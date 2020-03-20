@@ -9,7 +9,8 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
-        }
+        },
+        resolve: { extensions: [".js", ".jsx"] }
       },
       {
         test: /\.(js|jsx)$/,
@@ -32,6 +33,18 @@ module.exports = {
           // Compiles Sass to CSS
           'sass-loader',
         ],
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'static/images/[contenthash].[ext]'
+            }
+          },
+          'image-webpack-loader'
+        ]
       },
       {
         test: /\.html$/,
