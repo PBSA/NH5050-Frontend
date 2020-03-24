@@ -27,6 +27,7 @@
       "react/prefer-stateless-function": "off",
       "react/destructuring-assignment": "off",
       "react/jsx-filename-extension": "off",
+      "react/react-in-jsx-scope": "off",
       "import/extensions":"off"
     },
     "ignorePatterns": ["dist/", "node_modules", "webpack.config.js", "scripts"]

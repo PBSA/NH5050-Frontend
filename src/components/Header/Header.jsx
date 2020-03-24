@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppBar, Toolbar, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Facebook as FacebookIcon, Twitter as TwitterIcon, Instagram as InstagramIcon } from '@material-ui/icons';
 import marineCorpsLogo from '../../assets/images';
