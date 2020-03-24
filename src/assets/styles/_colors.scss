@@ -1,0 +1,10 @@
+$primary-app-color: rgba(236, 42, 50, 1);
+$primary-app-color-hover: rgba(243, 70, 77, 1);
+$dashboard-background: rgba(239, 238, 238, 1);
+$dashboard-buy-header: rgba(172, 175, 181, 1);
+$dashboard-buy-content: rgba(0, 0, 0, 1);
+
+//export so we can load into JS files for material UI styling
+:export {
+  primaryAppColor: $primary-app-color;
+}
