@@ -6,10 +6,16 @@
     justify-content: space-between;
   }
 
+  &-socials-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
   &-icon {
     width: 100px;
     padding: 10px;
     margin-right: 16px;
+    cursor: pointer;
   }
 
   &-text {
@@ -24,10 +30,22 @@
   &-socials {
     display: flex;
 
+    &-icon {
+      padding: 5px;
+      font-size: 3em;
+      cursor: pointer;
+    }
+
     &-text {
       @extend .header-text;
       margin-right: 10px;
       color: grey;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    &-wrapper {
+      flex-direction: column;
     }
   }
 }
