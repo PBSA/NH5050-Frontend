@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { Card, CardContent, Button } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PanoramaIcon from '@material-ui/icons/Panorama';
+import { NavigateActions } from '../../redux/actions';
+import { RouteConstants } from '../../constants';
 import strings from '../../assets/locales/strings';
 
 class Dashboard extends Component {
+
+  navgiateToOrderInfo = () => {
+    this.props.navigate(RouteConstants.ORDER_INFO);
+  }
+
   render() {
     return (
       <div className="dashboard">
@@ -26,7 +35,7 @@ class Dashboard extends Component {
               <span className="dashboard-buy-content">$1350</span>
               <span className="dashboard-buy-header">Progressive Jackpot</span>
               <span className="dashboard-buy-content">$5635</span>
-              <Button className="dashboard-buy-button" variant="outlined" size="medium">
+              <Button className="dashboard-buy-button" variant="outlined" size="medium" onClick={this.navgiateToOrderInfo}>
                 Buy Now
               </Button>
             </CardContent>
@@ -37,4 +46,11 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    navigate: NavigateActions.navigate,
+  },
+  dispatch,
+);
+
+export default connect(null, mapDispatchToProps)(Dashboard);

@@ -12,8 +12,19 @@ import '../assets/styles/common.scss';
 
 class App extends Component {
   componentDidMount() {
-    console.log(this.props);
-    this.props.navigate(RouteConstants.DASHBOARD);
+    const isKnownPath = () => {
+      const routeValues = Object.values(RouteConstants);
+      if (routeValues.indexOf(this.props.path) !== -1) {
+        return true;
+      }
+
+      return false;
+    };
+
+    if (!isKnownPath() || this.props.path === RouteConstants.ROOT) {
+      // Change the browser navigation to root.
+      this.props.navigate(RouteConstants.DASHBOARD);
+    }
   }
 
   render() {
@@ -29,6 +40,10 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  path: state.getIn(['router', 'location', 'pathname']),
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
@@ -36,4 +51,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   dispatch,
 );
 
-export default hot(connect(null, mapDispatchToProps)(App));
+export default hot(connect(mapStateToProps, mapDispatchToProps)(App));
