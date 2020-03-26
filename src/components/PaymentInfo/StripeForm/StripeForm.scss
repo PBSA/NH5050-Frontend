@@ -1,0 +1,16 @@
+.stripe {
+  display: flex;
+  flex-direction: column;
+
+  &-header {
+    font-size: 1rem;
+  }
+
+  &-expcvc {
+    display: flex;
+
+    &-input {
+      width: 50%;
+    }
+  }
+}
