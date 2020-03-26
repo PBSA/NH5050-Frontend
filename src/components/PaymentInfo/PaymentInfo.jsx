@@ -39,11 +39,11 @@ class PaymentInfo extends Component {
     }
   };
 
-  navigateBack() {
+  navigateBack = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
   }
 
-  navigateToConfirmation() {
+  navigateToConfirmation = () => {
     this.props.navigate(RouteConstants.CONFIRMATION_PAGE);
   }
 
@@ -64,11 +64,11 @@ class PaymentInfo extends Component {
             </StripeProvider>
           </div>
           <div className="payment-ticket">
-            <span className="payment-ticket-header">$20 Ticket</span>
-            <p className="payment-ticket-subtext">Gets you</p>
-            <p className="payment-ticket-subtext">10 entries in the 5050 draw on May 15, 2020.</p>
-            <p className="payment-ticket-subtext">And</p>
-            <p className="payment-ticket-subtext">10 entries in the Progressive Jackpoint on November 11, 2020.</p>
+            <p className="payment-ticket-header">$20 Ticket</p>
+            <span className="payment-ticket-subtext">Gets you</span>
+            <span className="payment-ticket-subtext">10 entries in the 5050 draw on May 15, 2020.</span>
+            <span className="payment-ticket-subtext">And</span>
+            <span className="payment-ticket-subtext">10 entries in the Progressive Jackpoint on November 11, 2020.</span>
           </div>
         </div>
         <div className="payment-buttons">

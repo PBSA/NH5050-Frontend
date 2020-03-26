@@ -51,8 +51,9 @@
     justify-content: space-between;
 
     &-buy {
+      font-size: 1.2rem;
       height: 3.5rem;
-      width: 10rem;
+      width: 13rem;
       color: white;
       background-color: $primary-app-color;
 
@@ -62,8 +63,9 @@
     }
 
     &-back {
+      font-size: 1.2rem;
       height: 3.5rem;
-      width: 10rem;
+      width: 13rem;
       color: white;
       background-color: $dashboard-buy-header;
 
