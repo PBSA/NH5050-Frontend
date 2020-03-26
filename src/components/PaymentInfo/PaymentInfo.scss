@@ -20,7 +20,7 @@
   &-wrapper {
     display: flex;
     justify-content: space-between;
-    padding: 5em 0;
+    padding: 2em 0;
   }
 
   &-info {
@@ -49,6 +49,7 @@
   &-buttons {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 3em;
 
     &-buy {
       font-size: 1.2rem;
@@ -72,6 +73,24 @@
       &:hover {
         background: $payment-info-back-button;
         }
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    
+    &-wrapper {
+      flex-direction: column;
+    }
+
+    &-info {
+      width: 100%;
+    }
+
+    &-ticket {
+      width: 100%;
     }
   }
 }
