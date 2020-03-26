@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { FormControl, FormHelperText } from '@material-ui/core';
 import {
   CardElement,
-  injectStripe,
-} from 'react-stripe-elements';
+} from '@stripe/react-stripe-js';
 
 const createOptions = () => ({
   style: {
@@ -48,4 +47,4 @@ class StripeForm extends Component {
   }
 }
 
-export default injectStripe(StripeForm);
+export default StripeForm;

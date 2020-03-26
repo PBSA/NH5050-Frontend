@@ -4,10 +4,8 @@ import Alert from '@material-ui/lab/Alert';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  StripeProvider,
-  Elements,
-} from 'react-stripe-elements';
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
 import StripeForm from './StripeForm';
 
 // import { Elements, CardElement } from '@stripe/react-stripe-js';
@@ -17,6 +15,7 @@ import StripeForm from './StripeForm';
 import { NavigateActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 
+const stripePromise = loadStripe('pk_test_JJ1eMdKN0Hp4UFJ6kWXWO4ix00jtXzq5XG');
 class PaymentInfo extends Component {
   state = {
     errorMessage: '',
@@ -57,11 +56,9 @@ class PaymentInfo extends Component {
 
         <div className="payment-wrapper">
           <div className="payment-info">
-            <StripeProvider apiKey="pk_test_12345">
-              <Elements>
+              <Elements stripe={stripePromise}>
                 <StripeForm handleResult={this.props.handleResult} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
               </Elements>
-            </StripeProvider>
           </div>
           <div className="payment-ticket">
             <p className="payment-ticket-header">$20 Ticket</p>
