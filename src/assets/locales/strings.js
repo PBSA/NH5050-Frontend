@@ -15,4 +15,10 @@ export default {
     subtext1: 'We have proccessed your order and emailed you a digital ticket containing the information below. Please print this page for your records',
     subtext2: 'Here are your ticket numbers for the New Hampshire Marine Corps League 50/50 Progressive Raffle -- Good luck!',
   },
+
+  share: {
+    header: 'Help Grow the Jackpot!',
+    subtext: 'Share this raffle with friends and family members to grow the jackpot and to show your support for the New Hampshire Marine Corps League and military families. Thank you for your support!',
+    thanks: 'Thanks for your support!',
+  },
 };
