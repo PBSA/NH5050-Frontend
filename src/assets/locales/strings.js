@@ -9,4 +9,10 @@ export default {
     ticketsSubtext: 'Please indicate how many of each bundle type you\'d like',
     ticketDetachementSubtext: 'Which detachement do you wish to support?',
   },
+
+  confirmationPage: {
+    header: 'Thank You!',
+    subtext1: 'We have proccessed your order and emailed you a digital ticket containing the information below. Please print this page for your records',
+    subtext2: 'Here are your ticket numbers for the New Hampshire Marine Corps League 50/50 Progressive Raffle -- Good luck!',
+  },
 };
