@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import {
   TextField, Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, InputLabel, Select, MenuItem, Checkbox
 } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { NavigateActions } from '../../redux/actions';
+import { RouteConstants } from '../../constants';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import strings from '../../assets/locales/strings';
 
@@ -42,6 +46,10 @@ class OrderInfo extends Component {
   handleCheckboxTicketChange = () => {
     this.setState({ticketCheck: !this.state.ticketCheck});
   };
+
+  navigateToPayment = () => {
+    this.props.navigate(RouteConstants.PAYMENT_INFO);
+  }
   
   render() {
     const {ticketSelected, ticketBundles, detachementSelected, detachements, ageCheck, ticketCheck} = this.state;
@@ -125,11 +133,18 @@ class OrderInfo extends Component {
         </div>
 
         <div className="order-button-wrapper">
-          <Button className="order-button" endIcon={<ArrowRightAltIcon />}>Continue</Button>
+          <Button className="order-button" onClick={this.navigateToPayment} endIcon={<ArrowRightAltIcon />}>Continue</Button>
         </div>
       </div>
     );
   }
 }
 
-export default OrderInfo;
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    navigate: NavigateActions.navigate,
+  },
+  dispatch,
+);
+
+export default connect(null, mapDispatchToProps)(OrderInfo);

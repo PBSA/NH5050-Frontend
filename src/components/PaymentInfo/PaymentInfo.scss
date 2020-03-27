@@ -1,0 +1,96 @@
+@import '../../assets/styles/common.scss';
+
+.payment {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 2%;
+  width: 60%;
+
+  &-error {
+    height: 4rem;
+  }
+  &-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 0.5em;
+  }
+
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 2em 0;
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+  }
+
+  &-ticket {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+
+    &-header {
+      font-size: 2rem;
+      font-weight: bold;
+      color: $primary-app-color;
+    }
+
+    &-subtext {
+      font-size: 1.5rem;
+      color: $dashboard-buy-header;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3em;
+
+    &-buy {
+      font-size: 1.2rem;
+      height: 3.5rem;
+      width: 13rem;
+      color: white;
+      background-color: $primary-app-color;
+
+      &:hover {
+        background: $primary-app-color-hover;
+        }
+    }
+
+    &-back {
+      font-size: 1.2rem;
+      height: 3.5rem;
+      width: 13rem;
+      color: white;
+      background-color: $dashboard-buy-header;
+
+      &:hover {
+        background: $payment-info-back-button;
+        }
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    
+    &-wrapper {
+      flex-direction: column;
+    }
+
+    &-info {
+      width: 100%;
+    }
+
+    &-ticket {
+      width: 100%;
+    }
+  }
+}
