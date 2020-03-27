@@ -37,14 +37,14 @@
     }
 
     &-header {
-      font-size: 20px;
+      font-size: 1.5rem;
       color: $dashboard-buy-header;
       text-align: center;
     }
 
     &-content {
       font-weight: bold;
-      font-size: 32px;
+      font-size: 2.5rem;
       color: $dashboard-buy-content;
       padding-bottom: 10px;
       text-align: center;
@@ -57,7 +57,7 @@
 
     &-button {
       font-size: 1.2rem;
-      width: 60%;
+      width: 70%;
       height: 40px;
       color: white;
       background-color: $primary-app-color;
