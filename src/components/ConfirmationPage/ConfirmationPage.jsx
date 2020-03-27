@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NavigateActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
+import ReactToPrint from 'react-to-print';
 import { RouteConstants } from '../../constants';
 
 class ConfirmationPage extends Component {
@@ -55,7 +56,7 @@ class ConfirmationPage extends Component {
 
         <div className="confirmation-buttons">
             <Button className="confirmation-buttons-order" onClick={this.navigateToOrder}>Order More</Button>
-            <Button className="confirmation-buttons-print">Print This Page</Button>
+            <Button className="confirmation-buttons-print" onClick={() => window.print()}>Print This Page</Button>
             <Button className="confirmation-buttons-grow" endIcon={<ArrowRightAltIcon />}>Grow the Jackpot</Button>
           </div>
       </div>

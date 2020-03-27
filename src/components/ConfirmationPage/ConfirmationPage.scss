@@ -138,4 +138,13 @@
       }
     }
   }
+
+  @media print {
+    margin-right: 1em;
+    margin-left: 1em;
+    
+    &-buttons {
+      display: none;
+    }
+  }    
 }
