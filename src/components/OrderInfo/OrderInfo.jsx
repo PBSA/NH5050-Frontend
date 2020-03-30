@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  TextField, Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, InputLabel, Select, MenuItem, Checkbox
+  TextField, Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, InputLabel, Select, MenuItem, Checkbox, Card
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,6 +8,7 @@ import { NavigateActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import strings from '../../assets/locales/strings';
+import ProgressBar from '../ProgressBar';
 
 class OrderInfo extends Component {
 
@@ -56,6 +57,7 @@ class OrderInfo extends Component {
     console.log('state: ', this.state);
     return (
       <div className="order">
+        <ProgressBar activeStep={0}/>
         <div className="order-wrapper">
 
           <div className="order-info">
@@ -76,6 +78,7 @@ class OrderInfo extends Component {
               className="order-info-input"
               label="Email Address"
               variant="outlined"
+              type="email"
             />
             <TextField
               className="order-info-input"

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AppBar, Toolbar } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Facebook as FacebookIcon, Twitter as TwitterIcon, Instagram as InstagramIcon } from '@material-ui/icons';
+import { Facebook as FacebookIcon, Twitter as TwitterIcon, LinkedIn as LinkedInIcon, Reddit as RedditIcon, WhatsApp as WhatsAppIcon, Mail as MailIcon } from '@material-ui/icons';
 import { NavigateActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import marineCorpsLogo from '../../assets/images';
@@ -25,9 +25,12 @@ class Header extends Component {
           </div>
           <div className="header-socials">
             <span className="header-socials-text">SHARE</span>
-            <FacebookIcon className="header-socials-icon" fontSize="large" color="primary" />
-            <TwitterIcon className="header-socials-icon" fontSize="large" color="primary" />
-            <InstagramIcon className="header-socials-icon" fontSize="large" color="primary" />
+            <FacebookIcon className="header-socials-fb" fontSize="large" />
+            <TwitterIcon className="header-socials-twitter" fontSize="large" />
+            <LinkedInIcon className="header-socials-linkedin" fontSize="large" />
+            <RedditIcon className="header-socials-reddit" fontSize="large" />
+            <WhatsAppIcon className="header-socials-whatsapp" fontSize="large" />
+            <MailIcon className="header-socials-mail" fontSize="large" />
           </div>
         </Toolbar>
       </AppBar>

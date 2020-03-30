@@ -1,3 +1,5 @@
+@import '../../assets/styles/common.scss';
+
 .header {
   background-color: white;
 
@@ -30,10 +32,36 @@
   &-socials {
     display: flex;
 
-    &-icon {
+    &-fb {
       padding: 5px;
       font-size: 3em;
       cursor: pointer;
+      color: $facebook-icon;
+    }
+
+    &-twitter {
+      @extend .header-socials-fb;
+      color: $twitter-icon;
+    }
+
+    &-linkedin {
+      @extend .header-socials-fb;
+      color: $linkedin-icon
+    }
+
+    &-reddit {
+      @extend .header-socials-fb;
+      color: $reddit-icon
+    }
+
+    &-whatsapp {
+      @extend .header-socials-fb;
+      color: $whatsapp-icon
+    }
+
+    &-mail {
+      @extend .header-socials-fb;
+      color: $mail-icon
     }
 
     &-text {

@@ -11,3 +11,33 @@ html, body, #content{
   overflow-x: hidden;
   font-family: 'Lato', sans-serif;
 }
+
+//stepper styles
+.MuiStepIcon-root.MuiStepIcon-active {
+  color: $primary-app-color;
+}
+
+.MuiStepIcon-root.MuiStepIcon-completed {
+  color: $primary-app-color;
+}
+
+.MuiStepper-horizontal {
+  @media only screen and (max-width: 1080px) {
+    padding: 10px;
+    margin-bottom: 0;
+  }
+}
+
+.MuiStepLabel-label {
+  font-size: 1.2rem;
+}
+
+.MuiStepIcon-root {
+  width: 25px;
+  height: 25px;
+}
+
+//radio-button and checkbox styles
+.MuiCheckbox-colorSecondary.Mui-checked, .MuiRadio-colorSecondary.Mui-checked {
+  color: $primary-app-color;
+}
