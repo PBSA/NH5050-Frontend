@@ -10,4 +10,50 @@ html, body, #content{
   overflow-y: scroll;
   overflow-x: hidden;
   font-family: 'Lato', sans-serif;
+  background: #eeeded;
+}
+
+//stepper styles
+.MuiStepIcon-root.MuiStepIcon-active {
+  color: $primary-app-color;
+}
+
+.MuiStepIcon-root.MuiStepIcon-completed {
+  color: $primary-app-color;
+}
+
+.MuiStepper-horizontal {
+  @media only screen and (max-width: 1080px) {
+    padding: 10px;
+    margin-bottom: 0;
+  }
+}
+
+.MuiStepLabel-label {
+  font-size: 1.2rem;
+
+  @media only screen and (max-width: 1080px) {
+    font-size: 1rem;
+  }
+}
+
+.MuiStepIcon-root {
+  width: 30px;
+  height: 30px;
+
+  @media only screen and (max-width: 1080px) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+//radio button and checkbox selects
+.MuiFormControlLabel-label {
+  font-size: 1.3rem;
+}
+
+//radio-button and checkbox styles
+.MuiCheckbox-colorSecondary.Mui-checked, .MuiRadio-colorSecondary.Mui-checked {
+  color: $primary-app-color;
 }

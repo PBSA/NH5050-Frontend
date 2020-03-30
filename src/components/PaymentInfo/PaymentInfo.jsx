@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, CardContent, Card } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import StripeForm from './StripeForm';
+import ProgressBar from '../ProgressBar';
 
 // import { Elements, CardElement } from '@stripe/react-stripe-js';
 // import { loadStripe } from '@stripe/stripe-js';
@@ -48,31 +49,33 @@ class PaymentInfo extends Component {
 
   render() {
     return (
-      <div className="payment">
-        <div className="payment-error">
-          {this.state.errorMessage !== '' ? <Alert severity="error">{this.state.errorMessage}</Alert> : null}
-        </div>
-        <span className="payment-header">Payment Info</span>
+      <Card className="payment-card" variant="outlined">
+      <CardContent>
+        <ProgressBar activeStep={1}/>
+        <div className="payment">
+          <div className="payment-error">
+            {this.state.errorMessage !== '' ? <Alert severity="error">{this.state.errorMessage}</Alert> : null}
+          </div>
+          <span className="payment-header">Payment Info</span>
 
-        <div className="payment-wrapper">
-          <div className="payment-info">
-              <Elements stripe={stripePromise}>
-                <StripeForm handleResult={this.props.handleResult} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-              </Elements>
+          <div className="payment-wrapper">
+            <div className="payment-info">
+                <Elements stripe={stripePromise}>
+                  <StripeForm handleResult={this.props.handleResult} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+                </Elements>
+            </div>
+            <div className="payment-ticket">
+              <p className="payment-ticket-header">$20 Ticket</p>
+              <span className="payment-ticket-subtext">Gets you 10 entries in the 5050 draw on May 15, 2020. And 10 entries in the Progressive Jackpoint on November 11, 2020.</span>
+            </div>
           </div>
-          <div className="payment-ticket">
-            <p className="payment-ticket-header">$20 Ticket</p>
-            <span className="payment-ticket-subtext">Gets you</span>
-            <span className="payment-ticket-subtext">10 entries in the 5050 draw on May 15, 2020.</span>
-            <span className="payment-ticket-subtext">And</span>
-            <span className="payment-ticket-subtext">10 entries in the Progressive Jackpoint on November 11, 2020.</span>
+          <div className="payment-buttons">
+            <Button className="payment-buttons-back" onClick={this.navigateBack}>Back</Button>
+            <Button className="payment-buttons-buy" onClick={this.navigateToConfirmation} endIcon={<ArrowRightAltIcon />}>Buy Now</Button>
           </div>
         </div>
-        <div className="payment-buttons">
-          <Button className="payment-buttons-back" onClick={this.navigateBack}>Back</Button>
-          <Button className="payment-buttons-buy" onClick={this.navigateToConfirmation} endIcon={<ArrowRightAltIcon />}>Buy Now</Button>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
     );
   }

@@ -5,8 +5,12 @@
   flex-direction: column;
   margin-left: 20%;
   margin-right: 20%;
-  margin-top: 2%;
   width: 60%;
+
+  &-card {
+    background: white;
+    margin: 2%;
+  }
 
   &-error {
     height: 4rem;
