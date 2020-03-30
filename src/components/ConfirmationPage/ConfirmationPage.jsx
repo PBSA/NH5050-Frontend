@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Card, CardContent } from '@material-ui/core';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -35,7 +35,8 @@ class ConfirmationPage extends Component {
   render() {
     const { tickets } = this.state;
     return (
-      <div>
+      <Card className="confirmation-card" variant="outlined">
+        <CardContent>
         <ProgressBar activeStep={2}/>
         <div className="confirmation">
           <span className="confirmation-header">{strings.confirmationPage.header}</span>
@@ -66,7 +67,8 @@ class ConfirmationPage extends Component {
               <Button className="confirmation-buttons-grow" onClick={this.navigateToShare}endIcon={<ArrowRightAltIcon />}>Grow the Jackpot</Button>
             </div>
         </div>
-      </div>
+        </CardContent>
+      </Card>
     );
   }
 }

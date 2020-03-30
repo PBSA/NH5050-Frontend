@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, TextField, Tooltip } from '@material-ui/core';
+import { Button, TextField, Tooltip, Card, CardContent } from '@material-ui/core';
 import { Facebook as FacebookIcon, Twitter as TwitterIcon, LinkedIn as LinkedInIcon, Reddit as RedditIcon, WhatsApp as WhatsAppIcon, Mail as MailIcon} from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -33,7 +33,8 @@ class GrowJackpot extends Component {
     const { shareLink } = this.state;
     console.log(this.props);
     return (
-      <div>
+      <Card className="grow-card" variant="outlined">
+        <CardContent>
         <ProgressBar activeStep={3} />
         <div className="grow">
           <p className="grow-header">{strings.share.header}</p>
@@ -75,7 +76,8 @@ class GrowJackpot extends Component {
             <Button className="grow-back" onClick={this.navigateToDashboard}>Back to Raffle Page</Button>
           </div>
         </div>
-      </div>
+        </CardContent>
+      </Card>
     );
   }
 }

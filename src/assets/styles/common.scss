@@ -10,6 +10,7 @@ html, body, #content{
   overflow-y: scroll;
   overflow-x: hidden;
   font-family: 'Lato', sans-serif;
+  background: #eeeded;
 }
 
 //stepper styles
@@ -30,11 +31,26 @@ html, body, #content{
 
 .MuiStepLabel-label {
   font-size: 1.2rem;
+
+  @media only screen and (max-width: 1080px) {
+    font-size: 1rem;
+  }
 }
 
 .MuiStepIcon-root {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
+
+  @media only screen and (max-width: 1080px) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+//radio button and checkbox selects
+.MuiFormControlLabel-label {
+  font-size: 1.3rem;
 }
 
 //radio-button and checkbox styles

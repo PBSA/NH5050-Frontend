@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, CardContent, Card } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { connect } from 'react-redux';
@@ -49,7 +49,8 @@ class PaymentInfo extends Component {
 
   render() {
     return (
-      <div>
+      <Card className="payment-card" variant="outlined">
+      <CardContent>
         <ProgressBar activeStep={1}/>
         <div className="payment">
           <div className="payment-error">
@@ -73,7 +74,8 @@ class PaymentInfo extends Component {
             <Button className="payment-buttons-buy" onClick={this.navigateToConfirmation} endIcon={<ArrowRightAltIcon />}>Buy Now</Button>
           </div>
         </div>
-      </div>
+        </CardContent>
+      </Card>
 
     );
   }

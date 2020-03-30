@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  TextField, Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, InputLabel, Select, MenuItem, Checkbox, Card
+  TextField, Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, InputLabel, Select, MenuItem, Checkbox, Card, CardContent
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -54,9 +54,9 @@ class OrderInfo extends Component {
   
   render() {
     const {ticketSelected, ticketBundles, detachementSelected, detachements, ageCheck, ticketCheck} = this.state;
-    console.log('state: ', this.state);
     return (
-      <div className="order">
+      <Card className="order" variant="outlined">
+        <CardContent>
         <ProgressBar activeStep={0}/>
         <div className="order-wrapper">
 
@@ -138,7 +138,8 @@ class OrderInfo extends Component {
         <div className="order-button-wrapper">
           <Button className="order-button" onClick={this.navigateToPayment} endIcon={<ArrowRightAltIcon />}>Continue</Button>
         </div>
-      </div>
+        </CardContent>
+      </Card>
     );
   }
 }
