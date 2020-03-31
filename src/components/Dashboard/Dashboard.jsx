@@ -6,18 +6,60 @@ import PanoramaIcon from '@material-ui/icons/Panorama';
 import { NavigateActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import strings from '../../assets/locales/strings';
+import { OrganizationService, RaffleService } from '../../services';
 
+const organizationId = 1;
 class Dashboard extends Component {
+  state = {
+    organizationInfo: {},
+    fiftyfiftyDraw: {},
+    progressiveDraw: {}
+  }
 
   navgiateToOrderInfo = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
   }
 
+  componentDidMount() {
+    OrganizationService.getOrganizationInfo(organizationId).then((res) => {
+      this.setState({organizationInfo: res});
+    }).catch((err) => {
+      console.log(err);
+    });
+
+    RaffleService.getRaffle(organizationId).then((res) => {
+      this.sortDraws(res);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  sortDraws = (draws) => {
+    const sortedDraws = draws.filter((draw) => {
+      return new Date(draw.draw_datetime) > new Date(Date.now());
+    });
+
+    if(sortedDraws[0].draw_type === "5050") {
+      this.setState({fiftyfiftyDraw: sortedDraws[0]});
+      this.setState({progressiveDraw: sortedDraws[1]});
+    } else {
+      this.setState({fiftyfiftyDraw: sortedDraws[1]});
+      this.setState({progressiveDraw: sortedDraws[0]});
+    }
+  }
+
   render() {
+    const {organizationInfo} = this.state;
+    console.log('state: ',this.state);
     return (
       <div className="dashboard">
         <div className="dashboard-panel">
-          <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />
+          {organizationInfo.logo_url ? 
+            <img className="dashboard-panel-img" src={organizationInfo.logo_url} alt=""/>
+            : 
+            <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />
+          }
+          
           <p className="dashboard-panel-text">
             {strings.dashboard.loremIpsum1}
           </p>

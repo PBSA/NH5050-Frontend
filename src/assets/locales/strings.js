@@ -6,7 +6,7 @@ export default {
   orderInfo: {
     infoHeader: 'Your Info',
     ticketsHeader: 'Tickets',
-    ticketsSubtext: 'Please indicate how many of each bundle type you\'d like',
+    ticketsSubtext: 'How many entries would you like?',
     ticketDetachementSubtext: 'Which detachement do you wish to support?',
   },
 
