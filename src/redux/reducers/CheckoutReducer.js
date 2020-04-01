@@ -1,9 +1,10 @@
 import { fromJS } from 'immutable';
 import ActionTypes from '../actions/ActionTypes';
+import { StorageUtil } from '../../utility';
 
 const initialState = fromJS({
-  organizationId: '',
-  raffleId: '',
+  organizationId: StorageUtil.get('organization_id') ? StorageUtil.get('organization_id') : '',
+  raffleId: StorageUtil.get('raffle_id') ? StorageUtil.get('raffle_id') : '',
 });
 
 export default (state = initialState, action) => {
