@@ -43,7 +43,7 @@ class ConfirmationPage extends Component {
           <span className="confirmation-subtext">{strings.confirmationPage.subtext1}</span>
           <span className="confirmation-subtext">{strings.confirmationPage.subtext2}</span>
           <div className="confirmation-tickets">
-            {tickets.map((ticket) => <span className="confirmation-tickets-ticket">{ticket}</span>)}
+            {tickets.map((ticket, index) => <span key={index} className="confirmation-tickets-ticket">{ticket}</span>)}
           </div>
 
           <div className="confirmation-jackpots">

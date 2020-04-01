@@ -32,6 +32,7 @@
 
   &-socials {
     display: flex;
+    flex-wrap: wrap;
 
     &-fb {
       padding: 5px;
