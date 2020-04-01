@@ -9,6 +9,7 @@ import { RouteConstants } from '../../constants';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import strings from '../../assets/locales/strings';
 import ProgressBar from '../ProgressBar';
+import { RaffleService } from '../../services';
 
 class OrderInfo extends Component {
 
@@ -51,8 +52,15 @@ class OrderInfo extends Component {
   navigateToPayment = () => {
     this.props.navigate(RouteConstants.PAYMENT_INFO);
   }
+
+  componentDidMount = () => {
+    RaffleService.getTicketBundle().then((res) => {
+      console.log('ticket bundlee: ', res);
+    });
+  }
   
   render() {
+    console.log('props: ', this.props);
     const {ticketSelected, ticketBundles, detachementSelected, detachements, ageCheck, ticketCheck} = this.state;
     return (
       <Card className="order" variant="outlined">
@@ -144,6 +152,13 @@ class OrderInfo extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    organizationId: state.getIn(['checkout', 'organizationId']),
+    raffleId: state.getIn(['checkout','raffleId']),
+  };
+};
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
@@ -151,4 +166,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   dispatch,
 );
 
-export default connect(null, mapDispatchToProps)(OrderInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderInfo);
