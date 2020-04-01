@@ -1,0 +1,4 @@
+export default {
+  SET_RAFFLE_ID: 'SET_RAFFLE_ID',
+  SET_ORGANIZATION_ID: 'SET_ORGANIZATION_ID',
+};
