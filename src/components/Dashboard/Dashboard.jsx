@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardContent, Button } from '@material-ui/core';
+import { Card, CardContent, Button, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PanoramaIcon from '@material-ui/icons/Panorama';
@@ -54,11 +54,13 @@ class Dashboard extends Component {
     return (
       <div className="dashboard">
         <div className="dashboard-panel">
-          {organizationInfo.logo_url ? 
+          {/* {organizationInfo.logo_url ? 
             <img className="dashboard-panel-img" src={organizationInfo.logo_url} alt=""/>
             : 
+            <CircularProgress color="secondary"/>
             <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />
-          }
+          } */}
+          <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />
           
           <p className="dashboard-panel-text">
             {strings.dashboard.loremIpsum1}
