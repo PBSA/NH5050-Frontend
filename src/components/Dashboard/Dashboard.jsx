@@ -3,7 +3,7 @@ import { Card, CardContent, Button, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PanoramaIcon from '@material-ui/icons/Panorama';
-import { NavigateActions } from '../../redux/actions';
+import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import strings from '../../assets/locales/strings';
 import { OrganizationService, RaffleService } from '../../services';
@@ -21,17 +21,21 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    //get organization data
     OrganizationService.getOrganizationInfo(organizationId).then((res) => {
       this.setState({organizationInfo: res});
     }).catch((err) => {
       console.log(err);
     });
-
+    //get current raffle data
     RaffleService.getRaffle(organizationId).then((res) => {
       this.sortDraws(res);
     }).catch((err) => {
       console.log(err);
     });
+
+    this.props.setOrganizationId(1);
+    this.props.setRaffleId(1);
   }
 
   sortDraws = (draws) => {
@@ -93,6 +97,8 @@ class Dashboard extends Component {
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
+    setOrganizationId: CheckoutActions.setOrganizationId,
+    setRaffleId: CheckoutActions.setRaffleId,
   },
   dispatch,
 );

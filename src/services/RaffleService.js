@@ -36,6 +36,23 @@ class RaffleService {
       }
     });
   }
+
+  static getTicketBundle() {
+    const query = `${apiRoot}/ticketbundles`;
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await ApiHandler.get(query);
+
+        if (response.data.status !== 200) {
+          return reject(response);
+        }
+
+        return resolve(response.data.result);
+      } catch (err) {
+        return reject(err.response);
+      }
+    });
+  }
 }
 
 export default RaffleService;
