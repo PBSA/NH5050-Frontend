@@ -13,29 +13,16 @@ class Dashboard extends Component {
   state = {
     organizationInfo: {},
     fiftyfiftyDraw: {},
-    progressiveDraw: {}
+    progressiveDraw: {},
+    loaded: false,
+    error: {
+      organization: null,
+      raffle: null,
+    }
   }
 
   navgiateToOrderInfo = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
-  }
-
-  componentDidMount() {
-    //get organization data
-    OrganizationService.getOrganizationInfo(organizationId).then((res) => {
-      this.setState({organizationInfo: res});
-    }).catch((err) => {
-      console.log(err);
-    });
-    //get current raffle data
-    RaffleService.getRaffle(organizationId).then((res) => {
-      this.sortDraws(res);
-    }).catch((err) => {
-      console.log(err);
-    });
-
-    this.props.setOrganizationId(1);
-    this.props.setRaffleId(1);
   }
 
   sortDraws = (draws) => {
@@ -52,25 +39,73 @@ class Dashboard extends Component {
     }
   }
 
+  displayImage = () => {
+    const {fiftyfiftyDraw, loaded} = this.state;
+
+    if(!loaded) {
+      return <CircularProgress color="secondary"/>;
+    } else if (fiftyfiftyDraw.image_url) {
+      return <img className="dashboard-panel-img" src={fiftyfiftyDraw.image_url} alt=""/>;
+    } else {
+      return <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />;
+    }
+  }
+
+  formatDate = (drawDate) => {
+    //format date to output in the following format: October 29, 2019, hh:mm
+    let date, formattedDate;
+    date = new Date(drawDate);
+    const twelveHourOptions = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric'};
+    const twentyFourHourOptions = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+
+    if(this.state.organizationInfo.time_format === '24h') {
+      formattedDate = date.toLocaleDateString('en-ZA', twentyFourHourOptions);
+    } else {
+      formattedDate = date.toLocaleDateString('en-US', twelveHourOptions);
+    }
+
+    return formattedDate;
+  }
+
+  componentDidMount() {
+    //get organization data
+    OrganizationService.getOrganizationInfo(organizationId).then((res) => {
+      this.setState({organizationInfo: res, loaded: true});
+    }).catch((err) => {
+      this.setState({
+        loaded: true,
+        error: {
+          ...this.state.errors,
+          organization: err
+        }
+      })
+    });
+    //get current raffle data
+    RaffleService.getRaffle(organizationId).then((res) => {
+      this.sortDraws(res);
+    }).catch((err) => {
+      this.setState({
+        loaded: true,
+        error: {
+          ...this.state.errors,
+          raffle: err
+        }
+      })
+    });
+
+    this.props.setOrganizationId(1);
+    this.props.setRaffleId(1);
+  }
+
   render() {
-    const {organizationInfo} = this.state;
+    const {fiftyfiftyDraw, progressiveDraw} = this.state;
     console.log('state: ',this.state);
     return (
       <div className="dashboard">
         <div className="dashboard-panel">
-          {/* {organizationInfo.logo_url ? 
-            <img className="dashboard-panel-img" src={organizationInfo.logo_url} alt=""/>
-            : 
-            <CircularProgress color="secondary"/>
-            <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />
-          } */}
-          <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />
-          
+          {this.displayImage()}
           <p className="dashboard-panel-text">
-            {strings.dashboard.loremIpsum1}
-          </p>
-          <p className="dashboard-panel-text">
-            {strings.dashboard.loremIpsum2}
+            {fiftyfiftyDraw.raffle_description}
           </p>
         </div>
 
@@ -78,11 +113,11 @@ class Dashboard extends Component {
           <Card>
             <CardContent className="dashboard-buy-container">
               <span className="dashboard-buy-header">Next Draw</span>
-              <span className="dashboard-buy-content-sm">May 15th, 2020 at 4pm</span>
+              <span className="dashboard-buy-content-sm">{this.formatDate(fiftyfiftyDraw.draw_datetime)}</span>
               <span className="dashboard-buy-header">Next 5050 jackpot</span>
-              <span className="dashboard-buy-content">$1350</span>
+              <span className="dashboard-buy-content">${fiftyfiftyDraw.total_jackpot}</span>
               <span className="dashboard-buy-header">Progressive Jackpot</span>
-              <span className="dashboard-buy-content">$5635</span>
+              <span className="dashboard-buy-content">${progressiveDraw.total_progressive_jackpot}</span>
               <Button className="dashboard-buy-button" variant="outlined" size="medium" onClick={this.navgiateToOrderInfo}>
                 Buy Now
               </Button>

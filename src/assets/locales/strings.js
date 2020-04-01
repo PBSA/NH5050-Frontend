@@ -8,6 +8,17 @@ export default {
     ticketsHeader: 'Tickets',
     ticketsSubtext: 'How many entries would you like?',
     ticketDetachementSubtext: 'Which detachement do you wish to support?',
+    errors: {
+      noFirstName: 'First name not entered',
+      noLastName: 'Last name not entered',
+      noEmail: 'Email not entered',
+      invalidEmail: 'Invalid email. Format must be xxx@xxx.xxx',
+      noPhone: 'Mobile phone number not entered',
+      invalidPhone: 'Invalid phone number format',
+      ageCheck: 'I \'m over the age 16 not selected',
+      ticketCheck: 'Send my ticket numbers via email not selected',
+      noDetachement: 'Please select a detachment',
+    },
   },
 
   confirmationPage: {

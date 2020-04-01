@@ -30,6 +30,17 @@ class CheckoutActions {
     StorageUtil.set('raffle_id', raffleId);
     return { type: ActionTypes.SET_RAFFLE_ID, raffleId };
   }
+
+  /**
+   * Toggles the display of the modal component.
+   *
+   * @static
+   * @returns {Action}
+   * @memberof CheckoutActions
+   */
+  static setOrderInfo(orderInfo) {
+    return { type: ActionTypes.SET_ORDER_INFO, orderInfo };
+  }
 }
 
 export default CheckoutActions;

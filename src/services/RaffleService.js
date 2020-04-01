@@ -37,8 +37,8 @@ class RaffleService {
     });
   }
 
-  static getTicketBundle() {
-    const query = `${apiRoot}/ticketbundles`;
+  static getTicketBundle(raffleId) {
+    const query = `${apiRoot}/ticketbundles?raffleId=${raffleId}`;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await ApiHandler.get(query);

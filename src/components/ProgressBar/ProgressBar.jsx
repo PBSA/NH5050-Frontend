@@ -4,7 +4,7 @@ import { Stepper, Step, StepLabel } from '@material-ui/core';
 class GrowJackpot extends Component {
   
   state = {
-    steps: ['Order Info', 'Payment', 'Confirmation', 'Grow the Jackpot']
+    steps: ['Order', 'Payment', 'Confirmation', 'Share']
   }
   
   render() {
