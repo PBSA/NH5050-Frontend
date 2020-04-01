@@ -23,16 +23,17 @@ function setupCompiler(host, port, protocol) {
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
   compiler.plugin('done', function(stats) {
+    clearConsole();
     // console.log('formatting message from stats: ', stats.toJson())
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     var messages = formatWebpackMessages(stats.toJson({}, true));
     var isSuccessful = !messages.errors.length && !messages.warnings.length;
-    var showInstructions = isSuccessful && (isFirstCompile);
+    var showInstructions = isSuccessful
 
     if (showInstructions) {
-      isFirstCompile = false;
+      // isFirstCompile = false;
       console.log();
       console.log('The app is running at:');
       console.log();

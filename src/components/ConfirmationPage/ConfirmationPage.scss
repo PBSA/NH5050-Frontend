@@ -1,0 +1,154 @@
+@import '../../assets/styles/common.scss';
+
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  margin-right: 25%;
+  margin-left: 25%;
+
+  &-card {
+    background: white;
+    margin: 2%;
+  }
+
+  &-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+  }
+
+  &-subtext {
+    font-size: 1.5rem;
+    margin-bottom: 1.5em;
+  }
+
+  &-tickets {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 3em;
+
+    &-ticket {
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding-right: 2em;
+    }
+  }
+
+  &-jackpots {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3em;
+
+    &-5050 {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &-progressive {
+      @extend .confirmation-jackpots-5050;
+      align-items: flex-end;
+    }
+
+    &-header {
+      font-size: 2rem;
+      color: $dashboard-buy-header;
+    }
+
+    &-amount {
+      font-weight: bold;
+      font-size: 3.5rem;
+    }
+
+    &-date {
+      font-size: 1.5rem;
+      color: $dashboard-buy-header;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    &-order {
+      font-size: 1.2rem;
+      height: 3.5rem;
+      width: 13rem;
+      color: white;
+      background-color: $dashboard-buy-header;
+
+      &:hover {
+        background: $payment-info-back-button;
+        }
+    }
+
+    &-print {
+      font-size: 1.2rem;
+      height: 3.5rem;
+      width: 13rem;
+      color: white;
+      background-color: $dashboard-buy-header;
+
+      &:hover {
+        background: $payment-info-back-button;
+      }
+    }
+
+    &-grow {
+      font-size: 1.2rem;
+      height: 3.5rem;
+      width: 18rem;
+      color: white;
+      background-color: $primary-app-color;
+
+      &:hover {
+        background: $primary-app-color-hover;
+        }
+    }
+  }
+
+  @media only screen and (max-width: 1080px) {
+    margin-right: 1em;
+    margin-left: 1em;
+
+    &-tickets {
+      justify-content: space-around;
+      &-ticket {
+        padding: 0;
+      }
+    }
+
+    &-buttons {
+      justify-content: space-around;
+      height: 10em;
+    }
+  
+    &-jackpots {
+      &-5050 {
+        align-items: center;
+      }
+    
+      &-header {
+        font-size: 1.5rem;
+      }
+
+      &-date {
+        font-size: 1rem;
+      }
+
+      &-amount {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  @media print {
+    margin-right: 1em;
+    margin-left: 1em;
+    
+    &-buttons {
+      display: none;
+    }
+  }    
+}

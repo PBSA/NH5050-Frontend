@@ -1,0 +1,80 @@
+@import '../../assets/styles/common.scss';
+
+.header {
+  background-color: white;
+
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2%;
+  }
+
+  &-socials-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-icon {
+    width: 100px;
+    padding: 10px;
+    margin-right: 16px;
+    cursor: pointer;
+  }
+
+  &-text {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
+  }
+
+  &-socials {
+    display: flex;
+
+    &-fb {
+      padding: 5px;
+      font-size: 3em;
+      cursor: pointer;
+      color: $facebook-icon;
+    }
+
+    &-twitter {
+      @extend .header-socials-fb;
+      color: $twitter-icon;
+    }
+
+    &-linkedin {
+      @extend .header-socials-fb;
+      color: $linkedin-icon
+    }
+
+    &-reddit {
+      @extend .header-socials-fb;
+      color: $reddit-icon
+    }
+
+    &-whatsapp {
+      @extend .header-socials-fb;
+      color: $whatsapp-icon
+    }
+
+    &-mail {
+      @extend .header-socials-fb;
+      color: $mail-icon
+    }
+
+    &-text {
+      @extend .header-text;
+      margin-right: 10px;
+      color: grey;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    &-wrapper {
+      flex-direction: column;
+    }
+  }
+}

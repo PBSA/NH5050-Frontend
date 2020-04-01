@@ -1,0 +1,135 @@
+@import '../../assets/styles/common.scss';
+
+.grow {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20%;
+  align-items: center;
+
+  &-card {
+    background: white;
+    margin: 2%;
+  }
+
+  &-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+  }
+
+  &-subtext {
+    font-size: 1.5rem;
+  }
+
+  &-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-socials {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    margin: 2em 0;
+
+    &-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 1.5em;
+    }
+
+    &-fb {
+      width: 30%;
+      cursor: pointer;
+      font-size: 4em;
+      color: white;
+      background-color: $facebook-icon
+    }
+
+    &-twitter {
+      @extend .grow-socials-fb;
+      background-color: $twitter-icon;
+    }
+
+    &-linkedin {
+      @extend .grow-socials-fb;
+      background-color: $linkedin-icon
+    }
+
+    &-reddit {
+      @extend .grow-socials-fb;
+      background-color: $reddit-icon
+    }
+
+    &-whatsapp {
+      @extend .grow-socials-fb;
+      background-color: $whatsapp-icon
+    }
+
+    &-mail {
+      @extend .grow-socials-fb;
+      background-color: $mail-icon
+    }
+  }
+
+  &-back {
+    font-size: 1.2rem;
+    width: 200px;
+    height: 40px;
+    margin-bottom: 20px;
+    color: white;
+    background-color: $primary-app-color;
+
+    &:hover {
+      background: $primary-app-color-hover;
+      }
+  }
+
+  &-copy {
+    display: flex;
+    width: 50%;
+
+    &-input {
+      width: 70%;
+    }
+
+    &-button {
+      font-size: 1.2rem;
+      height: 4.2rem;
+      width: 30%;
+      color: white;
+      background-color: $dashboard-buy-header;
+
+      &:hover {
+        background: $payment-info-back-button;
+      }
+
+      &-tooltip {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1056px) {
+    margin: 0 5%;
+
+    &-socials{
+      width: 80%;
+    }
+
+    &-copy {
+      width: 80%;
+
+      &-button {
+        font-size: 1rem;
+      }
+    }
+  }
+}

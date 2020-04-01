@@ -1,15 +1,17 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const devMode = process.env.NODE_ENV !== 'production';
+const devMode = process.env.NODE_ENV !== 'production' ? true : false;
 module.exports = {
-  mode: devMode ? 'development' : 'production',
+  mode: devMode === true ? 'development' : 'production',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
+        include: /src/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
-        }
+        },
+        resolve: { extensions: [".js", ".jsx"] }
       },
       {
         test: /\.(js|jsx)$/,
@@ -32,6 +34,18 @@ module.exports = {
           // Compiles Sass to CSS
           'sass-loader',
         ],
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'static/images/[contenthash].[ext]'
+            }
+          },
+          'image-webpack-loader'
+        ]
       },
       {
         test: /\.html$/,
