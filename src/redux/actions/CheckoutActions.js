@@ -63,6 +63,18 @@ class CheckoutActions {
   static setOrderInfo(orderInfo) {
     return { type: ActionTypes.SET_ORDER_INFO, orderInfo };
   }
+
+  /**
+   * Set the ticket purchase response to be displayed on confirmation page.
+   *
+   * @static
+   * @returns {Action}
+   * @memberof CheckoutActions
+   */
+  static setTicketPurchaseResponse(ticketPurchaseResponse) {
+    StorageUtil.set('ticketPurchaseResponse', ticketPurchaseResponse);
+    return { type: ActionTypes.SET_TICKET_PURCHASE_RESPONSE, ticketPurchaseResponse };
+  }
 }
 
 export default CheckoutActions;

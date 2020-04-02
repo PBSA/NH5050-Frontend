@@ -13,8 +13,18 @@ const initialState = fromJS({
   email: '',
   ageCheck: false,
   emailCheck: false,
+  playerId: 0,
   bundle: '',
   detachement: '',
+  ticketPurchaseResponse: StorageUtil.get('ticketPurchaseResponse') ? StorageUtil.get('ticketPurchaseResponse') : {
+    entries: [],
+    ticket_sales: {
+      id: 0,
+      raffle_id: 0,
+      total_jackpot: 0,
+      total_progressive_jackpot: 0,
+    },
+  },
 });
 
 export default (state = initialState, action) => {
@@ -51,8 +61,15 @@ export default (state = initialState, action) => {
         email: action.orderInfo.email,
         ageCheck: action.orderInfo.ageCheck,
         emailCheck: action.orderInfo.emailCheck,
+        playerId: action.orderInfo.playerId,
         bundle: action.orderInfo.bundle,
         detachement: action.orderInfo.detachement,
+      });
+    }
+
+    case ActionTypes.SET_TICKET_PURCHASE_RESPONSE: {
+      return state.merge({
+        ticketPurchaseResponse: action.ticketPurchaseResponse,
       });
     }
 

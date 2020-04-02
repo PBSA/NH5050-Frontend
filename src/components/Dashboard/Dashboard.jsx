@@ -13,10 +13,6 @@ class Dashboard extends Component {
     loaded: false,
   }
 
-  componentDidMount() {
-
-  }
-
   navgiateToOrderInfo = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
   }

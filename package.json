@@ -32,6 +32,7 @@
     "history": "^4.10.1",
     "image-webpack-loader": "^6.0.0",
     "immutable": "^4.0.0-rc.12",
+    "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "query-string": "^6.11.1",
     "react": "^16.13.1",
