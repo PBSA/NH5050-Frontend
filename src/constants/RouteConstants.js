@@ -5,4 +5,6 @@ export default {
   PAYMENT_INFO: '/payment',
   CONFIRMATION_PAGE: '/confirmation',
   GROW_JACKPOT: '/share',
+  ADMIN_LOGIN: '/login',
+  ADMIN: '/admin'
 };
