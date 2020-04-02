@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {FormControl, FormHelperText, Input, InputAdornment} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import {CardElement} from '@stripe/react-stripe-js';
+import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
 
 const createOptions = () => ({
   style: {
@@ -26,6 +26,10 @@ class StripeForm extends Component {
     showPassword: false,
   }
 
+  componentDidUpdate() {
+    this.props.stripeCallback(this.props.stripe, this.props.elements);
+  }
+
   handleClickShowPassword = () => {
     this.setState({showPassword: !this.state.showPassword});
   }
@@ -34,28 +38,33 @@ class StripeForm extends Component {
     const {showPassword} = this.state;
 
     return (
-      <FormControl onSubmit={this.props.handleSubmit}>
-        <FormHelperText className="stripe-header">
-          Card details
+      <FormControl>
+        <div className='stripe-header'>
+          <FormHelperText className="stripe-helpertext">
+            Card details
+          </FormHelperText>
           <div className="stripe">
             <CardElement
               onChange={this.props.handleChange}
               {...createOptions()}
             />
           </div>
-        </FormHelperText>
-        <FormHelperText className="stripe-header">
-          Name on Card
+        </div>
+        <div className='stripe-header'>
+          <FormHelperText className="stripe-helpertext">
+            Name on Card
+          </FormHelperText>
           <div className="stripe">
-            <input className="stripe-input" placeholder="Name" />
+            <input className="stripe-input" placeholder="Name" onChange={this.props.handleNameChange}/>
           </div>
-        </FormHelperText>
+        </div>
         <div className="stripe-pw">
           <Input
             disableUnderline
             className="stripe-input"
             type={showPassword ? 'text' : 'password'}
             placeholder="Seller Password (Admin Only)"
+            onChange={this.props.handleSellerPasswordChange}
             endAdornment={(
               <InputAdornment position="end">
                 <IconButton
@@ -73,4 +82,17 @@ class StripeForm extends Component {
   }
 }
 
-export default StripeForm;
+export default function InjectedCheckoutForm(props) {
+  return (
+    <ElementsConsumer>
+      {({stripe, elements}) => (
+        <StripeForm stripeCallback={props.stripeCallback} 
+        handleSellerPasswordChange={props.handleSellerPasswordChange} 
+        handleNameChange={props.handleNameChange}
+        handleChange={props.handleChange}
+        stripe={stripe} 
+        elements={elements} />
+      )}
+    </ElementsConsumer>
+  );
+}

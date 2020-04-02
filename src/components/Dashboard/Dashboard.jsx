@@ -31,6 +31,7 @@ class Dashboard extends Component {
 
     if(sortedDraws[0].draw_type === "5050") {
       this.setState({draw: sortedDraws[0]});
+      this.props.setRaffleId(sortedDraws[0].id);
     }
   }
 
@@ -89,7 +90,6 @@ class Dashboard extends Component {
     });
 
     this.props.setOrganizationId(1);
-    this.props.setRaffleId(1);
   }
 
   render() {

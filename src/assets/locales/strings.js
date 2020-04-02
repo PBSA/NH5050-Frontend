@@ -28,10 +28,29 @@ export default {
     },
   },
 
+  paymentInfo: {
+    title: 'Payment Info',
+    ticket: 'Ticket',
+    getsYou: 'Gets you',
+    text1: 'entries in the 5050 draw on',
+    and: 'And',
+    text2: 'entries in the Progressive Jackpot on',
+    back: 'Back',
+    buyNow: 'Buy Now',
+  },
+
   confirmationPage: {
     header: 'Thank You!',
     subtext1: 'We have proccessed your order and emailed you a digital ticket containing the information below. Please print this page for your records',
-    subtext2: 'Here are your ticket numbers for the New Hampshire Marine Corps League 50/50 Progressive Raffle -- Good luck!',
+    subtext2: 'Here are your ticket numbers for the',
+    goodluck: ' -- Good luck!',
+    jackpot: '5050 Jackpot',
+    progressivejackpot: 'Progressive Jackpot',
+    drawn: 'Drawn',
+    orderMore: 'Order More',
+    printThisPage: 'Print This Page',
+    growJackpot: 'Grow the Jackpot',
+    processing: 'Your payment is still being processed. You will receive an email with your digital ticket containing the ticket numbers when the payment is processed',
   },
 
   share: {

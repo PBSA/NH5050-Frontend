@@ -1,13 +1,13 @@
 import React, { Component, useCallback } from 'react';
 import {
-  TextField, Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, InputLabel, Select, MenuItem, Checkbox, Card, CardContent
+  TextField, Button, FormControl, FormControlLabel, FormGroup, CircularProgress, Radio, RadioGroup, InputLabel, Select, MenuItem, Checkbox, Card, CardContent
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
-import { RaffleService, OrganizationService } from '../../services';
+import { RaffleService, OrganizationService, UserService } from '../../services';
 import { ValidationUtil } from '../../utility';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import strings from '../../assets/locales/strings';
@@ -16,7 +16,7 @@ import ProgressBar from '../ProgressBar';
 class OrderInfo extends Component {
 
   state = {
-    ticketSelected: '1',
+    ticketSelected: '0',
     ticketBundles: [],
     detachmentSelected: '',
     detachments: [],
@@ -24,8 +24,9 @@ class OrderInfo extends Component {
     lastName: '',
     phoneNum: '',
     email: '',
+    playerId: 0,
     ageCheck: false,
-    ticketCheck: false,
+    ticketCheck: true,
     errorText: '',
   }
 
@@ -59,7 +60,7 @@ class OrderInfo extends Component {
 
   navigateToPayment = () => {
     this.setState({errorText: ''});
-    this.props.navigate(RouteConstants.PAYMENT_INFO);
+
     this.props.setOrderInfo({
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -67,9 +68,11 @@ class OrderInfo extends Component {
       email: this.state.email,
       ageCheck: this.state.ageCheck,
       emailCheck: this.state.ticketCheck,
+      playerId: this.state.playerId,
       bundle: this.state.ticketBundles[this.state.ticketSelected],
-      detachement: this.state.detachments[this.state.detachments]
+      detachement: this.state.detachments[this.state.detachmentSelected]
     });
+    this.props.navigate(RouteConstants.PAYMENT_INFO);
   }
 
   componentDidMount = () => {
@@ -81,17 +84,20 @@ class OrderInfo extends Component {
       this.setState({detachments: res});
     })
   }
-  
-  submitOrder = (event) => {
+
+  componentWillUnmount = () => {
+    this.setState({loading: false});
+  }
+
+  submitOrder = async(event) => {
     event.preventDefault();
     let errorText = '';
     const errors = strings.orderInfo.errors;
     const {firstName, lastName, phoneNum, email, ageCheck, ticketCheck, detachmentSelected} = this.state;
+    let player;
 
     if (firstName === '') {
       errorText = errors.noFirstName;
-    } else if (lastName === '') {
-      errorText = errors.noLastName;
     } else if (email === '') {
       errorText = errors.noEmail;
     } else if (!ValidationUtil.validateEmail(email)) {
@@ -102,112 +108,168 @@ class OrderInfo extends Component {
       errorText = errors.invalidPhone;
     } else if (!ageCheck) {
       errorText = errors.ageCheck
-    } else if (!ticketCheck) {
-      errorText = errors.ticketCheck;
     } else if (detachmentSelected === '') {
       errorText = errors.noDetachement;
     } else {
       errorText = ''
+
+      this.setState({loading: true});
+      try {
+        player = await UserService.getPlayer(email, phoneNum);
+      } catch (err) {
+        console.error(err);
+      }
+
+      if(player) {
+        player.is_email_allowed = ticketCheck;
+        delete player.organization_id;
+        this.setState({playerId: player.id});
+      } else {
+        player = {
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          mobile: phoneNum,
+          is_email_allowed: ticketCheck
+        }
+      }
+
+      try {
+        player = await UserService.createPlayer(player);
+        this.setState({playerId: player.id, loading: false});
+      } catch (err) {
+        console.error(err);
+        
+        if(err.hasOwnProperty('data')) {
+          if(err.status === 400) {
+            let errText = '';
+            Object.keys(err.data.error).map((key)=>{
+              errText += key + ': ' + err.data.error[key]
+            });
+            this.setState({
+              errorText: errText,
+              loading: false
+            });
+          } else {
+            this.setState({
+              errorText: err.data.error,
+              loading: false
+            });
+          }
+        } else {
+          this.setState({
+            errorText: err.message,
+            loading: false
+          });
+        }
+
+        return;
+      }
       this.navigateToPayment();
     }
 
-    this.setState({errorText: errorText});
+    this.setState({errorText: errorText, loading: false});
   }
 
   render() {
     const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, ticketCheck, errorText} = this.state;
 
     return (
-      <Card className="order" variant="outlined">
-        <CardContent>
-          <ProgressBar activeStep={0}/>
-          <form className="order-form" onSubmit={this.submitOrder}>
-            {errorText !== '' ? <Alert severity="error">{errorText}</Alert> : null}
-            <div className="order-wrapper">
-              <div className="order-info">
-                <div className="order-headers-wrapper">
-                  <span className="order-headers">{strings.orderInfo.infoHeader}</span>
-                </div>
-                <TextField
-                  className="order-info-input"
-                  label={strings.orderInfo.firstNameLabel}
-                  variant="outlined"
-                  value={firstName}
-                  onChange={this.handleFirstnameChange}
-                />
-                <TextField
-                  className="order-info-input"
-                  label={strings.orderInfo.lastNameLabel}
-                  variant="outlined"
-                  value={lastName}
-                  onChange={this.handleLastnameChange}
-                />
-                <TextField
-                  className="order-info-input"
-                  label={strings.orderInfo.emailLabel}
-                  variant="outlined"
-                  value={email}
-                  onChange={(event) => this.setState({email: event.target.value})}
-                />
-                <TextField
-                  className="order-info-input"
-                  label={strings.orderInfo.phoneLabel}
-                  variant="outlined"
-                  type="tel"
-                  value={phoneNum}
-                  onChange={(event) => this.setState({phoneNum: event.target.value})}
-                />
-                <div className="order-headers-wrapper">
-                  <FormControl component="fieldset">
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox checked={ageCheck} name="ageCheck" onChange={this.handleCheckboxAgeChange}/>}
-                        label={strings.orderInfo.ageCheckLabel}
-                      />
-                      <FormControlLabel
-                        control={<Checkbox checked={ticketCheck} name="ticketCheck" onChange={this.handleCheckboxTicketChange}/>}
-                        label={strings.orderInfo.emailCheckLabel}
+      <div>
+        <Card className="order" variant="outlined">
+          <CardContent>
+            <ProgressBar activeStep={0}/>
+            <form className="order-form" onSubmit={this.submitOrder}>
+              {errorText !== '' ? <Alert severity="error">{errorText}</Alert> : null}
+              <div className="order-wrapper">
+                <div className="order-info">
+                  <div className="order-headers-wrapper">
+                    <span className="order-headers">{strings.orderInfo.infoHeader}</span>
+                  </div>
+                  <TextField
+                    className="order-info-input"
+                    label={strings.orderInfo.firstNameLabel}
+                    variant="outlined"
+                    value={firstName}
+                    onChange={this.handleFirstnameChange}
+                  />
+                  <TextField
+                    className="order-info-input"
+                    label={strings.orderInfo.lastNameLabel}
+                    variant="outlined"
+                    value={lastName}
+                    onChange={this.handleLastnameChange}
+                  />
+                  <TextField
+                    className="order-info-input"
+                    label={strings.orderInfo.emailLabel}
+                    variant="outlined"
+                    value={email}
+                    onChange={(event) => this.setState({email: event.target.value})}
+                  />
+                  <TextField
+                    className="order-info-input"
+                    label={strings.orderInfo.phoneLabel}
+                    variant="outlined"
+                    type="tel"
+                    value={phoneNum}
+                    onChange={(event) => this.setState({phoneNum: event.target.value})}
+                  />
+                  <div className="order-headers-wrapper">
+                    <FormControl component="fieldset">
+                      <FormGroup>
+                        <FormControlLabel
+                          control={<Checkbox checked={ageCheck} name="ageCheck" onChange={this.handleCheckboxAgeChange}/>}
+                          label={strings.orderInfo.ageCheckLabel}
                         />
-                    </FormGroup>
-                  </FormControl>
+                        <FormControlLabel
+                          control={<Checkbox checked={ticketCheck} name="ticketCheck" onChange={this.handleCheckboxTicketChange}/>}
+                          label={strings.orderInfo.emailCheckLabel}
+                          />
+                      </FormGroup>
+                    </FormControl>
+                  </div>
                 </div>
-              </div>
 
-              <div className="order-tickets">
-                <span className="order-headers">{strings.orderInfo.ticketsHeader}</span>
-                <span className="order-tickets-subtext">{strings.orderInfo.ticketsSubtext}</span>
-                <FormControl component="fieldset">
-                  <RadioGroup aria-label="Ticket Bundle" name="ticket-bundle" value={ticketSelected} onChange={this.handleTicketBundleChange}>
-                    {ticketBundles.map((ticket, index) => {
-                      return <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={`${ticket.quantity} entry for ${ticket.price}$`} />
-                    })}
-                  </RadioGroup>
-                </FormControl>
-
-                <div className="order-tickets-wrapper">
-                  <span className="order-tickets-subtext">{strings.orderInfo.ticketDetachmentSubtext}</span>
-                  <FormControl className="order-tickets-detachement" variant="outlined">
-                  <InputLabel id="detachement-select">{strings.orderInfo.detachmentSelectLabel}</InputLabel>
-                    <Select
-                      id="detachement-select"
-                      value={detachmentSelected}
-                      onChange={this.handleDetachementChange}
-                      label={'Select A Detachement'}
-                    >
-                      {detachments.map((detachement, index) => {
-                        return <MenuItem key={index} value={index}>{detachement.user.name}</MenuItem>
+                <div className="order-tickets">
+                  <span className="order-headers">{strings.orderInfo.ticketsHeader}</span>
+                  <span className="order-tickets-subtext">{strings.orderInfo.ticketsSubtext}</span>
+                  <FormControl component="fieldset">
+                    <RadioGroup aria-label="Ticket Bundle" name="ticket-bundle" value={ticketSelected} onChange={this.handleTicketBundleChange}>
+                      {ticketBundles.map((ticket, index) => {
+                        return <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={`${ticket.quantity} entry for ${ticket.price}$`} />
                       })}
-                    </Select>
+                    </RadioGroup>
                   </FormControl>
+
+                  <div className="order-tickets-wrapper">
+                    <span className="order-tickets-subtext">{strings.orderInfo.ticketDetachmentSubtext}</span>
+                    <FormControl className="order-tickets-detachement" variant="outlined">
+                    <InputLabel id="detachement-select">{strings.orderInfo.detachmentSelectLabel}</InputLabel>
+                      <Select
+                        id="detachement-select"
+                        value={detachmentSelected}
+                        onChange={this.handleDetachementChange}
+                        label={'Select A Detachement'}
+                      >
+                        {detachments.map((detachement, index) => {
+                          return <MenuItem key={index} value={index}>{detachement.user.name}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="order-button-wrapper">
-              <Button className="order-button" type="submit" endIcon={<ArrowRightAltIcon />}>Continue</Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+              <div className="order-button-wrapper">
+                <Button className="order-button" type="submit" endIcon={<ArrowRightAltIcon />}>Continue</Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+        {this.state.loading && <div className='order-backdrop'>
+          <CircularProgress color="secondary" />
+        </div>}
+      </div>
     );
   }
 }
