@@ -5,10 +5,14 @@
   flex-direction: column;
   margin: 2%;
 
+  &-form {
+    padding: 1% 10%;
+  }
+
   &-wrapper {
     display: flex;
-    padding: 100px 200px;
-    justify-content: space-around;
+    margin-top: 1%;
+    justify-content: space-between;
   }
 
   &-info {
@@ -31,6 +35,8 @@
 
     &-wrapper {
       margin-top: 20px;
+      display: flex;
+      flex-direction: column;
     }
 
     &-subtext {
@@ -76,10 +82,14 @@
     }
   }
 
-  @media only screen and (max-width: 1038px) {
+  @media only screen and (max-width: 1000px) {
+    &-form {
+      padding: 1% 1%;
+    }
+    
     &-wrapper {
       flex-direction: column;
-      padding: 20px 20px;
+      margin-top: 1%;
     }
 
     &-info {
