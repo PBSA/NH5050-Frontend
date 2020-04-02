@@ -41,6 +41,11 @@ class StorageUtil {
   static remove(key) {
     return ls.removeItem(key);
   }
+
+  // clear local storage
+  static clear() {
+    return ls.clear();
+  }
 }
 
 export default StorageUtil;

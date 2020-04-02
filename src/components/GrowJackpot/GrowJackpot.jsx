@@ -3,6 +3,7 @@ import { Button, TextField, Tooltip, Card, CardContent } from '@material-ui/core
 import { Facebook as FacebookIcon, Twitter as TwitterIcon, LinkedIn as LinkedInIcon, Reddit as RedditIcon, WhatsApp as WhatsAppIcon, Mail as MailIcon} from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { StorageUtil } from '../../utility';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { NavigateActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
@@ -28,10 +29,13 @@ class GrowJackpot extends Component {
   handleTooltipClose = () => {
     this.setState({ showTooltip: false });
   };
+
+  componentDidMount() {
+    StorageUtil.clear();
+  }
   
   render() {
     const { shareLink } = this.state;
-    console.log(this.props);
     return (
       <Card className="grow-card" variant="outlined">
         <CardContent>
