@@ -3,7 +3,9 @@ import ActionTypes from '../actions/ActionTypes';
 import { StorageUtil } from '../../utility';
 
 const initialState = fromJS({
+  organization: [],
   organizationId: StorageUtil.get('organization_id') ? StorageUtil.get('organization_id') : '',
+  raffle: [],
   raffleId: StorageUtil.get('raffle_id') ? StorageUtil.get('raffle_id') : '',
   firstName: '',
   lastName: '',
@@ -17,9 +19,21 @@ const initialState = fromJS({
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.SET_ORGANIZATION: {
+      return state.merge({
+        organization: action.organization,
+      });
+    }
+
     case ActionTypes.SET_ORGANIZATION_ID: {
       return state.merge({
         organizationId: action.organizationId,
+      });
+    }
+
+    case ActionTypes.SET_RAFFLE: {
+      return state.merge({
+        raffle: action.raffle,
       });
     }
 

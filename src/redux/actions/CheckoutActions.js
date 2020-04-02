@@ -14,6 +14,17 @@ class CheckoutActions {
    * @returns {Action}
    * @memberof CheckoutActions
    */
+  static setOrganization(organization) {
+    return { type: ActionTypes.SET_ORGANIZATION, organization };
+  }
+
+  /**
+   * Toggles the display of the modal component.
+   *
+   * @static
+   * @returns {Action}
+   * @memberof CheckoutActions
+   */
   static setOrganizationId(organizationId) {
     StorageUtil.set('organization_id', organizationId);
     return { type: ActionTypes.SET_ORGANIZATION_ID, organizationId };
@@ -29,6 +40,17 @@ class CheckoutActions {
   static setRaffleId(raffleId) {
     StorageUtil.set('raffle_id', raffleId);
     return { type: ActionTypes.SET_RAFFLE_ID, raffleId };
+  }
+
+  /**
+   * Toggles the display of the modal component.
+   *
+   * @static
+   * @returns {Action}
+   * @memberof CheckoutActions
+   */
+  static setRaffle(raffle) {
+    return { type: ActionTypes.SET_RAFFLE, raffle };
   }
 
   /**
