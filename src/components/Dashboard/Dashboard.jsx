@@ -8,43 +8,25 @@ import { RouteConstants } from '../../constants';
 import strings from '../../assets/locales/strings';
 import { OrganizationService, RaffleService } from '../../services';
 
-const organizationId = 1;
 class Dashboard extends Component {
   state = {
-    organizationInfo: {},
-    draw: {},
     loaded: false,
-    error: {
-      organization: null,
-      raffle: null,
-    }
   }
 
   navgiateToOrderInfo = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
   }
 
-  sortDraws = (draws) => {
-    const sortedDraws = draws.filter((draw) => {
-      return (new Date(draw.draw_datetime) > new Date(Date.now()) && draw.draw_type === "5050");
-    });
-
-    if(sortedDraws[0].draw_type === "5050") {
-      this.setState({draw: sortedDraws[0]});
-      this.props.setRaffleId(sortedDraws[0].id);
-    }
-  }
-
   displayImage = () => {
-    const {draw, loaded} = this.state;
-
-    if(!loaded) {
-      return <CircularProgress color="secondary"/>;
-    } else if (draw.image_url) {
-      return <img className="dashboard-panel-img" src={draw.image_url} alt=""/>;
+    if(this.props.raffle.image_url) {
+      return <img className="dashboard-panel-img" src={this.props.raffle.image_url} alt=""/>;
+      
     } else {
-      return <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />;
+      return <CircularProgress color="secondary"/>;
     }
+      // else {
+      //   return <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />;
+      // }
   }
 
   formatDate = (drawDate) => {
@@ -54,7 +36,7 @@ class Dashboard extends Component {
     const twelveHourOptions = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric'};
     const twentyFourHourOptions = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 
-    if(this.state.organizationInfo.time_format === '24h') {
+    if(this.props.organization.time_format === '24h') {
       formattedDate = date.toLocaleDateString('en-ZA', twentyFourHourOptions);
     } else {
       formattedDate = date.toLocaleDateString('en-US', twelveHourOptions);
@@ -63,44 +45,15 @@ class Dashboard extends Component {
     return formattedDate;
   }
 
-  componentDidMount() {
-    //get organization data
-    OrganizationService.getOrganizationInfo(organizationId).then((res) => {
-      this.setState({organizationInfo: res, loaded: true});
-    }).catch((err) => {
-      this.setState({
-        loaded: true,
-        error: {
-          ...this.state.errors,
-          organization: err
-        }
-      })
-    });
-    //get current raffle data
-    RaffleService.getRaffle(organizationId).then((res) => {
-      this.sortDraws(res);
-    }).catch((err) => {
-      this.setState({
-        loaded: true,
-        error: {
-          ...this.state.errors,
-          raffle: err
-        }
-      })
-    });
-
-    this.props.setOrganizationId(1);
-  }
-
   render() {
-    const {draw} = this.state;
+    const {raffle} = this.props;
 
     return (
       <div className="dashboard">
         <div className="dashboard-panel">
           {this.displayImage()}
           <p className="dashboard-panel-text">
-            {draw.raffle_description}
+            {raffle.raffle_description}
           </p>
         </div>
 
@@ -108,11 +61,11 @@ class Dashboard extends Component {
           <Card>
             <CardContent className="dashboard-buy-container">
               <span className="dashboard-buy-header">Next Draw</span>
-              <span className="dashboard-buy-content-sm">{this.formatDate(draw.draw_datetime)}</span>
+              <span className="dashboard-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
               <span className="dashboard-buy-header">Next 5050 jackpot</span>
-              <span className="dashboard-buy-content">${draw.total_jackpot}</span>
+              <span className="dashboard-buy-content">${raffle.total_jackpot}</span>
               <span className="dashboard-buy-header">Progressive Jackpot</span>
-              <span className="dashboard-buy-content">${draw.total_progressive_jackpot}</span>
+              <span className="dashboard-buy-content">${raffle.total_progressive_jackpot}</span>
               <Button className="dashboard-buy-button" variant="outlined" size="medium" onClick={this.navgiateToOrderInfo}>
                 Buy Now
               </Button>
@@ -124,13 +77,18 @@ class Dashboard extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    organization: state.getIn(['checkout', 'organization']),
+    raffle: state.getIn(['checkout', 'raffle'])
+  };
+};
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
-    setOrganizationId: CheckoutActions.setOrganizationId,
-    setRaffleId: CheckoutActions.setRaffleId,
   },
   dispatch,
 );
 
-export default connect(null, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
