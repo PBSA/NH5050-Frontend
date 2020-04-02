@@ -61,7 +61,7 @@
 
     &-button {
       font-size: 1.2rem;
-      width: 70%;
+      width: 95%;
       height: 40px;
       color: white;
       background-color: $primary-app-color;
@@ -72,7 +72,7 @@
     }
   }
 
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 867px) {
     flex-direction: column;
     padding: 20px;
 
