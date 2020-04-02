@@ -2,18 +2,24 @@ import React, { Component } from 'react';
 import { AppBar, Toolbar } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Facebook as FacebookIcon, Twitter as TwitterIcon, LinkedIn as LinkedInIcon, Reddit as RedditIcon, WhatsApp as WhatsAppIcon, Mail as MailIcon } from '@material-ui/icons';
+import { FacebookShareButton, FacebookIcon, 
+  TwitterShareButton, TwitterIcon,
+  LinkedinShareButton, LinkedinIcon,
+  RedditShareButton, RedditIcon,
+  WhatsappShareButton, WhatsappIcon,
+  EmailShareButton, EmailIcon } from 'react-share';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService } from '../../services';
-import marineCorpsLogo from '../../assets/images';
+import { Config } from '../../utility';
 
 const organizationId = 1;
 class Header extends Component {
   
   state = {
     loaded: false,
-    errors: {}
+    errors: {},
+    shareLink: `${Config.baseRoute}/dashboard`
   };
 
   navgiateToOrderInfo = () => {
@@ -62,6 +68,7 @@ class Header extends Component {
 
   render() {
     const {organization, raffle} = this.props;
+    const {shareLink} = this.state;
     return (
       <AppBar className="header" position="static">
         <Toolbar className="header-wrapper">
@@ -74,12 +81,24 @@ class Header extends Component {
           </div>
           <div className="header-socials">
             <span className="header-socials-text">SHARE</span>
-            <FacebookIcon className="header-socials-fb" fontSize="large" />
-            <TwitterIcon className="header-socials-twitter" fontSize="large" />
-            <LinkedInIcon className="header-socials-linkedin" fontSize="large" />
-            <RedditIcon className="header-socials-reddit" fontSize="large" />
-            <WhatsAppIcon className="header-socials-whatsapp" fontSize="large" />
-            <MailIcon className="header-socials-mail" fontSize="large" />
+            <FacebookShareButton url={shareLink}>
+              <FacebookIcon size={32} borderRadius={5}/>
+            </FacebookShareButton>
+            <TwitterShareButton url={shareLink}>
+              <TwitterIcon size={32} borderRadius={5}/>
+            </TwitterShareButton>
+            <LinkedinShareButton url={shareLink}>
+              <LinkedinIcon size={32} borderRadius={5}/>
+            </LinkedinShareButton>
+            <RedditShareButton url={shareLink}>
+              <RedditIcon size={32} borderRadius={5}/>
+            </RedditShareButton>
+            <WhatsappShareButton url={shareLink}>
+              <WhatsappIcon size={32} borderRadius={5}/>
+            </WhatsappShareButton>
+            <EmailShareButton url={shareLink}>
+              <EmailIcon size={32} borderRadius={5}/>
+            </EmailShareButton>
           </div>
         </Toolbar>
       </AppBar>

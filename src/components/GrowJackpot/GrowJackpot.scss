@@ -50,7 +50,8 @@
       cursor: pointer;
       font-size: 4em;
       color: white;
-      background-color: $facebook-icon
+      background-color: $facebook-icon;
+      align-items: center;
     }
 
     &-twitter {
