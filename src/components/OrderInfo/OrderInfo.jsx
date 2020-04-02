@@ -18,8 +18,8 @@ class OrderInfo extends Component {
   state = {
     ticketSelected: '1',
     ticketBundles: [],
-    detachementSelected: '',
-    detachements: [],
+    detachmentSelected: '',
+    detachments: [],
     firstName: '',
     lastName: '',
     phoneNum: '',
@@ -46,7 +46,7 @@ class OrderInfo extends Component {
 
   handleDetachementChange = (event) => {
     const ticket = event.target.value;
-    this.setState({detachementSelected: ticket});
+    this.setState({detachmentSelected: ticket});
   }
 
   handleCheckboxAgeChange = () => {
@@ -68,7 +68,7 @@ class OrderInfo extends Component {
       ageCheck: this.state.ageCheck,
       emailCheck: this.state.ticketCheck,
       bundle: this.state.ticketBundles[this.state.ticketSelected],
-      detachement: this.state.detachements[this.state.ticketSelected]
+      detachement: this.state.detachments[this.state.detachments]
     });
   }
 
@@ -78,7 +78,7 @@ class OrderInfo extends Component {
     });
 
     OrganizationService.getBeneficiaries(this.props.organizationId).then((res) => {
-      this.setState({detachements: res});
+      this.setState({detachments: res});
     })
   }
   
@@ -86,7 +86,7 @@ class OrderInfo extends Component {
     event.preventDefault();
     let errorText = '';
     const errors = strings.orderInfo.errors;
-    const {firstName, lastName, phoneNum, email, ageCheck, ticketCheck, detachementSelected} = this.state;
+    const {firstName, lastName, phoneNum, email, ageCheck, ticketCheck, detachmentSelected} = this.state;
 
     if (firstName === '') {
       errorText = errors.noFirstName;
@@ -104,7 +104,7 @@ class OrderInfo extends Component {
       errorText = errors.ageCheck
     } else if (!ticketCheck) {
       errorText = errors.ticketCheck;
-    } else if (detachementSelected === '') {
+    } else if (detachmentSelected === '') {
       errorText = errors.noDetachement;
     } else {
       errorText = ''
@@ -115,8 +115,8 @@ class OrderInfo extends Component {
   }
 
   render() {
-    const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachementSelected, detachements, ageCheck, ticketCheck, errorText} = this.state;
-    console.log('state:', this.state);
+    const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, ticketCheck, errorText} = this.state;
+
     return (
       <Card className="order" variant="outlined">
         <CardContent>
@@ -130,28 +130,28 @@ class OrderInfo extends Component {
                 </div>
                 <TextField
                   className="order-info-input"
-                  label="First Name"
+                  label={strings.orderInfo.firstNameLabel}
                   variant="outlined"
                   value={firstName}
                   onChange={this.handleFirstnameChange}
                 />
                 <TextField
                   className="order-info-input"
-                  label="Last Name"
+                  label={strings.orderInfo.lastNameLabel}
                   variant="outlined"
                   value={lastName}
                   onChange={this.handleLastnameChange}
                 />
                 <TextField
                   className="order-info-input"
-                  label="Email Address"
+                  label={strings.orderInfo.emailLabel}
                   variant="outlined"
                   value={email}
                   onChange={(event) => this.setState({email: event.target.value})}
                 />
                 <TextField
                   className="order-info-input"
-                  label="Mobile Phone"
+                  label={strings.orderInfo.phoneLabel}
                   variant="outlined"
                   type="tel"
                   value={phoneNum}
@@ -162,11 +162,11 @@ class OrderInfo extends Component {
                     <FormGroup>
                       <FormControlLabel
                         control={<Checkbox checked={ageCheck} name="ageCheck" onChange={this.handleCheckboxAgeChange}/>}
-                        label="I'm over the age of 16."
+                        label={strings.orderInfo.ageCheckLabel}
                       />
                       <FormControlLabel
                         control={<Checkbox checked={ticketCheck} name="ticketCheck" onChange={this.handleCheckboxTicketChange}/>}
-                        label="Send my ticket numbers via email."
+                        label={strings.orderInfo.emailCheckLabel}
                         />
                     </FormGroup>
                   </FormControl>
@@ -185,16 +185,16 @@ class OrderInfo extends Component {
                 </FormControl>
 
                 <div className="order-tickets-wrapper">
-                  <span className="order-tickets-subtext">{strings.orderInfo.ticketDetachementSubtext}</span>
+                  <span className="order-tickets-subtext">{strings.orderInfo.ticketDetachmentSubtext}</span>
                   <FormControl className="order-tickets-detachement" variant="outlined">
-                    <InputLabel id="detachement-select">Select a detachement</InputLabel>
+                  <InputLabel id="detachement-select">{strings.orderInfo.detachmentSelectLabel}</InputLabel>
                     <Select
                       id="detachement-select"
-                      value={detachementSelected}
+                      value={detachmentSelected}
                       onChange={this.handleDetachementChange}
                       label={'Select A Detachement'}
                     >
-                      {detachements.map((detachement, index) => {
+                      {detachments.map((detachement, index) => {
                         return <MenuItem key={index} value={index}>{detachement.user.name}</MenuItem>
                       })}
                     </Select>

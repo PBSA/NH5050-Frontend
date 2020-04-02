@@ -12,8 +12,7 @@ const organizationId = 1;
 class Dashboard extends Component {
   state = {
     organizationInfo: {},
-    fiftyfiftyDraw: {},
-    progressiveDraw: {},
+    draw: {},
     loaded: false,
     error: {
       organization: null,
@@ -27,25 +26,21 @@ class Dashboard extends Component {
 
   sortDraws = (draws) => {
     const sortedDraws = draws.filter((draw) => {
-      return new Date(draw.draw_datetime) > new Date(Date.now());
+      return (new Date(draw.draw_datetime) > new Date(Date.now()) && draw.draw_type === "5050");
     });
 
     if(sortedDraws[0].draw_type === "5050") {
-      this.setState({fiftyfiftyDraw: sortedDraws[0]});
-      this.setState({progressiveDraw: sortedDraws[1]});
-    } else {
-      this.setState({fiftyfiftyDraw: sortedDraws[1]});
-      this.setState({progressiveDraw: sortedDraws[0]});
+      this.setState({draw: sortedDraws[0]});
     }
   }
 
   displayImage = () => {
-    const {fiftyfiftyDraw, loaded} = this.state;
+    const {draw, loaded} = this.state;
 
     if(!loaded) {
       return <CircularProgress color="secondary"/>;
-    } else if (fiftyfiftyDraw.image_url) {
-      return <img className="dashboard-panel-img" src={fiftyfiftyDraw.image_url} alt=""/>;
+    } else if (draw.image_url) {
+      return <img className="dashboard-panel-img" src={draw.image_url} alt=""/>;
     } else {
       return <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />;
     }
@@ -98,14 +93,14 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {fiftyfiftyDraw, progressiveDraw} = this.state;
-    console.log('state: ',this.state);
+    const {draw} = this.state;
+
     return (
       <div className="dashboard">
         <div className="dashboard-panel">
           {this.displayImage()}
           <p className="dashboard-panel-text">
-            {fiftyfiftyDraw.raffle_description}
+            {draw.raffle_description}
           </p>
         </div>
 
@@ -113,11 +108,11 @@ class Dashboard extends Component {
           <Card>
             <CardContent className="dashboard-buy-container">
               <span className="dashboard-buy-header">Next Draw</span>
-              <span className="dashboard-buy-content-sm">{this.formatDate(fiftyfiftyDraw.draw_datetime)}</span>
+              <span className="dashboard-buy-content-sm">{this.formatDate(draw.draw_datetime)}</span>
               <span className="dashboard-buy-header">Next 5050 jackpot</span>
-              <span className="dashboard-buy-content">${fiftyfiftyDraw.total_jackpot}</span>
+              <span className="dashboard-buy-content">${draw.total_jackpot}</span>
               <span className="dashboard-buy-header">Progressive Jackpot</span>
-              <span className="dashboard-buy-content">${progressiveDraw.total_progressive_jackpot}</span>
+              <span className="dashboard-buy-content">${draw.total_progressive_jackpot}</span>
               <Button className="dashboard-buy-button" variant="outlined" size="medium" onClick={this.navgiateToOrderInfo}>
                 Buy Now
               </Button>
