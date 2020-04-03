@@ -13,7 +13,7 @@ const initialState = fromJS({
   phone: orderInfo ? orderInfo.phone : '',
   email: orderInfo ? orderInfo.email : '',
   ageCheck: orderInfo ? orderInfo.ageCheck : false,
-  emailCheck: orderInfo ? orderInfo.emailCheck : false,
+  emailCheck: orderInfo ? orderInfo.emailCheck : true,
   bundleVal: orderInfo ? orderInfo.bundleVal : '0',
   detachementVal: orderInfo ? orderInfo.detachementVal : '',
   playerId: 0,
