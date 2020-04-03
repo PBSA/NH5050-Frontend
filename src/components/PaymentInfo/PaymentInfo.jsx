@@ -12,6 +12,7 @@ import { RaffleService } from '../../services';
 import strings from '../../assets/locales/strings';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
+import { StorageUtil } from '../../utility';
 import moment from 'moment';
 
 const stripePromise = loadStripe('pk_test_eXMu4Pj53sjl7Ff2pj3xYPh8');

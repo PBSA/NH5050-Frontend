@@ -9,7 +9,6 @@ import AdminLogin from '../components/AdminLogin';
 import AdminDashboard from '../components/AdminDashboard';
 import { RouteConstants as Routes } from '../constants';
 
-console.log('rendering routes');
 const routes = (
   <>
     <Switch>
