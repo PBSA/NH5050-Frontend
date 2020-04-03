@@ -8,10 +8,6 @@ import GrowJackpot from '../GrowJackpot';
 import { RouteConstants } from '../../constants';
 
 class CheckoutContainer extends Component {
-  state = {
-    loaded: false,
-  }
-
   renderCheckoutPage = () => {
     switch(this.props.route) {
       case RouteConstants.DASHBOARD:

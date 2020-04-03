@@ -1,10 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
-import OrderInfo from '../components/OrderInfo';
-import PaymentInfo from '../components/PaymentInfo';
-import ConfirmationPage from '../components/ConfirmationPage';
-import GrowJackpot from '../components/GrowJackpot';
 import AdminLogin from '../components/AdminLogin';
 import AdminDashboard from '../components/AdminDashboard';
 import CheckoutContainer from '../components/CheckoutContainer';
