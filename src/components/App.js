@@ -7,7 +7,7 @@ import { StylesProvider } from '@material-ui/core/styles';
 import Header from './Header';
 import routes from '../routes';
 import { RouteConstants } from '../constants';
-import { NavigateActions } from '../redux/actions';
+import { NavigateActions, CheckoutActions } from '../redux/actions';
 import '../assets/styles/common.scss';
 
 class App extends Component {
@@ -21,7 +21,11 @@ class App extends Component {
       return false;
     };
 
-    if (!isKnownPath() || this.props.path === RouteConstants.ROOT) {
+    if (this.props.path === RouteConstants.DASHBOARD) {
+      this.props.setRoute(RouteConstants.DASHBOARD);
+    } else if (this.props.path !== this.props.checkoutRoute && !this.props.path.includes('/admin')) {
+      this.props.navigate(this.props.checkoutRoute);
+    } else if (!isKnownPath() || this.props.path === RouteConstants.ROOT) {
       // Change the browser navigation to root.
       this.props.navigate(RouteConstants.DASHBOARD);
     }
@@ -41,11 +45,13 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   path: state.getIn(['router', 'location', 'pathname']),
+  checkoutRoute: state.getIn(['checkout', 'checkoutRoute']),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
+    setRoute: CheckoutActions.setCheckoutRoute,
   },
   dispatch,
 );

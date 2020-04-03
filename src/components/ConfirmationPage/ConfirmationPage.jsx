@@ -4,7 +4,7 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RaffleService } from '../../services';
-import { NavigateActions } from '../../redux/actions';
+import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 import { RouteConstants } from '../../constants';
 import ProgressBar from '../ProgressBar';
@@ -19,7 +19,7 @@ class ConfirmationPage extends Component {
   };
 
   componentDidMount() {
-    RaffleService.getRaffleById(this.props.ticketConfirmation.ticket_sales.raffle_id).then((raffle)=>{
+    RaffleService.getRaffleById(this.props.raffle_id).then((raffle)=>{
       this.setState({raffle});
       RaffleService.getRaffleById(raffle.progressive_draw_id).then((progressive)=>{
         this.setState({progressive});
@@ -46,10 +46,12 @@ class ConfirmationPage extends Component {
 
   navigateToOrder = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
+    this.props.setRoute(RouteConstants.ORDER_INFO)
   }
 
   navigateToShare = () => {
     this.props.navigate(RouteConstants.GROW_JACKPOT);
+    this.props.setRoute(RouteConstants.GROW_JACKPOT);
   }
 
   timeToDraw = (drawdate) => {
@@ -64,14 +66,8 @@ class ConfirmationPage extends Component {
   }
 
   render() {
-    let entries, ticket_sales, totalJackpot, totalProgressive;
+    const {entries, ticket_sales, totalJackpot, totalProgressive} = this.props;
     const {raffle, progressive, timeToDraw, timeToProgressiveDraw} = this.state;
-    if(this.props.ticketConfirmation !== 'Processing') {
-      entries = this.props.ticketConfirmation.entries;
-      ticket_sales = this.props.ticketConfirmation.ticket_sales;
-      totalJackpot = ticket_sales.total_jackpot;
-      totalProgressive = ticket_sales.total_progressive_jackpot;
-    }
     
     return (
       <Card className="confirmation-card" variant="outlined">
@@ -118,12 +114,18 @@ class ConfirmationPage extends Component {
 const mapStateToProps = (state) => {
   return {
     ticketConfirmation: state.getIn(['checkout','ticketPurchaseResponse']),
+    entries: state.getIn(['checkout','ticketPurchaseResponse','entries']),
+    ticket_sales: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales']),
+    raffle_id: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'raffle_id']),
+    totalJackpot: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'total_jackpot']),
+    totalProgressive: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'total_progressive_jackpot']),
   };
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
+    setRoute: CheckoutActions.setCheckoutRoute
   },
   dispatch,
 );

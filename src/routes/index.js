@@ -7,16 +7,17 @@ import ConfirmationPage from '../components/ConfirmationPage';
 import GrowJackpot from '../components/GrowJackpot';
 import AdminLogin from '../components/AdminLogin';
 import AdminDashboard from '../components/AdminDashboard';
+import CheckoutContainer from '../components/CheckoutContainer';
 import { RouteConstants as Routes } from '../constants';
 
 const routes = (
   <>
     <Switch>
       <Route path={Routes.DASHBOARD} component={Dashboard} />
-      <Route path={Routes.ORDER_INFO} component={OrderInfo} />
-      <Route path={Routes.PAYMENT_INFO} component={PaymentInfo} />
-      <Route path={Routes.CONFIRMATION_PAGE} component={ConfirmationPage} />
-      <Route path={Routes.GROW_JACKPOT} component={GrowJackpot} />
+      <Route path={Routes.ORDER_INFO} component={CheckoutContainer} />
+      <Route path={Routes.PAYMENT_INFO} component={CheckoutContainer} />
+      <Route path={Routes.CONFIRMATION_PAGE} component={CheckoutContainer} />
+      <Route path={Routes.GROW_JACKPOT} component={CheckoutContainer} />
       <Route path={Routes.ADMIN_LOGIN} component={AdminLogin} />
       <Route path={Routes.ADMIN} component={AdminDashboard} />
     </Switch>

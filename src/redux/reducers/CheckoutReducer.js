@@ -4,6 +4,7 @@ import { StorageUtil } from '../../utility';
 
 const orderInfo = JSON.parse(StorageUtil.get('orderInfo'));
 const initialState = fromJS({
+  checkoutRoute: StorageUtil.get('checkoutRoute') ? StorageUtil.get('checkoutRoute') : '/dashboard',
   organization: [],
   organizationId: StorageUtil.get('organization_id') ? StorageUtil.get('organization_id') : '',
   raffle: [],
@@ -19,7 +20,7 @@ const initialState = fromJS({
   playerId: 0,
   bundle: orderInfo ? orderInfo.bundle : '',
   detachement: orderInfo ? orderInfo.detachement : '',
-  ticketPurchaseResponse: StorageUtil.get('ticketPurchaseResponse') ? StorageUtil.get('ticketPurchaseResponse') : {
+  ticketPurchaseResponse: StorageUtil.get('ticketPurchaseResponse') ? JSON.parse(StorageUtil.get('ticketPurchaseResponse')) : {
     entries: [],
     ticket_sales: {
       id: 0,
@@ -75,6 +76,12 @@ export default (state = initialState, action) => {
     case ActionTypes.SET_TICKET_PURCHASE_RESPONSE: {
       return state.merge({
         ticketPurchaseResponse: action.ticketPurchaseResponse,
+      });
+    }
+
+    case ActionTypes.SET_CHECKOUT_ROUTE: {
+      return state.merge({
+        checkoutRoute: action.checkoutRoute,
       });
     }
 

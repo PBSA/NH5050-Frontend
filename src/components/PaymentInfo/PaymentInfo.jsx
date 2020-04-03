@@ -87,6 +87,7 @@ class PaymentInfo extends Component {
 
   navigateBack = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
+    this.props.setRoute(RouteConstants.ORDER_INFO);
   }
 
   navigateToConfirmation = async() => {
@@ -213,6 +214,7 @@ class PaymentInfo extends Component {
     this.setState({loading: false});
     this.props.setTicketPurchaseResponse(tickets);
     this.props.navigate(RouteConstants.CONFIRMATION_PAGE);
+    this.props.setRoute(RouteConstants.CONFIRMATION_PAGE);
   }
 
   render() {
@@ -266,6 +268,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
     setTicketPurchaseResponse: CheckoutActions.setTicketPurchaseResponse,
+    setRoute: CheckoutActions.setCheckoutRoute
   },
   dispatch,
 );

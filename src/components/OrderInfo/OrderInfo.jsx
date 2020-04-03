@@ -79,6 +79,7 @@ class OrderInfo extends Component {
       detachementVal: this.state.detachmentSelected
     });
     this.props.navigate(RouteConstants.PAYMENT_INFO);
+    this.props.setRoute(RouteConstants.PAYMENT_INFO);
   }
 
   componentDidMount = () => {
@@ -291,6 +292,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
     setOrderInfo: CheckoutActions.setOrderInfo,
+    setRoute: CheckoutActions.setCheckoutRoute
   },
   dispatch,
 );

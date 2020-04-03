@@ -24,6 +24,7 @@ class Header extends Component {
 
   navgiateToOrderInfo = () => {
     this.props.navigate(RouteConstants.DASHBOARD);
+    this.props.setRoute(RouteConstants.DASHBOARD);
   }
 
   componentDidMount = () => {
@@ -120,6 +121,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     setRaffle: CheckoutActions.setRaffle,
     setOrganizationId: CheckoutActions.setOrganizationId,
     setRaffleId: CheckoutActions.setRaffleId,
+    setRoute: CheckoutActions.setCheckoutRoute
   },
   dispatch,
 );
