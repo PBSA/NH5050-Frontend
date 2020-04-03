@@ -7,7 +7,6 @@ import ConfirmationPage from '../components/ConfirmationPage';
 import GrowJackpot from '../components/GrowJackpot';
 import { RouteConstants as Routes } from '../constants';
 
-console.log('rendering routes');
 const routes = (
   <>
     <Switch>

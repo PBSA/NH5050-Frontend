@@ -15,19 +15,24 @@ import ProgressBar from '../ProgressBar';
 
 class OrderInfo extends Component {
 
-  state = {
-    ticketSelected: '0',
-    ticketBundles: [],
-    detachmentSelected: '',
-    detachments: [],
-    firstName: '',
-    lastName: '',
-    phoneNum: '',
-    email: '',
-    playerId: 0,
-    ageCheck: false,
-    ticketCheck: true,
-    errorText: '',
+  constructor(props) {
+    super(props);
+    const checkout = this.props.checkout;
+
+    this.state = {
+      ticketSelected: checkout.get('bundleVal'),
+      ticketBundles: [],
+      detachmentSelected: checkout.get('detachementVal'),
+      detachments: [],
+      firstName: checkout.get('firstName'),
+      lastName: checkout.get('lastName'),
+      phoneNum: checkout.get('phone'),
+      email: checkout.get('email'),
+      playerId: 0,
+      ageCheck: checkout.get('ageCheck'),
+      emailCheck: checkout.get('emailCheck'),
+      errorText: '',
+    }
   }
 
   handleFirstnameChange = (event) => {
@@ -54,23 +59,24 @@ class OrderInfo extends Component {
     this.setState({ageCheck: !this.state.ageCheck});
   };
 
-  handleCheckboxTicketChange = () => {
-    this.setState({ticketCheck: !this.state.ticketCheck});
+  handleCheckboxEmailChange = () => {
+    this.setState({emailCheck: !this.state.emailCheck});
   };
 
   navigateToPayment = () => {
     this.setState({errorText: ''});
-
     this.props.setOrderInfo({
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       phone: this.state.phoneNum,
       email: this.state.email,
       ageCheck: this.state.ageCheck,
-      emailCheck: this.state.ticketCheck,
+      emailCheck: this.state.emailCheck,
       playerId: this.state.playerId,
       bundle: this.state.ticketBundles[this.state.ticketSelected],
-      detachement: this.state.detachments[this.state.detachmentSelected]
+      bundleVal: this.state.ticketSelected,
+      detachement: this.state.detachments[this.state.detachmentSelected],
+      detachementVal: this.state.detachmentSelected
     });
     this.props.navigate(RouteConstants.PAYMENT_INFO);
   }
@@ -93,7 +99,7 @@ class OrderInfo extends Component {
     event.preventDefault();
     let errorText = '';
     const errors = strings.orderInfo.errors;
-    const {firstName, lastName, phoneNum, email, ageCheck, ticketCheck, detachmentSelected} = this.state;
+    const {firstName, lastName, phoneNum, email, ageCheck, emailCheck, detachmentSelected} = this.state;
     let player;
 
     if (firstName === '') {
@@ -121,7 +127,7 @@ class OrderInfo extends Component {
       }
 
       if(player) {
-        player.is_email_allowed = ticketCheck;
+        player.is_email_allowed = emailCheck;
         delete player.organization_id;
         this.setState({playerId: player.id});
       } else {
@@ -130,7 +136,7 @@ class OrderInfo extends Component {
           lastname: lastName,
           email: email,
           mobile: phoneNum,
-          is_email_allowed: ticketCheck
+          is_email_allowed: emailCheck
         }
       }
 
@@ -172,8 +178,7 @@ class OrderInfo extends Component {
   }
 
   render() {
-    const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, ticketCheck, errorText} = this.state;
-
+    const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText} = this.state;
     return (
       <div>
         <Card className="order" variant="outlined">
@@ -223,7 +228,7 @@ class OrderInfo extends Component {
                           label={strings.orderInfo.ageCheckLabel}
                         />
                         <FormControlLabel
-                          control={<Checkbox checked={ticketCheck} name="ticketCheck" onChange={this.handleCheckboxTicketChange}/>}
+                          control={<Checkbox checked={emailCheck} name="emailCheck" onChange={this.handleCheckboxEmailChange}/>}
                           label={strings.orderInfo.emailCheckLabel}
                           />
                       </FormGroup>

@@ -61,6 +61,7 @@ class CheckoutActions {
    * @memberof CheckoutActions
    */
   static setOrderInfo(orderInfo) {
+    StorageUtil.set('orderInfo', JSON.stringify(orderInfo));
     return { type: ActionTypes.SET_ORDER_INFO, orderInfo };
   }
 
