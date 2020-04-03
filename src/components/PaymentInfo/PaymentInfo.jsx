@@ -34,7 +34,7 @@ class PaymentInfo extends Component {
         this.setState({progressive});
       });
     });
-    RaffleService.createPayment(this.props.bundle.id).then((res) => {
+    RaffleService.createPayment(this.props.bundleId).then((res) => {
       this.setState({
         paymentId: res.paymentId,
         clientSecret: res.clientSecret,
@@ -99,9 +99,9 @@ class PaymentInfo extends Component {
         this.setState({loading: true});
         tickets = await RaffleService.ticketPurchase({
           raffle_id: this.props.raffleId,
-          ticketbundle_id: this.props.bundle.id,
-          total_price: this.props.bundle.price,
-          beneficiary_id: this.props.beneficiary.id,
+          ticketbundle_id: this.props.bundleId,
+          total_price: this.props.bundlePrice,
+          beneficiary_id: this.props.beneficiaryId,
           player_id: this.props.playerId,
           payment_type: 'cash',
           seller_password: sellerPassword
@@ -135,9 +135,9 @@ class PaymentInfo extends Component {
           this.setState({loading: true});
           await RaffleService.initStripePayment({
             raffle_id: this.props.raffleId,
-            ticketbundle_id: this.props.bundle.id,
-            total_price: this.props.bundle.price,
-            beneficiary_id: this.props.beneficiary.id,
+            ticketbundle_id: this.props.bundleId,
+            total_price: this.props.bundlePrice,
+            beneficiary_id: this.props.beneficiaryId,
             player_id: this.props.playerId,
             payment_type: 'stripe',
             stripe_payment_id: this.state.paymentId
@@ -164,9 +164,9 @@ class PaymentInfo extends Component {
             if (result.paymentIntent.status === 'succeeded') {
               tickets = await RaffleService.ticketPurchase({
                 raffle_id: this.props.raffleId,
-                ticketbundle_id: this.props.bundle.id,
-                total_price: this.props.bundle.price,
-                beneficiary_id: this.props.beneficiary.id,
+                ticketbundle_id: this.props.bundleId,
+                total_price: this.props.bundlePrice,
+                beneficiary_id: this.props.beneficiaryId,
                 player_id: this.props.playerId,
                 payment_type: 'stripe',
                 stripe_payment_id: this.state.paymentId
@@ -236,7 +236,7 @@ class PaymentInfo extends Component {
                 </Elements>
               </div>
               <div className="payment-ticket">
-                <p className="payment-ticket-header">${this.props.bundle.price} {strings.paymentInfo.ticket}</p>
+                <p className="payment-ticket-header">${this.props.bundlePrice} {strings.paymentInfo.ticket}</p>
                 <span className="payment-ticket-subtext">{strings.paymentInfo.getsYou} {this.props.bundle.quantity} {strings.paymentInfo.text1} {moment(this.state.raffle.draw_datetime).format('MMMM D, YYYY')}. {strings.paymentInfo.and} {this.props.bundle.quantity} {strings.paymentInfo.text2} {moment(this.state.progressive.draw_datetime).format('MMMM D, YYYY')}.</span>
               </div>
             </div>
@@ -259,7 +259,9 @@ const mapStateToProps = (state) => {
   return {
     raffleId: state.getIn(['checkout','raffleId']),
     bundle: state.getIn(['checkout','bundle']),
-    beneficiary: state.getIn(['checkout','detachement']),
+    bundleId: state.getIn(['checkout','bundle', 'id']),
+    bundlePrice: state.getIn(['checkout','bundle', 'price']),
+    beneficiaryId: state.getIn(['checkout','detachement','id']),
     playerId: state.getIn(['checkout','playerId'])
   };
 };

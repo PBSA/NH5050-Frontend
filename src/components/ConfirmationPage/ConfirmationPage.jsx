@@ -66,9 +66,9 @@ class ConfirmationPage extends Component {
   }
 
   render() {
-    const {entries, ticket_sales, totalJackpot, totalProgressive} = this.props;
+    const {entries, ticket_sales, totalJackpot, totalProgressive, raffle_id, ticket_sales_id} = this.props;
     const {raffle, progressive, timeToDraw, timeToProgressiveDraw} = this.state;
-    
+    debugger;
     return (
       <Card className="confirmation-card" variant="outlined">
         <CardContent>
@@ -78,7 +78,7 @@ class ConfirmationPage extends Component {
           <span className="confirmation-subtext">{strings.confirmationPage.subtext1}</span>
           <span className="confirmation-subtext">{strings.confirmationPage.subtext2} {raffle.raffle_name}{strings.confirmationPage.goodluck}</span>
           <div className="confirmation-tickets">
-            {entries.map((ticket, index) => <span key={index} className="confirmation-tickets-ticket">{`R${this.addLeadingZeros(raffle.id,2)}T${this.addLeadingZeros(ticket_sales.id,4)}E${this.addLeadingZeros(ticket.id, 5)}`}</span>)}
+            {entries.map((ticket, index) => <span key={index} className="confirmation-tickets-ticket">{`R${this.addLeadingZeros(raffle_id,2)}T${this.addLeadingZeros(ticket_sales_id,4)}E${this.addLeadingZeros(ticket.id === undefined ? ticket.get('id') : ticket.id , 5)}`}</span>)}
           </div>
 
           <div className="confirmation-jackpots">
@@ -116,6 +116,7 @@ const mapStateToProps = (state) => {
     ticketConfirmation: state.getIn(['checkout','ticketPurchaseResponse']),
     entries: state.getIn(['checkout','ticketPurchaseResponse','entries']),
     ticket_sales: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales']),
+    ticket_sales_id: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'id']),
     raffle_id: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'raffle_id']),
     totalJackpot: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'total_jackpot']),
     totalProgressive: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'total_progressive_jackpot']),

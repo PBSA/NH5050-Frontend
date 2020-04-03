@@ -3,6 +3,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { StorageUtil } from '../../utility';
 
 const orderInfo = JSON.parse(StorageUtil.get('orderInfo'));
+console.log(orderInfo);
 const initialState = fromJS({
   checkoutRoute: StorageUtil.get('checkoutRoute') ? StorageUtil.get('checkoutRoute') : '/dashboard',
   organization: [],
@@ -17,7 +18,7 @@ const initialState = fromJS({
   emailCheck: orderInfo ? orderInfo.emailCheck : true,
   bundleVal: orderInfo ? orderInfo.bundleVal : '0',
   detachementVal: orderInfo ? orderInfo.detachementVal : '',
-  playerId: 0,
+  playerId: orderInfo ? orderInfo.playerId : 1,
   bundle: orderInfo ? orderInfo.bundle : '',
   detachement: orderInfo ? orderInfo.detachement : '',
   ticketPurchaseResponse: StorageUtil.get('ticketPurchaseResponse') ? JSON.parse(StorageUtil.get('ticketPurchaseResponse')) : {

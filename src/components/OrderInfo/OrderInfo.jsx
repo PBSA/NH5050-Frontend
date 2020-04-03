@@ -28,7 +28,7 @@ class OrderInfo extends Component {
       lastName: checkout.get('lastName'),
       phoneNum: checkout.get('phone'),
       email: checkout.get('email'),
-      playerId: 0,
+      playerId: 1,
       ageCheck: checkout.get('ageCheck'),
       emailCheck: checkout.get('emailCheck'),
       errorText: '',
