@@ -19,6 +19,13 @@ const Config = {
    * @memberof Config
    */
   prodApiRoute: 'https://5050staging.peerplays.global/api/v1',
+  /**
+   * Represents the base uri.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  baseRoute: isDev ? 'https://5050dev.peerplays.global' : 'https://5050staging.peerplays.global',
 };
 
 export default Config;
