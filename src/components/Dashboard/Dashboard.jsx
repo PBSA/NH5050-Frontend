@@ -30,7 +30,7 @@ class Dashboard extends Component {
     let date, formattedDate;
     date = new Date(drawDate);
     const twelveHourOptions = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-    const twentyFourHourOptions = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', minute: 'numeric'};
+    const twentyFourHourOptions = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 
     if(this.props.organization.time_format === '24h') {
       formattedDate = date.toLocaleDateString('en-ZA', twentyFourHourOptions);
