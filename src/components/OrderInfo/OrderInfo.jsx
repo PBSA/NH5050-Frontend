@@ -181,6 +181,7 @@ class OrderInfo extends Component {
 
   render() {
     const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText} = this.state;
+
     return (
       <div>
         <Card className="order" variant="outlined">
