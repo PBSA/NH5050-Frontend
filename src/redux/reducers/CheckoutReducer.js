@@ -3,7 +3,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { StorageUtil } from '../../utility';
 
 const orderInfo = JSON.parse(StorageUtil.get('orderInfo'));
-console.log(orderInfo);
+
 const initialState = fromJS({
   checkoutRoute: StorageUtil.get('checkoutRoute') ? StorageUtil.get('checkoutRoute') : '/dashboard',
   organization: [],
@@ -83,6 +83,23 @@ export default (state = initialState, action) => {
     case ActionTypes.SET_CHECKOUT_ROUTE: {
       return state.merge({
         checkoutRoute: action.checkoutRoute,
+      });
+    }
+
+    case ActionTypes.RESET_CHECKOUT: {
+      return state.merge({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        ageCheck: '',
+        emailCheck: '',
+        bundleVal: '',
+        detachementVal: '',
+        playerId: '',
+        bundle: '',
+        detachement: '',
+        ticketPurchaseResponse: '',
       });
     }
 

@@ -88,6 +88,11 @@ class CheckoutActions {
     StorageUtil.set('checkoutRoute', checkoutRoute);
     return { type: ActionTypes.SET_CHECKOUT_ROUTE, checkoutRoute };
   }
+
+  static resetCheckout() {
+    StorageUtil.clear();
+    return { type: ActionTypes.RESET_CHECKOUT };
+  }
 }
 
 export default CheckoutActions;

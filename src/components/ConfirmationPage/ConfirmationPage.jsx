@@ -68,7 +68,7 @@ class ConfirmationPage extends Component {
   render() {
     const {entries, ticket_sales, totalJackpot, totalProgressive, raffle_id, ticket_sales_id} = this.props;
     const {raffle, progressive, timeToDraw, timeToProgressiveDraw} = this.state;
-    debugger;
+
     return (
       <Card className="confirmation-card" variant="outlined">
         <CardContent>
