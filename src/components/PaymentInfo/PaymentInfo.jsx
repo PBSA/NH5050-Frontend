@@ -110,7 +110,7 @@ class PaymentInfo extends Component {
       catch(err) {
         console.error(err);
 
-        if(err.status === 400) {
+        if(err.status === 400 && typeof err.data.error !== 'string') {
           let errText = '';
           Object.keys(err.data.error).map((key)=>{
             errText += key + ': ' + err.data.error[key]
@@ -132,15 +132,20 @@ class PaymentInfo extends Component {
       if (stripe && clientSecret) {
         try{
           this.setState({loading: true});
-          await RaffleService.initStripePayment({
-            raffle_id: this.props.raffleId,
-            ticketbundle_id: this.props.bundle.id,
-            total_price: this.props.bundle.price,
-            beneficiary_id: this.props.beneficiary.id,
-            player_id: this.props.playerId,
-            payment_type: 'stripe',
-            stripe_payment_id: this.state.paymentId
-          });
+          try{
+            await RaffleService.initStripePayment({
+              raffle_id: this.props.raffleId,
+              ticketbundle_id: this.props.bundle.id,
+              total_price: this.props.bundle.price,
+              beneficiary_id: this.props.beneficiary.id,
+              player_id: this.props.playerId,
+              payment_type: 'stripe',
+              stripe_payment_id: this.state.paymentId
+            });
+          }catch(error) {
+            //Ignore any error
+            console.error(error);
+          }
 
           const result = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
@@ -179,7 +184,7 @@ class PaymentInfo extends Component {
           console.error(err);
 
           if(err.hasOwnProperty('data')) {
-            if(err.status === 400) {
+            if(err.status === 400 && typeof err.data.error !== 'string') {
               let errText = '';
               Object.keys(err.data.error).map((key)=>{
                 errText += key + ': ' + err.data.error[key]

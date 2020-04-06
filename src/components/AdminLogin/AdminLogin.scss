@@ -1,10 +1,70 @@
+@import '../../assets/styles/common.scss';
+
 .login-form {
   display: flex;
   flex-direction: column;
   margin-right: 25%;
   margin-left: 25%;
 
-  &-input {
+  &-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin: auto;
+
+    &-input {
+      width: 300px;
+      margin-bottom: 20px;
+    }
+  }
+
+  &-alert {
+    white-space: pre-line;
+  }
+
+  &-headers {
+    color: $order-info-header;
+    font-size: 32px;
+    font-weight: bold;
     margin-bottom: 20px;
+
+    &-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: left;
+    }
+  }
+
+  &-button {
+    font-size: 1.2rem;
+    width: 200px;
+    height: 40px;
+    margin-bottom: 20px;
+    color: white;
+    background-color: $primary-app-color;
+
+    &:hover {
+    background: $primary-app-color-hover;
+    }
+
+    &-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &-backdrop {
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
   }
 }
