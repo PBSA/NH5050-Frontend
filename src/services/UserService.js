@@ -65,6 +65,30 @@ class OrganizationService {
       }
     });
   }
+
+  static Login(admin) {
+    const url = `${apiRoot}/users/login`;
+    let response;
+    return new Promise(async (resolve, reject) => {
+      const headers = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      };
+
+      try {
+        response = await ApiHandler.post(url, querystring.stringify(admin), headers);
+
+        if (response.data.status !== 200) {
+          return reject(response);
+        }
+
+        return resolve(response.data.result);
+      } catch (err) {
+        return reject(err.response);
+      }
+    });
+  }
 }
 
 export default OrganizationService;

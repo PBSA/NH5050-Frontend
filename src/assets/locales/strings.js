@@ -8,7 +8,7 @@ export default {
     title: 'Admin Login',
     username: 'Username',
     password: 'Password',
-    signIn: 'Sign In'
+    signIn: 'Sign In',
   },
 
   adminDashboard: {
@@ -16,8 +16,8 @@ export default {
       beneficiaries: 'Beneficiaries',
       sellers: 'Sellers',
       raffles: 'Raffles',
-      tickets: 'Tickets'
-    }
+      tickets: 'Tickets',
+    },
   },
 
   orderInfo: {

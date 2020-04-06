@@ -105,6 +105,8 @@ class OrderInfo extends Component {
 
     if (firstName === '') {
       errorText = errors.noFirstName;
+    } else if (lastName === '') {
+      errorText = errors.noLastName;
     } else if (email === '') {
       errorText = errors.noEmail;
     } else if (!ValidationUtil.validateEmail(email)) {
@@ -148,10 +150,10 @@ class OrderInfo extends Component {
         console.error(err);
         
         if(err.hasOwnProperty('data')) {
-          if(err.status === 400) {
+          if(err.status === 400 && typeof err.data.error !== 'string') {
             let errText = '';
             Object.keys(err.data.error).map((key)=>{
-              errText += key + ': ' + err.data.error[key]
+              errText += key + ': ' + err.data.error[key] + '\n'
             });
             this.setState({
               errorText: errText,

@@ -53,24 +53,24 @@ class GrowJackpot extends Component {
           <div className="grow-socials">
             <div className="grow-socials-row">
               <FacebookShareButton url={shareLink}>
-                <FacebookIcon borderRadius={5}/>
+                <FacebookIcon borderRadius={5} size={50}/>
               </FacebookShareButton>
               <TwitterShareButton url={shareLink}>
-                <TwitterIcon borderRadius={5}/>
+                <TwitterIcon borderRadius={5} size={50}/>
               </TwitterShareButton>
               <LinkedinShareButton url={shareLink}>
-                <LinkedinIcon borderRadius={5}/>
+                <LinkedinIcon borderRadius={5} size={50}/>
               </LinkedinShareButton>
             </div>
             <div className="grow-socials-row">
               <RedditShareButton url={shareLink}>
-                <RedditIcon borderRadius={5}/>
+                <RedditIcon borderRadius={5} size={50}/>
               </RedditShareButton>
               <WhatsappShareButton url={shareLink}>
-                <WhatsappIcon borderRadius={5}/>
+                <WhatsappIcon borderRadius={5} size={50}/>
               </WhatsappShareButton>
               <EmailShareButton url={shareLink}>
-                <EmailIcon borderRadius={5}/>
+                <EmailIcon borderRadius={5} size={50}/>
               </EmailShareButton>
             </div>
           </div>
