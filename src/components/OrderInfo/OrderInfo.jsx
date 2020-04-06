@@ -75,7 +75,7 @@ class OrderInfo extends Component {
       playerId: this.state.playerId,
       bundle: this.state.ticketBundles[this.state.ticketSelected],
       bundleVal: this.state.ticketSelected,
-      detachement: this.state.detachments[this.state.detachmentSelected],
+      detachment: this.state.detachments[this.state.detachmentSelected],
       detachementVal: this.state.detachmentSelected
     });
     this.props.navigate(RouteConstants.PAYMENT_INFO);
@@ -117,7 +117,7 @@ class OrderInfo extends Component {
     } else if (!ageCheck) {
       errorText = errors.ageCheck
     } else if (detachmentSelected === '') {
-      errorText = errors.noDetachement;
+      errorText = errors.noDetachment;
     } else {
       errorText = ''
 
@@ -251,16 +251,16 @@ class OrderInfo extends Component {
 
                   <div className="order-tickets-wrapper">
                     <span className="order-tickets-subtext">{strings.orderInfo.ticketDetachmentSubtext}</span>
-                    <FormControl className="order-tickets-detachement" variant="outlined">
-                    <InputLabel id="detachement-select">{strings.orderInfo.detachmentSelectLabel}</InputLabel>
+                    <FormControl className="order-tickets-detachment" variant="outlined">
+                    <InputLabel id="detachment-select">{strings.orderInfo.detachmentSelectLabel}</InputLabel>
                       <Select
-                        id="detachement-select"
+                        id="detachment-select"
                         value={detachmentSelected}
                         onChange={this.handleDetachementChange}
-                        label={'Select A Detachement'}
+                        label={'Select A Detachment'}
                       >
-                        {detachments.map((detachement, index) => {
-                          return <MenuItem key={index} value={index}>{detachement.user.name}</MenuItem>
+                        {detachments.map((detachment, index) => {
+                          return <MenuItem key={index} value={index}>{detachment.user.name}</MenuItem>
                         })}
                       </Select>
                     </FormControl>

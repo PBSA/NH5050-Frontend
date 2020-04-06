@@ -4,9 +4,9 @@ import { StorageUtil } from '../../utility';
 
 const orderInfo = JSON.parse(StorageUtil.get('orderInfo'));
 const initialState = fromJS({
-  organization: [],
+  organization: {},
   organizationId: StorageUtil.get('organization_id') ? StorageUtil.get('organization_id') : '',
-  raffle: [],
+  raffle: {},
   raffleId: StorageUtil.get('raffle_id') ? StorageUtil.get('raffle_id') : '',
   firstName: orderInfo ? orderInfo.firstName : '',
   lastName: orderInfo ? orderInfo.lastName : '',
@@ -18,7 +18,7 @@ const initialState = fromJS({
   detachementVal: orderInfo ? orderInfo.detachementVal : '',
   playerId: 0,
   bundle: orderInfo ? orderInfo.bundle : '',
-  detachement: orderInfo ? orderInfo.detachement : '',
+  detachment: orderInfo ? orderInfo.detachment : '',
   ticketPurchaseResponse: StorageUtil.get('ticketPurchaseResponse') ? StorageUtil.get('ticketPurchaseResponse') : {
     entries: [],
     ticket_sales: {
@@ -66,7 +66,7 @@ export default (state = initialState, action) => {
         emailCheck: action.orderInfo.emailCheck,
         playerId: action.orderInfo.playerId,
         bundle: action.orderInfo.bundle,
-        detachement: action.orderInfo.detachement,
+        detachment: action.orderInfo.detachment,
         bundleVal: action.orderInfo.bundleVal,
         detachementVal: action.orderInfo.detachementVal,
       });
