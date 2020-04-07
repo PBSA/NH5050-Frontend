@@ -5,6 +5,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {withRouter} from 'react-router';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService, UserService } from '../../services';
@@ -299,4 +300,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   dispatch,
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderInfo);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderInfo));
