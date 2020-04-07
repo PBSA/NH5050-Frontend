@@ -83,10 +83,6 @@ class OrderInfo extends Component {
     this.props.setRoute(RouteConstants.PAYMENT_INFO);
   }
 
-  sortBundles = () => {
-
-  }
-
   componentDidMount = () => {
     RaffleService.getTicketBundle(this.props.raffleId).then((res) => {
       res.sort((a,b) => (a.quantity > b.quantity) ? 1 : ((b.quantity > a.quantity) ? -1 : 0));
