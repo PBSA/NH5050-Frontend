@@ -64,17 +64,19 @@ class AdminTable extends Component {
           <Table stickyHeader>
             <TableHead>
               <TableRow hover>
-              {this.generateHeadCells(tableType).map(headCell =>
-  					    <TableCell key={headCell.id} sortDirection={sortType}>
+              {this.generateHeadCells().map(headCell =>
+  					    <TableCell key={headCell.id}>
                   {headCell.label}
                 </TableCell>
               )}
               </TableRow>
             </TableHead>
             <TableBody>
-            {tableData && tableData.slice( currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((rowData, i) =>
-  			      <TableCell>test!</TableCell>
-  			    )}
+              <TableRow>
+                {tableData && tableData.slice( currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((rowData, i) =>
+                  <TableCell key={rowData.id}>{rowData.label}</TableCell>
+                )}
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>

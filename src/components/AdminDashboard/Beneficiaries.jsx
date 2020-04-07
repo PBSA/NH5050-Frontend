@@ -21,7 +21,7 @@ export default function Beneficiaries() {
   }];
 
   return (
-    <AdminTable tableData={rows} route={RouteConstants} />
+    <AdminTable tableData={rows} route={RouteConstants.ADMIN_BENEFICIARIES} />
     // <TableContainer component={Paper}>
     //   <Table className="beneficiaries-table" aria-label="simple table">
     //     <TableHead>
