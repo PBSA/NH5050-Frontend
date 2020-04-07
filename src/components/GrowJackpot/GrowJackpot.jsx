@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { Button, TextField, Tooltip, Card, CardContent } from '@material-ui/core';
-import { Facebook as FacebookIcon, Twitter as TwitterIcon, LinkedIn as LinkedInIcon, Reddit as RedditIcon, WhatsApp as WhatsAppIcon, Mail as MailIcon} from '@material-ui/icons';
+import { FacebookShareButton, FacebookIcon,
+  TwitterShareButton, TwitterIcon,
+  LinkedinShareButton, LinkedinIcon,
+  RedditShareButton, RedditIcon,
+  WhatsappShareButton, WhatsappIcon,
+  EmailShareButton, EmailIcon } from 'react-share';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { StorageUtil } from '../../utility';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { NavigateActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 import { RouteConstants } from '../../constants';
 import ProgressBar from '../ProgressBar';
+import { Config } from '../../utility';
 
 class GrowJackpot extends Component {
   
   state = {
-    shareLink: 'https://www.communityraffles.org/blahblahtesttest',
+    shareLink: `${Config.baseRoute}/dashboard`,
     copied: false,
     showTooltip: false,
   }
@@ -28,10 +35,13 @@ class GrowJackpot extends Component {
   handleTooltipClose = () => {
     this.setState({ showTooltip: false });
   };
+
+  componentDidMount() {
+    StorageUtil.clear();
+  }
   
   render() {
     const { shareLink } = this.state;
-    console.log(this.props);
     return (
       <Card className="grow-card" variant="outlined">
         <CardContent>
@@ -41,14 +51,26 @@ class GrowJackpot extends Component {
           <p className="grow-subtext">{strings.share.subtext}</p>
           <div className="grow-socials">
             <div className="grow-socials-row">
-              <FacebookIcon className="grow-socials-fb" fontSize="large" />
-              <TwitterIcon className="grow-socials-twitter" fontSize="large" />
-              <LinkedInIcon className="grow-socials-linkedin" fontSize="large" />
+              <FacebookShareButton url={shareLink}>
+                <FacebookIcon borderRadius={5}/>
+              </FacebookShareButton>
+              <TwitterShareButton url={shareLink}>
+                <TwitterIcon borderRadius={5}/>
+              </TwitterShareButton>
+              <LinkedinShareButton url={shareLink}>
+                <LinkedinIcon borderRadius={5}/>
+              </LinkedinShareButton>
             </div>
             <div className="grow-socials-row">
-              <RedditIcon className="grow-socials-reddit" fontSize="large" />
-              <WhatsAppIcon className="grow-socials-whatsapp" fontSize="large" />
-              <MailIcon className="grow-socials-mail" fontSize="large" />
+              <RedditShareButton url={shareLink}>
+                <RedditIcon borderRadius={5}/>
+              </RedditShareButton>
+              <WhatsappShareButton url={shareLink}>
+                <WhatsappIcon borderRadius={5}/>
+              </WhatsappShareButton>
+              <EmailShareButton url={shareLink}>
+                <EmailIcon borderRadius={5}/>
+              </EmailShareButton>
             </div>
           </div>
           <div className="grow-wrapper">

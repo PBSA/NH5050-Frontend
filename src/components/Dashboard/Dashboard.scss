@@ -19,6 +19,10 @@
       color: white;
       background-color: $primary-app-color;
     }
+
+    &-img {
+      width: 60%;
+    }
  
     &-text {
       text-align: center;
@@ -57,7 +61,7 @@
 
     &-button {
       font-size: 1.2rem;
-      width: 70%;
+      width: 95%;
       height: 40px;
       color: white;
       background-color: $primary-app-color;
@@ -68,7 +72,7 @@
     }
   }
 
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 867px) {
     flex-direction: column;
     padding: 20px;
 
@@ -79,6 +83,10 @@
       &-icon {
         width: 100%;
         height: 30%;
+      }
+
+      &-img {
+        width: 80%;
       }
     }
 

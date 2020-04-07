@@ -32,6 +32,7 @@
 
   &-socials {
     display: flex;
+    flex-wrap: wrap;
 
     &-fb {
       padding: 5px;
@@ -77,4 +78,8 @@
       flex-direction: column;
     }
   }
+}
+
+.react-share__ShareButton {
+  margin: 0.4em;
 }
