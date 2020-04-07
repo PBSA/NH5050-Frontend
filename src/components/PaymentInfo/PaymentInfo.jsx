@@ -262,7 +262,7 @@ const mapStateToProps = (state) => {
   return {
     raffleId: state.getIn(['checkout','raffleId']),
     bundle: state.getIn(['checkout','bundle']),
-    beneficiary: state.getIn(['checkout','detachement']),
+    beneficiary: state.getIn(['checkout','detachment']),
     playerId: state.getIn(['checkout','playerId'])
   };
 };
