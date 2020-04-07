@@ -3,7 +3,6 @@ import ActionTypes from '../actions/ActionTypes';
 import { StorageUtil } from '../../utility';
 
 const orderInfo = JSON.parse(StorageUtil.get('orderInfo'));
-
 const initialState = fromJS({
   checkoutRoute: StorageUtil.get('checkoutRoute') ? StorageUtil.get('checkoutRoute') : '/dashboard',
   organization: {},
@@ -15,8 +14,8 @@ const initialState = fromJS({
   phone: orderInfo ? orderInfo.phone : '',
   email: orderInfo ? orderInfo.email : '',
   ageCheck: orderInfo ? orderInfo.ageCheck : false,
-  emailCheck: orderInfo ? orderInfo.emailCheck : true,
-  bundleVal: orderInfo ? orderInfo.bundleVal : 0,
+  emailCheck: orderInfo ? orderInfo.emailCheck : false,
+  bundleVal: orderInfo ? orderInfo.bundleVal : '0',
   detachmentVal: orderInfo ? orderInfo.detachmentVal : '',
   playerId: orderInfo ? orderInfo.playerId : 1,
   bundle: orderInfo ? orderInfo.bundle : '',
@@ -92,11 +91,11 @@ export default (state = initialState, action) => {
         lastName: '',
         phone: '',
         email: '',
-        ageCheck: '',
-        emailCheck: '',
-        bundleVal: '',
+        ageCheck: false,
+        emailCheck: false,
+        bundleVal: '0',
         detachmentVal: '',
-        playerId: '',
+        playerId: 1,
         bundle: '',
         detachment: '',
         ticketPurchaseResponse: '',
