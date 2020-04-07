@@ -58,13 +58,15 @@ class Header extends Component {
 
   sortDraws = (draws) => {
     const sortedDraws = draws.filter((draw) => {
-      return (new Date(draw.draw_datetime) > new Date(Date.now()) && draw.draw_type === "5050");
+      return (new Date(draw.draw_datetime) > new Date(Date.now()) && new Date(draw.start_datetime) < new Date(Date.now()) && draw.draw_type === "5050");
     });
 
-    if(sortedDraws[0].draw_type === "5050") {
-      this.props.setRaffleId(sortedDraws[0].id)
-      this.props.setRaffle(sortedDraws[0]);
+    if(!sortedDraws[0]) {
+      return;
     }
+
+    this.props.setRaffleId(sortedDraws[0].id)
+    this.props.setRaffle(sortedDraws[0]);
   }
 
 

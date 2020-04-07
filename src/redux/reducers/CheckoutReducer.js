@@ -6,21 +6,21 @@ const orderInfo = JSON.parse(StorageUtil.get('orderInfo'));
 
 const initialState = fromJS({
   checkoutRoute: StorageUtil.get('checkoutRoute') ? StorageUtil.get('checkoutRoute') : '/dashboard',
-  organization: [],
+  organization: {},
   organizationId: StorageUtil.get('organization_id') ? StorageUtil.get('organization_id') : '',
-  raffle: [],
+  raffle: {},
   raffleId: StorageUtil.get('raffle_id') ? StorageUtil.get('raffle_id') : '',
   firstName: orderInfo ? orderInfo.firstName : '',
   lastName: orderInfo ? orderInfo.lastName : '',
   phone: orderInfo ? orderInfo.phone : '',
   email: orderInfo ? orderInfo.email : '',
   ageCheck: orderInfo ? orderInfo.ageCheck : false,
-  emailCheck: orderInfo ? orderInfo.emailCheck : true,
-  bundleVal: orderInfo ? orderInfo.bundleVal : '0',
-  detachementVal: orderInfo ? orderInfo.detachementVal : '',
+  emailCheck: orderInfo ? orderInfo.emailCheck : false,
+  bundleVal: orderInfo ? orderInfo.bundleVal : '',
+  detachmentVal: orderInfo ? orderInfo.detachmentVal : '',
   playerId: orderInfo ? orderInfo.playerId : 1,
   bundle: orderInfo ? orderInfo.bundle : '',
-  detachement: orderInfo ? orderInfo.detachement : '',
+  detachment: orderInfo ? orderInfo.detachment : '',
   ticketPurchaseResponse: StorageUtil.get('ticketPurchaseResponse') ? JSON.parse(StorageUtil.get('ticketPurchaseResponse')) : {
     entries: [],
     ticket_sales: {
@@ -68,9 +68,9 @@ export default (state = initialState, action) => {
         emailCheck: action.orderInfo.emailCheck,
         playerId: action.orderInfo.playerId,
         bundle: action.orderInfo.bundle,
-        detachement: action.orderInfo.detachement,
+        detachment: action.orderInfo.detachment,
         bundleVal: action.orderInfo.bundleVal,
-        detachementVal: action.orderInfo.detachementVal,
+        detachmentVal: action.orderInfo.detachmentVal,
       });
     }
 
@@ -95,10 +95,10 @@ export default (state = initialState, action) => {
         ageCheck: '',
         emailCheck: '',
         bundleVal: '',
-        detachementVal: '',
+        detachmentVal: '',
         playerId: '',
         bundle: '',
-        detachement: '',
+        detachment: '',
         ticketPurchaseResponse: '',
       });
     }

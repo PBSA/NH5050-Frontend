@@ -266,7 +266,8 @@ const mapStateToProps = (state) => {
     bundle: state.getIn(['checkout','bundle']),
     bundleId: state.getIn(['checkout','bundle', 'id']),
     bundlePrice: state.getIn(['checkout','bundle', 'price']),
-    beneficiaryId: state.getIn(['checkout','detachement','id']),
+    beneficiaryId: state.getIn(['checkout','detachment','id']),
+    beneficiary: state.getIn(['checkout','detachment']),
     playerId: state.getIn(['checkout','playerId'])
   };
 };
