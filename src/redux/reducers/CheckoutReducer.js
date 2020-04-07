@@ -3,23 +3,25 @@ import ActionTypes from '../actions/ActionTypes';
 import { StorageUtil } from '../../utility';
 
 const orderInfo = JSON.parse(StorageUtil.get('orderInfo'));
+
 const initialState = fromJS({
-  organization: [],
+  checkoutRoute: StorageUtil.get('checkoutRoute') ? StorageUtil.get('checkoutRoute') : '/dashboard',
+  organization: {},
   organizationId: StorageUtil.get('organization_id') ? StorageUtil.get('organization_id') : '',
-  raffle: [],
+  raffle: {},
   raffleId: StorageUtil.get('raffle_id') ? StorageUtil.get('raffle_id') : '',
   firstName: orderInfo ? orderInfo.firstName : '',
   lastName: orderInfo ? orderInfo.lastName : '',
   phone: orderInfo ? orderInfo.phone : '',
   email: orderInfo ? orderInfo.email : '',
   ageCheck: orderInfo ? orderInfo.ageCheck : false,
-  emailCheck: orderInfo ? orderInfo.emailCheck : true,
-  bundleVal: orderInfo ? orderInfo.bundleVal : '0',
-  detachementVal: orderInfo ? orderInfo.detachementVal : '',
-  playerId: 0,
+  emailCheck: orderInfo ? orderInfo.emailCheck : false,
+  bundleVal: orderInfo ? orderInfo.bundleVal : '',
+  detachmentVal: orderInfo ? orderInfo.detachmentVal : '',
+  playerId: orderInfo ? orderInfo.playerId : 1,
   bundle: orderInfo ? orderInfo.bundle : '',
-  detachement: orderInfo ? orderInfo.detachement : '',
-  ticketPurchaseResponse: StorageUtil.get('ticketPurchaseResponse') ? StorageUtil.get('ticketPurchaseResponse') : {
+  detachment: orderInfo ? orderInfo.detachment : '',
+  ticketPurchaseResponse: StorageUtil.get('ticketPurchaseResponse') ? JSON.parse(StorageUtil.get('ticketPurchaseResponse')) : {
     entries: [],
     ticket_sales: {
       id: 0,
@@ -66,15 +68,38 @@ export default (state = initialState, action) => {
         emailCheck: action.orderInfo.emailCheck,
         playerId: action.orderInfo.playerId,
         bundle: action.orderInfo.bundle,
-        detachement: action.orderInfo.detachement,
+        detachment: action.orderInfo.detachment,
         bundleVal: action.orderInfo.bundleVal,
-        detachementVal: action.orderInfo.detachementVal,
+        detachmentVal: action.orderInfo.detachmentVal,
       });
     }
 
     case ActionTypes.SET_TICKET_PURCHASE_RESPONSE: {
       return state.merge({
         ticketPurchaseResponse: action.ticketPurchaseResponse,
+      });
+    }
+
+    case ActionTypes.SET_CHECKOUT_ROUTE: {
+      return state.merge({
+        checkoutRoute: action.checkoutRoute,
+      });
+    }
+
+    case ActionTypes.RESET_CHECKOUT: {
+      return state.merge({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        ageCheck: '',
+        emailCheck: '',
+        bundleVal: '',
+        detachmentVal: '',
+        playerId: '',
+        bundle: '',
+        detachment: '',
+        ticketPurchaseResponse: '',
       });
     }
 

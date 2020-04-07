@@ -8,7 +8,7 @@ export default {
     title: 'Admin Login',
     username: 'Username',
     password: 'Password',
-    signIn: 'Sign In'
+    signIn: 'Sign In',
   },
 
   adminDashboard: {
@@ -16,15 +16,15 @@ export default {
       beneficiaries: 'Beneficiaries',
       sellers: 'Sellers',
       raffles: 'Raffles',
-      tickets: 'Tickets'
-    }
+      tickets: 'Tickets',
+    },
   },
 
   orderInfo: {
     infoHeader: 'Your Info',
     ticketsHeader: 'Tickets',
     ticketsSubtext: 'How many entries would you like?',
-    ticketDetachmentSubtext: 'Which detachement do you wish to support?',
+    ticketDetachmentSubtext: 'Which detachment do you wish to support?',
     firstNameLabel: 'First Name',
     lastNameLabel: 'Last Name',
     emailLabel: 'Email Address',
@@ -38,10 +38,10 @@ export default {
       noEmail: 'Email not entered',
       invalidEmail: 'Invalid email. Format must be xxx@xxx.xxx',
       noPhone: 'Mobile phone number not entered',
-      invalidPhone: 'Invalid phone number format',
-      ageCheck: 'I \'m over the age 16 not selected',
+      invalidPhone: 'Invalid phone number. Format must be xxx-xxx-xxxx',
+      ageCheck: 'I\'m over the age of 16 not selected',
       ticketCheck: 'Send my ticket numbers via email not selected',
-      noDetachement: 'Please select a detachment',
+      noDetachment: 'Please select a detachment',
     },
   },
 
