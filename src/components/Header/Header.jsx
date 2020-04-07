@@ -11,7 +11,7 @@ import { FacebookShareButton, FacebookIcon,
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService } from '../../services';
-import { Config } from '../../utility';
+import { Config, StorageUtil } from '../../utility';
 
 const organizationId = 1;
 class Header extends Component {
@@ -24,6 +24,8 @@ class Header extends Component {
 
   navgiateToOrderInfo = () => {
     this.props.navigate(RouteConstants.DASHBOARD);
+    this.props.setRoute(RouteConstants.DASHBOARD);
+    this.props.resetCheckout();
   }
 
   componentDidMount = () => {
@@ -122,6 +124,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     setRaffle: CheckoutActions.setRaffle,
     setOrganizationId: CheckoutActions.setOrganizationId,
     setRaffleId: CheckoutActions.setRaffleId,
+    setRoute: CheckoutActions.setCheckoutRoute,
+    resetCheckout: CheckoutActions.resetCheckout,
   },
   dispatch,
 );

@@ -5,6 +5,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {withRouter} from 'react-router';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService, UserService } from '../../services';
@@ -22,13 +23,13 @@ class OrderInfo extends Component {
     this.state = {
       ticketSelected: checkout.get('bundleVal'),
       ticketBundles: [],
-      detachmentSelected: checkout.get('detachementVal'),
+      detachmentSelected: checkout.get('detachmentVal'),
       detachments: [],
       firstName: checkout.get('firstName'),
       lastName: checkout.get('lastName'),
       phoneNum: checkout.get('phone'),
       email: checkout.get('email'),
-      playerId: 0,
+      playerId: 1,
       ageCheck: checkout.get('ageCheck'),
       emailCheck: checkout.get('emailCheck'),
       errorText: '',
@@ -76,9 +77,10 @@ class OrderInfo extends Component {
       bundle: this.state.ticketBundles[this.state.ticketSelected],
       bundleVal: this.state.ticketSelected,
       detachment: this.state.detachments[this.state.detachmentSelected],
-      detachementVal: this.state.detachmentSelected
+      detachmentVal: this.state.detachmentSelected
     });
     this.props.navigate(RouteConstants.PAYMENT_INFO);
+    this.props.setRoute(RouteConstants.PAYMENT_INFO);
   }
 
   componentDidMount = () => {
@@ -294,8 +296,9 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
     setOrderInfo: CheckoutActions.setOrderInfo,
+    setRoute: CheckoutActions.setCheckoutRoute
   },
   dispatch,
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderInfo);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderInfo));

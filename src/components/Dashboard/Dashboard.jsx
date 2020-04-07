@@ -11,6 +11,7 @@ import { OrganizationService, RaffleService } from '../../services';
 class Dashboard extends Component {
   navgiateToOrderInfo = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
+    this.props.setRoute(RouteConstants.ORDER_INFO);
   }
 
   displayImage = () => {
@@ -87,6 +88,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
+    setRoute: CheckoutActions.setCheckoutRoute,
   },
   dispatch,
 );

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StorageUtil } from '../../utility';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { NavigateActions } from '../../redux/actions';
+import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 import { RouteConstants } from '../../constants';
 import ProgressBar from '../ProgressBar';
@@ -26,6 +26,7 @@ class GrowJackpot extends Component {
 
   navigateToDashboard = () => {
     this.props.navigate(RouteConstants.DASHBOARD);
+    this.props.setRoute(RouteConstants.DASHBOARD);
   };
 
   copyURL = () => {
@@ -107,6 +108,7 @@ class GrowJackpot extends Component {
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
+    setRoute: CheckoutActions.setCheckoutRoute
   },
   dispatch,
 );
