@@ -53,11 +53,19 @@ class AdminTable extends Component {
   	}
   }
 
+  renderTableRow = (rowData, i) => {
+    const rowArray = Object.values(rowData);
+    let row;
+    row = rowArray.map(el => { return <TableCell key={el}>{el}</TableCell> });
+    return row;
+  }
+
   render() {
     const {tableData} = this.props;
     const {currentPage, rowsPerPage} = this.state;
-    let totalRows = Math.ceil(tableData.length/rowsPerPage);
-    console.log('route: ', this.props);
+    let pages = Math.ceil(tableData.length/rowsPerPage);
+    console.log('totalRows: ', pages);
+    console.log('state: ', this.state);
     return (
       <>
         <TableContainer>
@@ -72,18 +80,18 @@ class AdminTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
                 {tableData && tableData.slice( currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((rowData, i) =>
-                  <TableCell key={rowData.id}>{rowData.label}</TableCell>
+                  <TableRow>
+                    {this.renderTableRow(rowData, i)}
+                  </TableRow>
                 )}
-              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[15, 25, 50]}
           component="div"
-          count={totalRows}
+          count={tableData.length}
           rowsPerPage={rowsPerPage}
           page={currentPage}
           onChangePage={this.changePage}

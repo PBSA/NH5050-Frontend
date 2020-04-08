@@ -18,6 +18,122 @@ export default function Beneficiaries() {
     name: 'Detachment #550',
     type: 'Beneficiary',
     proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
+  }, {
+    name: 'Detachment #550',
+    type: 'Beneficiary',
+    proceeds: '$600',
   }];
 
   return (
