@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { hot } from 'react-hot-loader/root';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from './Header';
+import Footer from './Footer';
 import routes from '../routes';
 import { RouteConstants } from '../constants';
 import { NavigateActions, CheckoutActions } from '../redux/actions';
@@ -33,6 +34,7 @@ class App extends Component {
         <StylesProvider injectFirst>
           <Header />
           {routes}
+          {/* {!this.props.path.includes('/admin') ? <Footer /> : null } */}
         </StylesProvider>
       </ConnectedRouter>
     );

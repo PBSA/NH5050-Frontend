@@ -94,6 +94,11 @@ class PaymentInfo extends Component {
     let tickets;
     const {sellerPassword} = this.state;
 
+    if(this.state.name === '') {
+      this.setState({errorMessage: strings.paymentInfo.errors.noName});
+      return;
+    }
+
     if(sellerPassword) {
       try{
         this.setState({loading: true});

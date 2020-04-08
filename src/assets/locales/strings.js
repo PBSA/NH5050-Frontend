@@ -21,7 +21,7 @@ export default {
   },
 
   adminSellerForm: {
-    save: 'Save'
+    save: 'Save',
   },
 
   orderInfo: {
@@ -58,6 +58,9 @@ export default {
     text2: 'entries in the Progressive Jackpot on',
     back: 'Back',
     buyNow: 'Buy Now',
+    errors: {
+      noName: 'No card holder name',
+    },
   },
 
   confirmationPage: {
