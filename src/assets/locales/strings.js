@@ -21,7 +21,7 @@ export default {
   },
 
   adminSellerForm: {
-    save: 'Save'
+    save: 'Save',
   },
 
   orderInfo: {
@@ -64,7 +64,7 @@ export default {
     header: 'Thank You!',
     subtext1: 'We have proccessed your order and emailed you a digital ticket containing the information below. Please print this page for your records',
     subtext2: 'Here are your ticket numbers for the',
-    goodluck: ' -- Good luck!',
+    goodluck: ' and the progressive raffle to be drawn in November -- Good luck!',
     jackpot: '5050 Jackpot',
     progressivejackpot: 'Progressive Jackpot',
     drawn: 'Drawn',

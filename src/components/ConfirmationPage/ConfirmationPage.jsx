@@ -56,7 +56,9 @@ class ConfirmationPage extends Component {
 
   timeToDraw = (drawdate) => {
     const diff = moment.duration(moment(drawdate).diff(moment()));
-    return `${diff.days()}d ${diff.hours()}h ${diff.minutes()}m ${diff.seconds()}s`;
+
+    let days = moment(drawdate).diff(moment(), 'days');
+    return `${days}d ${diff.hours()}h ${diff.minutes()}m ${diff.seconds()}s`;
   }
 
   addLeadingZeros(num, totalDigitsRequired) {
