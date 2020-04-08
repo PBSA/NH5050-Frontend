@@ -229,7 +229,7 @@ class PaymentInfo extends Component {
 
   render() {
     return (
-      <div>
+      <div className="checkout-container">
         <Card className="payment-card" variant="outlined">
         <CardContent>
           <ProgressBar activeStep={1}/>
