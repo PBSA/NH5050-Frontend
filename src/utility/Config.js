@@ -12,7 +12,7 @@ const Config = {
    * @type {text}
    * @memberof Config
    */
-  devApiRoute: 'https://5050dev.peerplays.global/api/v1',
+  devApiRoute: 'http://localhost:3000/api/v1', // https://5050dev.peerplays.global/api/v1',
   /**
    * @type {text}
    * @memberof Config

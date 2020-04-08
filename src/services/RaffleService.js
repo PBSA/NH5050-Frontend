@@ -1,147 +1,51 @@
-import axios from 'axios';
-import querystring from 'query-string';
-import { Config } from '../utility';
+import { apiCall } from './api.helper';
 
-const ApiHandler = axios.create({ withCredentials: true });
-
-const apiRoot = Config.isDev
-  ? Config.devApiRoute
-  : Config.prodApiRoute;
-
-class RaffleService {
-  /**
-   * Login via Username and Password.
-   *
-   * @static
-   * @param {object} account - Account object:
-   * {
-      login: 'username',
-      password: 'password
-   * }.
-   * @returns {Promise}
-   * @memberof PrivateAuthService
-   */
-
+export default class RaffleService {
+  
   static getRaffle(organizationId) {
-    const query = `${apiRoot}/raffles?organizationId=${organizationId}`;
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await ApiHandler.get(query);
-
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+    return apiCall('get', 'raffles', { organizationId });
   }
 
   static getRaffleById(raffleId) {
-    const query = `${apiRoot}/raffles/${raffleId}`;
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await ApiHandler.get(query);
+    return apiCall('get', `raffles/${raffleId}`);
+  }
 
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+  static createOrUpdateRaffle(raffleData) {
+    return apiCall('post', 'raffles', raffleData);
   }
 
   static getTicketBundle(raffleId) {
-    const query = `${apiRoot}/ticketbundles?raffleId=${raffleId}`;
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await ApiHandler.get(query);
+    return apiCall('get', 'ticketbundles', { raffleId });
+  }
 
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
+  static createTicketBundle(bundleData) {
+    return apiCall('post', 'raffles/ticketbundles', bundleData);
+  }
 
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+  static getReportUrl(raffleId) {
+    return apiCall('post', 'raffles/downloadreport', { raffleId });
   }
 
   static createPayment(bundleId) {
-    const url = `${apiRoot}/createpayment?bundleId=${bundleId}`;
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await ApiHandler.get(url);
-
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+    return apiCall('get', 'createpayment', { bundleId });
   }
 
   static initStripePayment(ticketsale) {
-    const url = `${apiRoot}/raffles/initpurchase`;
-    let response;
-    return new Promise(async (resolve, reject) => {
-      const headers = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      };
-
-      const body = {
-        ...ticketsale,
-        payment_type: 'stripe',
-      };
-
-      try {
-        response = await ApiHandler.post(url, querystring.stringify(body), headers);
-
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
+    return apiCall('post', 'raffles/initpurchase', {
+      ...ticketsale,
+      payment_type: 'stripe',
     });
   }
 
   static ticketPurchase(ticketsale) {
-    const url = `${apiRoot}/raffles/ticketpurchase`;
-    let response;
-    return new Promise(async (resolve, reject) => {
-      const headers = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      };
+    return apiCall('post', 'raffles/ticketpurchase', ticketsale);
+  }
 
-      try {
-        response = await ApiHandler.post(url, querystring.stringify(ticketsale), headers);
+  static getTicketSalesForRaffle(raffleId) {
+    return apiCall('get', `ticketsales/${raffleId}`);
+  }
 
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+  static getTicketDetails(ticketId) {
+    return apiCall('get', `ticketdetails/${ticketId}`);
   }
 }
-
-export default RaffleService;

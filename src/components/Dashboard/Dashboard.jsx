@@ -10,7 +10,7 @@ import { OrganizationService, RaffleService } from '../../services';
 var parse = require('html-react-parser');
 
 class Dashboard extends Component {
-  navgiateToOrderInfo = () => {
+  navigateToOrderInfo = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
     this.props.setRoute(RouteConstants.ORDER_INFO);
   }
@@ -66,7 +66,7 @@ class Dashboard extends Component {
                 <span className="dashboard-buy-content">${raffle.total_jackpot}</span>
                 <span className="dashboard-buy-header">Progressive Jackpot</span>
                 <span className="dashboard-buy-content">${raffle.total_progressive_jackpot}</span>
-                <Button className="dashboard-buy-button" variant="outlined" size="medium" onClick={this.navgiateToOrderInfo}>
+                <Button className="dashboard-buy-button" variant="outlined" size="medium" onClick={this.navigateToOrderInfo}>
                   Buy Now
                 </Button>
               </CardContent>
