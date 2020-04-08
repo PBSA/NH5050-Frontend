@@ -28,6 +28,3 @@ const Config = {
 };
 
 export default Config;
-
-// https://5050dev.peerplays.global/api/v1/organization
-// https://5050dev.peerplays.global/api/v1/organization
