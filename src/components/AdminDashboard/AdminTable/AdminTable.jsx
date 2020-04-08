@@ -64,8 +64,6 @@ class AdminTable extends Component {
     const {tableData} = this.props;
     const {currentPage, rowsPerPage} = this.state;
     let pages = Math.ceil(tableData.length/rowsPerPage);
-    console.log('totalRows: ', pages);
-    console.log('state: ', this.state);
     return (
       <>
         <TableContainer>
