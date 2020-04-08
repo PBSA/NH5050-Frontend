@@ -1,7 +1,8 @@
 import React from 'react';
+import SellerForm from '../SellerForm';
 
 export default function Sellers() {
   return (
-    <div>Sellers</div>
+    <SellerForm/>
   );
 }

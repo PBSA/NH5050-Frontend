@@ -20,6 +20,10 @@ export default {
     },
   },
 
+  adminSellerForm: {
+    save: 'Save'
+  },
+
   orderInfo: {
     infoHeader: 'Your Info',
     ticketsHeader: 'Tickets',
