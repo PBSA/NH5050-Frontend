@@ -8,7 +8,7 @@ import { StorageUtil } from '../../utility';
  */
 class CheckoutActions {
   /**
-   * Toggles the display of the modal component.
+   *
    *
    * @static
    * @returns {Action}
@@ -19,7 +19,7 @@ class CheckoutActions {
   }
 
   /**
-   * Toggles the display of the modal component.
+   *
    *
    * @static
    * @returns {Action}
@@ -31,7 +31,7 @@ class CheckoutActions {
   }
 
   /**
-   * Toggles the display of the modal component.
+   *
    *
    * @static
    * @returns {Action}
@@ -43,7 +43,7 @@ class CheckoutActions {
   }
 
   /**
-   * Toggles the display of the modal component.
+   *
    *
    * @static
    * @returns {Action}
@@ -54,7 +54,7 @@ class CheckoutActions {
   }
 
   /**
-   * Toggles the display of the modal component.
+   *
    *
    * @static
    * @returns {Action}
@@ -73,8 +73,25 @@ class CheckoutActions {
    * @memberof CheckoutActions
    */
   static setTicketPurchaseResponse(ticketPurchaseResponse) {
-    StorageUtil.set('ticketPurchaseResponse', ticketPurchaseResponse);
+    StorageUtil.set('ticketPurchaseResponse', JSON.stringify(ticketPurchaseResponse));
     return { type: ActionTypes.SET_TICKET_PURCHASE_RESPONSE, ticketPurchaseResponse };
+  }
+
+  /**
+   * Set checkout route
+   *
+   * @static
+   * @returns {Action}
+   * @memberof CheckoutActions
+   */
+  static setCheckoutRoute(checkoutRoute) {
+    StorageUtil.set('checkoutRoute', checkoutRoute);
+    return { type: ActionTypes.SET_CHECKOUT_ROUTE, checkoutRoute };
+  }
+
+  static resetCheckout() {
+    StorageUtil.clear();
+    return { type: ActionTypes.RESET_CHECKOUT };
   }
 }
 

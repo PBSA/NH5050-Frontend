@@ -5,6 +5,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {withRouter} from 'react-router';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService, UserService } from '../../services';
@@ -22,13 +23,13 @@ class OrderInfo extends Component {
     this.state = {
       ticketSelected: checkout.get('bundleVal'),
       ticketBundles: [],
-      detachmentSelected: checkout.get('detachementVal'),
+      detachmentSelected: checkout.get('detachmentVal'),
       detachments: [],
       firstName: checkout.get('firstName'),
       lastName: checkout.get('lastName'),
       phoneNum: checkout.get('phone'),
       email: checkout.get('email'),
-      playerId: 0,
+      playerId: 1,
       ageCheck: checkout.get('ageCheck'),
       emailCheck: checkout.get('emailCheck'),
       errorText: '',
@@ -75,10 +76,11 @@ class OrderInfo extends Component {
       playerId: this.state.playerId,
       bundle: this.state.ticketBundles[this.state.ticketSelected],
       bundleVal: this.state.ticketSelected,
-      detachement: this.state.detachments[this.state.detachmentSelected],
-      detachementVal: this.state.detachmentSelected
+      detachment: this.state.detachments[this.state.detachmentSelected],
+      detachmentVal: this.state.detachmentSelected
     });
     this.props.navigate(RouteConstants.PAYMENT_INFO);
+    this.props.setRoute(RouteConstants.PAYMENT_INFO);
   }
 
   componentDidMount = () => {
@@ -104,6 +106,8 @@ class OrderInfo extends Component {
 
     if (firstName === '') {
       errorText = errors.noFirstName;
+    } else if (lastName === '') {
+      errorText = errors.noLastName;
     } else if (email === '') {
       errorText = errors.noEmail;
     } else if (!ValidationUtil.validateEmail(email)) {
@@ -115,7 +119,7 @@ class OrderInfo extends Component {
     } else if (!ageCheck) {
       errorText = errors.ageCheck
     } else if (detachmentSelected === '') {
-      errorText = errors.noDetachement;
+      errorText = errors.noDetachment;
     } else {
       errorText = ''
 
@@ -147,10 +151,10 @@ class OrderInfo extends Component {
         console.error(err);
         
         if(err.hasOwnProperty('data')) {
-          if(err.status === 400) {
+          if(err.status === 400 && typeof err.data.error !== 'string') {
             let errText = '';
             Object.keys(err.data.error).map((key)=>{
-              errText += key + ': ' + err.data.error[key]
+              errText += key + ': ' + err.data.error[key] + '\n'
             });
             this.setState({
               errorText: errText,
@@ -179,6 +183,7 @@ class OrderInfo extends Component {
 
   render() {
     const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText} = this.state;
+
     return (
       <div>
         <Card className="order" variant="outlined">
@@ -249,16 +254,16 @@ class OrderInfo extends Component {
 
                   <div className="order-tickets-wrapper">
                     <span className="order-tickets-subtext">{strings.orderInfo.ticketDetachmentSubtext}</span>
-                    <FormControl className="order-tickets-detachement" variant="outlined">
-                    <InputLabel id="detachement-select">{strings.orderInfo.detachmentSelectLabel}</InputLabel>
+                    <FormControl className="order-tickets-detachment" variant="outlined">
+                    <InputLabel id="detachment-select">{strings.orderInfo.detachmentSelectLabel}</InputLabel>
                       <Select
-                        id="detachement-select"
+                        id="detachment-select"
                         value={detachmentSelected}
                         onChange={this.handleDetachementChange}
-                        label={'Select A Detachement'}
+                        label={'Select A Detachment'}
                       >
-                        {detachments.map((detachement, index) => {
-                          return <MenuItem key={index} value={index}>{detachement.user.name}</MenuItem>
+                        {detachments.map((detachment, index) => {
+                          return <MenuItem key={index} value={index}>{detachment.user.name}</MenuItem>
                         })}
                       </Select>
                     </FormControl>
@@ -291,8 +296,9 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
     setOrderInfo: CheckoutActions.setOrderInfo,
+    setRoute: CheckoutActions.setCheckoutRoute
   },
   dispatch,
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderInfo);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderInfo));

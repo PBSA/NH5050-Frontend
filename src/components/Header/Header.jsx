@@ -11,7 +11,7 @@ import { FacebookShareButton, FacebookIcon,
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService } from '../../services';
-import { Config } from '../../utility';
+import { Config, StorageUtil } from '../../utility';
 
 const organizationId = 1;
 class Header extends Component {
@@ -24,6 +24,8 @@ class Header extends Component {
 
   navgiateToOrderInfo = () => {
     this.props.navigate(RouteConstants.DASHBOARD);
+    this.props.setRoute(RouteConstants.DASHBOARD);
+    this.props.resetCheckout();
   }
 
   componentDidMount = () => {
@@ -56,13 +58,15 @@ class Header extends Component {
 
   sortDraws = (draws) => {
     const sortedDraws = draws.filter((draw) => {
-      return (new Date(draw.draw_datetime) > new Date(Date.now()) && draw.draw_type === "5050");
+      return (new Date(draw.draw_datetime) > new Date(Date.now()) && new Date(draw.start_datetime) < new Date(Date.now()) && draw.draw_type === "5050");
     });
 
-    if(sortedDraws[0].draw_type === "5050") {
-      this.props.setRaffleId(sortedDraws[0].id)
-      this.props.setRaffle(sortedDraws[0]);
+    if(!sortedDraws[0]) {
+      return;
     }
+
+    this.props.setRaffleId(sortedDraws[0].id)
+    this.props.setRaffle(sortedDraws[0]);
   }
 
 
@@ -120,6 +124,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     setRaffle: CheckoutActions.setRaffle,
     setOrganizationId: CheckoutActions.setOrganizationId,
     setRaffleId: CheckoutActions.setRaffleId,
+    setRoute: CheckoutActions.setCheckoutRoute,
+    resetCheckout: CheckoutActions.resetCheckout,
   },
   dispatch,
 );

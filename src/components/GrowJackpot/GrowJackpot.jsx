@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StorageUtil } from '../../utility';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { NavigateActions } from '../../redux/actions';
+import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 import { RouteConstants } from '../../constants';
 import ProgressBar from '../ProgressBar';
@@ -26,6 +26,7 @@ class GrowJackpot extends Component {
 
   navigateToDashboard = () => {
     this.props.navigate(RouteConstants.DASHBOARD);
+    this.props.setRoute(RouteConstants.DASHBOARD);
   };
 
   copyURL = () => {
@@ -52,24 +53,24 @@ class GrowJackpot extends Component {
           <div className="grow-socials">
             <div className="grow-socials-row">
               <FacebookShareButton url={shareLink}>
-                <FacebookIcon borderRadius={5}/>
+                <FacebookIcon borderRadius={5} size={50}/>
               </FacebookShareButton>
               <TwitterShareButton url={shareLink}>
-                <TwitterIcon borderRadius={5}/>
+                <TwitterIcon borderRadius={5} size={50}/>
               </TwitterShareButton>
               <LinkedinShareButton url={shareLink}>
-                <LinkedinIcon borderRadius={5}/>
+                <LinkedinIcon borderRadius={5} size={50}/>
               </LinkedinShareButton>
             </div>
             <div className="grow-socials-row">
               <RedditShareButton url={shareLink}>
-                <RedditIcon borderRadius={5}/>
+                <RedditIcon borderRadius={5} size={50}/>
               </RedditShareButton>
               <WhatsappShareButton url={shareLink}>
-                <WhatsappIcon borderRadius={5}/>
+                <WhatsappIcon borderRadius={5} size={50}/>
               </WhatsappShareButton>
               <EmailShareButton url={shareLink}>
-                <EmailIcon borderRadius={5}/>
+                <EmailIcon borderRadius={5} size={50}/>
               </EmailShareButton>
             </div>
           </div>
@@ -107,6 +108,7 @@ class GrowJackpot extends Component {
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
+    setRoute: CheckoutActions.setCheckoutRoute
   },
   dispatch,
 );
