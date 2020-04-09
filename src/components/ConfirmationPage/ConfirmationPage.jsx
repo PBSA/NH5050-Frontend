@@ -56,7 +56,9 @@ class ConfirmationPage extends Component {
 
   timeToDraw = (drawdate) => {
     const diff = moment.duration(moment(drawdate).diff(moment()));
-    return `${diff.days()}d ${diff.hours()}h ${diff.minutes()}m ${diff.seconds()}s`;
+
+    let days = moment(drawdate).diff(moment(), 'days');
+    return `${days}d ${diff.hours()}h ${diff.minutes()}m ${diff.seconds()}s`;
   }
 
   addLeadingZeros(num, totalDigitsRequired) {
@@ -70,43 +72,45 @@ class ConfirmationPage extends Component {
     const {raffle, progressive, timeToDraw, timeToProgressiveDraw} = this.state;
 
     return (
-      <Card className="confirmation-card" variant="outlined">
-        <CardContent>
-        <ProgressBar activeStep={2}/>
-        {this.props.ticketConfirmation !== 'Processing' ? <div className="confirmation">
-          <span className="confirmation-header">{strings.confirmationPage.header}</span>
-          <span className="confirmation-subtext">{strings.confirmationPage.subtext1}</span>
-          <span className="confirmation-subtext">{strings.confirmationPage.subtext2} {raffle.raffle_name}{strings.confirmationPage.goodluck}</span>
-          <div className="confirmation-tickets">
-            {entries.map((ticket, index) => <span key={index} className="confirmation-tickets-ticket">{`R${this.addLeadingZeros(raffle_id,2)}T${this.addLeadingZeros(ticket_sales_id,4)}E${this.addLeadingZeros(ticket.id === undefined ? ticket.get('id') : ticket.id , 5)}`}</span>)}
-          </div>
-
-          <div className="confirmation-jackpots">
-            <div className="confirmation-jackpots-5050">
-              <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
-              <span className="confirmation-jackpots-amount"> ${totalJackpot} </span>
-              <span className="confirmation-jackpots-header"> {timeToDraw} </span>
-              <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(raffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
+      <div className="checkout-container">
+        <Card className="confirmation-card" variant="outlined">
+          <CardContent>
+          <ProgressBar activeStep={2}/>
+          {this.props.ticketConfirmation !== 'Processing' ? <div className="confirmation">
+            <span className="confirmation-header">{strings.confirmationPage.header}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext1}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext2} {raffle.raffle_name}{strings.confirmationPage.goodluck}</span>
+            <div className="confirmation-tickets">
+              {entries.map((ticket, index) => <span key={index} className="confirmation-tickets-ticket">{`R${this.addLeadingZeros(raffle_id,2)}T${this.addLeadingZeros(ticket_sales_id,4)}E${this.addLeadingZeros(ticket.id === undefined ? ticket.get('id') : ticket.id , 5)}`}</span>)}
             </div>
-            <div className="confirmation-jackpots-progressive">
-              <span className="confirmation-jackpots-header"> {strings.confirmationPage.progressivejackpot} </span>
-              <span className="confirmation-jackpots-amount"> ${totalProgressive} </span>
-              <span className="confirmation-jackpots-header"> {timeToProgressiveDraw} </span>
-              <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(progressive.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
-            </div>
-          </div>
 
-          <div className="confirmation-buttons">
-            <Button className="confirmation-buttons-order" onClick={this.navigateToOrder}>{strings.confirmationPage.orderMore}</Button>
-            <Button className="confirmation-buttons-print" onClick={() => window.print()}>{strings.confirmationPage.printThisPage}</Button>
-            <Button className="confirmation-buttons-grow" onClick={this.navigateToShare}endIcon={<ArrowRightAltIcon />}>{strings.confirmationPage.growJackpot}</Button>
-          </div>
-        </div> 
-        : <div className="confirmation">
-          {strings.confirmationPage.processing}
-          </div>}
-        </CardContent>
-      </Card>
+            <div className="confirmation-jackpots">
+              <div className="confirmation-jackpots-5050">
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
+                <span className="confirmation-jackpots-amount"> ${totalJackpot} </span>
+                <span className="confirmation-jackpots-header"> {timeToDraw} </span>
+                <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(raffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
+              </div>
+              <div className="confirmation-jackpots-progressive">
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.progressivejackpot} </span>
+                <span className="confirmation-jackpots-amount"> ${totalProgressive} </span>
+                <span className="confirmation-jackpots-header"> {timeToProgressiveDraw} </span>
+                <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(progressive.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
+              </div>
+            </div>
+
+            <div className="confirmation-buttons">
+              <Button className="confirmation-buttons-order" onClick={this.navigateToOrder}>{strings.confirmationPage.orderMore}</Button>
+              <Button className="confirmation-buttons-print" onClick={() => window.print()}>{strings.confirmationPage.printThisPage}</Button>
+              <Button className="confirmation-buttons-grow" onClick={this.navigateToShare}endIcon={<ArrowRightAltIcon />}>{strings.confirmationPage.growJackpot}</Button>
+            </div>
+          </div> 
+          : <div className="confirmation">
+            {strings.confirmationPage.processing}
+            </div>}
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }
