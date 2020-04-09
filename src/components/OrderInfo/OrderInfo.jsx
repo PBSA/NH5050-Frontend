@@ -187,7 +187,7 @@ class OrderInfo extends Component {
   render() {
     const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText} = this.state;
     return (
-      <div>
+      <div className="checkout-container">
         <Card className="order" variant="outlined">
           <CardContent>
             <ProgressBar activeStep={0}/>
