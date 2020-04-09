@@ -1,6 +1,6 @@
 {
   "name": "nhmc-5050",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "5050 application for the New Hampshire Marine Corps",
   "main": "index.js",
   "scripts": {
