@@ -20,6 +20,10 @@ export default {
     },
   },
 
+  adminSellerForm: {
+    save: 'Save',
+  },
+
   orderInfo: {
     infoHeader: 'Your Info',
     ticketsHeader: 'Tickets',
@@ -54,13 +58,16 @@ export default {
     text2: 'entries in the Progressive Jackpot on',
     back: 'Back',
     buyNow: 'Buy Now',
+    errors: {
+      noName: 'No card holder name',
+    },
   },
 
   confirmationPage: {
     header: 'Thank You!',
     subtext1: 'We have proccessed your order and emailed you a digital ticket containing the information below. Please print this page for your records',
     subtext2: 'Here are your ticket numbers for the',
-    goodluck: ' -- Good luck!',
+    goodluck: ' and the progressive raffle to be drawn in November -- Good luck!',
     jackpot: '5050 Jackpot',
     progressivejackpot: 'Progressive Jackpot',
     drawn: 'Drawn',

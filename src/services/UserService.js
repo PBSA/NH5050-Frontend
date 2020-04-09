@@ -1,14 +1,6 @@
-import axios from 'axios';
-import querystring from 'query-string';
-import { Config } from '../utility';
+import { apiCall } from './api.helper';
 
-const ApiHandler = axios.create({ withCredentials: true });
-
-const apiRoot = Config.isDev
-  ? Config.devApiRoute
-  : Config.prodApiRoute;
-
-class OrganizationService {
+export default class UserService {
   /**
    * Create or update a player
    *
@@ -26,69 +18,14 @@ class OrganizationService {
    * @memberof PrivateAuthService
    */
   static createPlayer(player) {
-    const url = `${apiRoot}/users`;
-    let response;
-    return new Promise(async (resolve, reject) => {
-      const headers = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      };
-
-      try {
-        response = await ApiHandler.post(url, querystring.stringify(player), headers);
-
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+    return apiCall('post', 'users', player);
   }
 
   static getPlayer(email, mobile) {
-    const url = `${apiRoot}/users?email=${email}&mobile=${mobile}`;
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await ApiHandler.get(url);
-
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+    return apiCall('get', 'users', { email, mobile });
   }
 
-  static Login(admin) {
-    const url = `${apiRoot}/users/login`;
-    let response;
-    return new Promise(async (resolve, reject) => {
-      const headers = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      };
-
-      try {
-        response = await ApiHandler.post(url, querystring.stringify(admin), headers);
-
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+  static login(credentials) {
+    return apiCall('post', 'users/login', credentials);
   }
 }
-
-export default OrganizationService;

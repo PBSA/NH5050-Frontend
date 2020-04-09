@@ -1,58 +1,41 @@
-import axios from 'axios';
-import { Config } from '../utility';
+import { apiCall } from './api.helper';
 
-const ApiHandler = axios.create({ withCredentials: true });
+export default class OrganizationService {
 
-const apiRoot = Config.isDev
-  ? Config.devApiRoute
-  : Config.prodApiRoute;
-
-class OrganizationService {
-  /**
-   * Login via Username and Password.
-   *
-   * @static
-   * @param {object} account - Account object:
-   * {
-      login: 'username',
-      password: 'password
-   * }.
-   * @returns {Promise}
-   * @memberof PrivateAuthService
-   */
   static getOrganizationInfo(organizationId) {
-    const query = `${apiRoot}/organization?organizationId=${organizationId}`;
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await ApiHandler.get(query);
+    return apiCall('get', 'organization', { organizationId });
+  }
 
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+  static createOrUpdateOrganization(organizationData) {
+    return apiCall('post', 'organization', organizationData);
   }
 
   static getBeneficiaries(organizationId) {
-    const query = `${apiRoot}/organization/beneficiary?organizationId=${organizationId}`;
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await ApiHandler.get(query);
-
-        if (response.data.status !== 200) {
-          return reject(response);
-        }
-
-        return resolve(response.data.result);
-      } catch (err) {
-        return reject(err.response);
-      }
-    });
+    return apiCall('get', 'organization/beneficiary', { organizationId });
   }
-}
 
-export default OrganizationService;
+  static createOrUpdateBeneficiary(beneficiaryData) {
+    return apiCall('post', 'organization/beneficiary', beneficiaryData);
+  }
+
+  static getSellers(organizationId) {
+    return apiCall('get', 'organization/sellers', { organizationId });
+  }
+
+  static createOrUpdateSeller(sellerData) {
+    return apiCall('post', 'organization/sellers', sellerData);
+  }
+
+  static getAdmins(organizationId) {
+    return apiCall('get', 'organization/admins', { organizationId });
+  }
+
+  static createOrUpdateAdmin(adminData) {
+    return apiCall('post', 'organization/admins', adminData);
+  }
+
+  static deleteAdmin(userId) {
+    return apiCall('delete', 'organizations/admins', { userId });
+  }
+  
+}

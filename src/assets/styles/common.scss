@@ -10,7 +10,12 @@ html, body, #content{
   overflow-y: auto;
   overflow-x: hidden;
   font-family: 'Lato', sans-serif;
-  background: #eeeded;
+  background: $app-background;
+}
+
+.checkout-container {
+  background: $checkout-pages-background;
+  padding: 2%;
 }
 
 //stepper styles
