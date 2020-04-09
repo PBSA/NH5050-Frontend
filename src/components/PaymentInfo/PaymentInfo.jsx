@@ -114,7 +114,7 @@ class PaymentInfo extends Component {
         if(err.status === 400 && typeof err.data.error !== 'string') {
           let errText = '';
           Object.keys(err.data.error).map((key)=>{
-            errText += key + ': ' + err.data.error[key]
+            errText += err.data.error[key]
           });
           this.setState({
             errorMessage: errText
@@ -193,7 +193,7 @@ class PaymentInfo extends Component {
             if(err.status === 400 && typeof err.data.error !== 'string') {
               let errText = '';
               Object.keys(err.data.error).map((key)=>{
-                errText += key + ': ' + err.data.error[key]
+                errText += err.data.error[key]
               });
               this.setState({
                 errorMessage: errText,
