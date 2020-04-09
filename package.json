@@ -1,6 +1,6 @@
 {
   "name": "nhmc-5050",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "5050 application for the New Hampshire Marine Corps",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "file-loader": "^6.0.0",
     "history": "^4.10.1",
+    "html-react-parser": "^0.10.3",
     "image-webpack-loader": "^6.0.0",
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",

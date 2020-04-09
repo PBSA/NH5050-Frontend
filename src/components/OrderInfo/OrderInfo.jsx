@@ -85,6 +85,7 @@ class OrderInfo extends Component {
 
   componentDidMount = () => {
     RaffleService.getTicketBundle(this.props.raffleId).then((res) => {
+      res.sort((a,b) => (a.quantity > b.quantity) ? 1 : ((b.quantity > a.quantity) ? -1 : 0));
       this.setState({ticketBundles: res});
     });
 
@@ -118,6 +119,8 @@ class OrderInfo extends Component {
       errorText = errors.invalidPhone;
     } else if (!ageCheck) {
       errorText = errors.ageCheck
+    } else if (!emailCheck) {
+      errorText= errors.ticketCheck
     } else if (detachmentSelected === '') {
       errorText = errors.noDetachment;
     } else {
@@ -183,7 +186,6 @@ class OrderInfo extends Component {
 
   render() {
     const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText} = this.state;
-
     return (
       <div>
         <Card className="order" variant="outlined">
@@ -247,7 +249,7 @@ class OrderInfo extends Component {
                   <FormControl component="fieldset">
                     <RadioGroup aria-label="Ticket Bundle" name="ticket-bundle" value={ticketSelected} onChange={this.handleTicketBundleChange}>
                       {ticketBundles.map((ticket, index) => {
-                        return <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={`${ticket.quantity} entry for ${ticket.price}$`} />
+                        return <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={`${ticket.quantity} entry for $${ticket.price}`} />
                       })}
                     </RadioGroup>
                   </FormControl>

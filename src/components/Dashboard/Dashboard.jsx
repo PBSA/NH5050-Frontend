@@ -7,6 +7,7 @@ import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import strings from '../../assets/locales/strings';
 import { OrganizationService, RaffleService } from '../../services';
+var parse = require('html-react-parser');
 
 class Dashboard extends Component {
   navgiateToOrderInfo = () => {
@@ -52,7 +53,7 @@ class Dashboard extends Component {
           <div className="dashboard-panel">
             {this.displayImage()}
             <p className="dashboard-panel-text">
-              {raffle.raffle_description}
+              {parse(raffle.raffle_description)}
             </p>
           </div>
 
