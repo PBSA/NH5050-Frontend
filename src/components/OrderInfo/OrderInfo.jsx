@@ -64,6 +64,14 @@ class OrderInfo extends Component {
     this.setState({emailCheck: !this.state.emailCheck});
   };
 
+  bundleLabel = (quantity, price) => {//${ticket.quantity} entry for $${ticket.price}
+    if (quantity <= 1) {
+      return `${quantity} entry for $${price}`;
+    } else {
+      return `${quantity} entries for $${price}`;
+    }
+  }
+
   navigateToPayment = () => {
     this.setState({errorText: ''});
     this.props.setOrderInfo({
@@ -157,7 +165,7 @@ class OrderInfo extends Component {
           if(err.status === 400 && typeof err.data.error !== 'string') {
             let errText = '';
             Object.keys(err.data.error).map((key)=>{
-              errText += key + ': ' + err.data.error[key] + '\n'
+                errText += err.data.error[key] + '\n'
             });
             this.setState({
               errorText: errText,
@@ -187,7 +195,7 @@ class OrderInfo extends Component {
   render() {
     const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText} = this.state;
     return (
-      <div>
+      <div className="checkout-container">
         <Card className="order" variant="outlined">
           <CardContent>
             <ProgressBar activeStep={0}/>
@@ -249,7 +257,7 @@ class OrderInfo extends Component {
                   <FormControl component="fieldset">
                     <RadioGroup aria-label="Ticket Bundle" name="ticket-bundle" value={ticketSelected} onChange={this.handleTicketBundleChange}>
                       {ticketBundles.map((ticket, index) => {
-                        return <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={`${ticket.quantity} entry for $${ticket.price}`} />
+                        return <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={this.bundleLabel(ticket.quantity, ticket.price)} />
                       })}
                     </RadioGroup>
                   </FormControl>
