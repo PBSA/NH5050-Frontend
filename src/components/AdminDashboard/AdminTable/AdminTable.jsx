@@ -63,7 +63,8 @@ class AdminTable extends Component {
   render() {
     const {tableData} = this.props;
     const {currentPage, rowsPerPage} = this.state;
-    let pages = Math.ceil(tableData.length/rowsPerPage);
+    const tableLength = tableData ? tableData.length : 15;
+    const pages = Math.ceil(tableLength/rowsPerPage);
     return (
       <>
         <TableContainer>
@@ -89,7 +90,7 @@ class AdminTable extends Component {
         <TablePagination
           rowsPerPageOptions={[15, 25, 50]}
           component="div"
-          count={tableData.length}
+          count={tableLength}
           rowsPerPage={rowsPerPage}
           page={currentPage}
           onChangePage={this.changePage}
