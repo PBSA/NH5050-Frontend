@@ -298,7 +298,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
     setOrderInfo: CheckoutActions.setOrderInfo,
-    setRoute: CheckoutActions.setCheckoutRoute
+    setRoute: CheckoutActions.setCheckoutRoute,
   },
   dispatch,
 );

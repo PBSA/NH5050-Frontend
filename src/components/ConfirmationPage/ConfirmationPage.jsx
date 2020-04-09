@@ -4,6 +4,7 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RaffleService } from '../../services';
+import { StorageUtil } from '../../utility';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 import { RouteConstants } from '../../constants';
@@ -45,8 +46,9 @@ class ConfirmationPage extends Component {
   }
 
   navigateToOrder = () => {
+    this.props.resetCheckout();
     this.props.navigate(RouteConstants.ORDER_INFO);
-    this.props.setRoute(RouteConstants.ORDER_INFO)
+    this.props.setRoute(RouteConstants.ORDER_INFO);
   }
 
   navigateToShare = () => {
@@ -73,7 +75,7 @@ class ConfirmationPage extends Component {
 
     return (
       <Card className="confirmation-card" variant="outlined">
-        <CardContent>
+        <CardContent className="confirmation-content">
         <ProgressBar activeStep={2}/>
         {this.props.ticketConfirmation !== 'Processing' ? <div className="confirmation">
           <span className="confirmation-header">{strings.confirmationPage.header}</span>
@@ -128,7 +130,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
-    setRoute: CheckoutActions.setCheckoutRoute
+    setRoute: CheckoutActions.setCheckoutRoute,
+    resetCheckout: CheckoutActions.resetCheckout
   },
   dispatch,
 );

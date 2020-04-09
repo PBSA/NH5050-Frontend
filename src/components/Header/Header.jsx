@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FacebookShareButton, FacebookIcon, 
   TwitterShareButton, TwitterIcon,
-  LinkedinShareButton, LinkedinIcon,
+  TelegramShareButton, TelegramIcon,
   RedditShareButton, RedditIcon,
   WhatsappShareButton, WhatsappIcon,
   EmailShareButton, EmailIcon } from 'react-share';
@@ -91,9 +91,9 @@ class Header extends Component {
             <TwitterShareButton url={shareLink}>
               <TwitterIcon size={32} borderRadius={5}/>
             </TwitterShareButton>
-            <LinkedinShareButton url={shareLink}>
-              <LinkedinIcon size={32} borderRadius={5}/>
-            </LinkedinShareButton>
+            <TelegramShareButton url={shareLink}>
+              <TelegramIcon size={32} borderRadius={5}/>
+            </TelegramShareButton>
             <RedditShareButton url={shareLink}>
               <RedditIcon size={32} borderRadius={5}/>
             </RedditShareButton>

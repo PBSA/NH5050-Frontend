@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, TextField, Tooltip, Card, CardContent } from '@material-ui/core';
 import { FacebookShareButton, FacebookIcon,
   TwitterShareButton, TwitterIcon,
-  LinkedinShareButton, LinkedinIcon,
+  TelegramShareButton, TelegramIcon,
   RedditShareButton, RedditIcon,
   WhatsappShareButton, WhatsappIcon,
   EmailShareButton, EmailIcon } from 'react-share';
@@ -38,7 +38,7 @@ class GrowJackpot extends Component {
   };
 
   componentDidMount() {
-    StorageUtil.clear();
+    this.props.resetCheckout();
   }
   
   render() {
@@ -58,9 +58,9 @@ class GrowJackpot extends Component {
               <TwitterShareButton url={shareLink}>
                 <TwitterIcon borderRadius={5} size={50}/>
               </TwitterShareButton>
-              <LinkedinShareButton url={shareLink}>
-                <LinkedinIcon borderRadius={5} size={50}/>
-              </LinkedinShareButton>
+              <TelegramShareButton url={shareLink}>
+                <TelegramIcon borderRadius={5} size={50}/>
+              </TelegramShareButton>
             </div>
             <div className="grow-socials-row">
               <RedditShareButton url={shareLink}>
@@ -108,7 +108,8 @@ class GrowJackpot extends Component {
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
-    setRoute: CheckoutActions.setCheckoutRoute
+    setRoute: CheckoutActions.setCheckoutRoute,
+    resetCheckout: CheckoutActions.resetCheckout,
   },
   dispatch,
 );
