@@ -29,6 +29,15 @@ class Header extends Component {
   }
 
   componentDidMount = () => {
+    this.getOrganization();
+    this.getRaffles();
+    //set interval to get raffle updates every 30 seconds
+    setInterval(async () => {
+      this.getRaffles();
+    }, 30000);
+  }
+
+  getOrganization = () => {
     OrganizationService.getOrganizationInfo(organizationId).then((organization) => {
       this.setState({loaded: true});
       this.props.setOrganization(organization);
@@ -42,6 +51,9 @@ class Header extends Component {
         }
       })
     });
+  }
+
+  getRaffles = () => {
     //get current raffle data
     RaffleService.getRaffle(organizationId).then((raffle) => {
       this.sortDraws(raffle);
