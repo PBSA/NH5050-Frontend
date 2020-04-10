@@ -1,0 +1,16 @@
+@import '../../../assets/styles/common.scss';
+
+.admin-table {
+  &-header {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  &-cell {
+    font-size: 1rem;
+  }
+
+  &-footer {
+    color: $primary-app-color;
+  }
+}

@@ -35,13 +35,21 @@ class AdminDashboard extends Component {
   }
 
   getBeneficiaries = () => {
-    OrganizationService.getBeneficiaries(this.props.organizationId).then((beneficiaries) => {
+    OrganizationService.getBeneficiaries(this.props.organizationId).then((data) => {
+      let beneficiaries = data.map(item => {
+        return ({
+        name: item.user.name,
+        type: item.user.type,
+        proceeds: item.total_funds,
+        })
+      });
       this.setState({beneficiaries});
-    });
+    })
   }
 
   getSellers = () => {
     OrganizationService.getSellers(this.props.organizationId).then((sellers) => {
+      
       this.setState({sellers});
     })
   }
@@ -54,7 +62,7 @@ class AdminDashboard extends Component {
 
   componentDidMount() {
     this.getBeneficiaries();
-    this.getSellers();
+    // this.getSellers();
     // this.getRaffles();
   }
 
@@ -62,7 +70,7 @@ class AdminDashboard extends Component {
     const { tabIndex, beneficiaries, sellers, raffles, tickets } = this.state;
     const activeTab = tabs[tabIndex].id;
     return (
-      <Card className="order" variant="outlined">
+      <Card className="admin" variant="outlined">
         <CardContent>
           <Tabs value={tabIndex} onChange={(e, index) => this.setTabIndex(index)} centered>
             {tabs.map(({ id, label }) => <Tab key={id} label={label} />)}

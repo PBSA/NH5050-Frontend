@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  TableContainer, Table, TablePagination, TableHead, TableBody, TableRow, TableCell,
+  TableContainer, Table, TablePagination, TableHead, TableBody, TableRow, TableCell, Paper,
 } from '@material-ui/core';
 import { RouteConstants } from '../../../constants';
 
 class AdminTable extends Component {
-  
+
   state = {
     currentPage: 0,
     rowsPerPage: 15,
@@ -53,49 +53,56 @@ class AdminTable extends Component {
   	}
   }
 
-  renderTableRow = (rowData, i) => {
+  renderTableRow = (rowData, styleClass) => {
     const rowArray = Object.values(rowData);
     let row;
-    row = rowArray.map(el => { return <TableCell key={el}>{el}</TableCell> });
+    row = rowArray.map((el, index) => { return <TableCell className={`admin-table-cell ${styleClass}`} align={index > 0 ? "right" : "left"} key={`${el}${index}`}>{el}</TableCell> });
     return row;
   }
 
   render() {
-    const {tableData} = this.props;
-    const {currentPage, rowsPerPage} = this.state;
+    const { tableData, sumRowData } = this.props;
+    const { currentPage, rowsPerPage } = this.state;
     const tableLength = tableData ? tableData.length : 15;
-    const pages = Math.ceil(tableLength/rowsPerPage);
+    // const pages = Math.ceil(tableLength/rowsPerPage);
     return (
       <>
         <TableContainer>
           <Table stickyHeader>
             <TableHead>
               <TableRow hover>
-              {this.generateHeadCells().map(headCell =>
-  					    <TableCell key={headCell.id}>
-                  {headCell.label}
-                </TableCell>
-              )}
+                {this.generateHeadCells().map((headCell, index) => (
+                  <TableCell className="admin-table-header" align={index > 0 ? 'right' : 'left'} key={headCell.id}>
+                    {headCell.label}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
-                {tableData && tableData.slice( currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((rowData, i) =>
-                  <TableRow>
-                    {this.renderTableRow(rowData, i)}
+              {tableData && tableData.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((rowData, i) => (
+                <TableRow hover key={i}>
+                  {this.renderTableRow(rowData)}
+                </TableRow>
+              ))}
+              {sumRowData
+                ? (
+                  <TableRow hover>
+                    {this.renderTableRow(sumRowData, 'admin-table-footer')}
                   </TableRow>
-                )}
+                )
+                : null}
             </TableBody>
           </Table>
+          <TablePagination
+            rowsPerPageOptions={[15, 25, 50]}
+            component="div"
+            count={tableLength}
+            rowsPerPage={rowsPerPage}
+            page={currentPage}
+            onChangePage={this.changePage}
+            onChangeRowsPerPage={this.changeRowsPerPage}
+          />
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[15, 25, 50]}
-          component="div"
-          count={tableLength}
-          rowsPerPage={rowsPerPage}
-          page={currentPage}
-          onChangePage={this.changePage}
-          onChangeRowsPerPage={this.changeRowsPerPage}
-        />
       </>
     );
   }

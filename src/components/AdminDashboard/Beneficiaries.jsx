@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AdminTable from './AdminTable';
 import { RouteConstants } from '../../constants';
+import { GeneralUtil } from '../../utility';
 
-const Beneficiaries = (props) => (
-  <AdminTable tableData={props.data} route={RouteConstants.ADMIN_BENEFICIARIES} />
-);
+class Beneficiaries extends Component {
+  sumRow = () => {
+    const proceeds = GeneralUtil.sumProceeds(this.props.data);
+    if(!!proceeds) {
+      return {
+        total: 'Total',
+        empty: '',
+        proceeds: proceeds
+      }
+    }
+  }
+
+  render() {
+    const proceedSum = this.sumRow();
+    return (
+      <AdminTable tableData={this.props.data} route={RouteConstants.ADMIN_BENEFICIARIES} sumRowData={proceedSum} />
+    );
+  }
+}
 
 export default Beneficiaries;
