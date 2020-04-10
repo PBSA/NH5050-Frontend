@@ -62,3 +62,13 @@ html, body, #content{
 .MuiCheckbox-colorSecondary.Mui-checked, .MuiRadio-colorSecondary.Mui-checked {
   color: $primary-app-color;
 }
+
+//admin panel tab navigation
+.MuiTabs-indicator {
+  display: none;
+}
+
+.Mui-selected {
+  color: white;
+  background-color: $primary-app-color;
+}
