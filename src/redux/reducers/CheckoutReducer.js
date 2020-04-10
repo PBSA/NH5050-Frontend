@@ -96,8 +96,6 @@ export default (state = initialState, action) => {
         bundleVal: '0',
         detachmentVal: '',
         playerId: 1,
-        bundle: '',
-        detachment: '',
         ticketPurchaseResponse: '',
       });
     }

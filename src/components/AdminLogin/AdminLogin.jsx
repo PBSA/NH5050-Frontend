@@ -20,7 +20,7 @@ class AdminLogin extends Component {
   doLogin = async(e) => {
     e.preventDefault();
     try{
-      await UserService.Login({
+      await UserService.login({
         email: this.state.username,
         password: this.state.password,
       });
@@ -32,7 +32,7 @@ class AdminLogin extends Component {
         if(err.status === 400 && typeof err.data.error !== 'string') {
           let errText = '';
           Object.keys(err.data.error).map((key)=>{
-            errText += key + ': ' + err.data.error[key] + '\n'
+            errText += err.data.error[key] + '\n'
           });
           this.setState({
             errorText: errText,
