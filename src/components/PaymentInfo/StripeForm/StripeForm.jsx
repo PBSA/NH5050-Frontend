@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import {FormControl, FormHelperText, Input, InputAdornment} from '@material-ui/core';
+import {
+  FormControl, FormHelperText, Input, InputAdornment,
+} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
+import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js';
 
 const createOptions = () => ({
   style: {
@@ -35,11 +37,19 @@ class StripeForm extends Component {
   }
 
   render() {
-    const {showPassword} = this.state;
+    const { showPassword } = this.state;
 
     return (
       <FormControl>
-        <div className='stripe-header'>
+        <div className="stripe-header">
+          <FormHelperText className="stripe-helpertext">
+            Name on Card
+          </FormHelperText>
+          <div className="stripe">
+            <input className="stripe-input" placeholder="Name" onChange={this.props.handleNameChange} />
+          </div>
+        </div>
+        <div className="stripe-header">
           <FormHelperText className="stripe-helpertext">
             Card details
           </FormHelperText>
@@ -48,14 +58,6 @@ class StripeForm extends Component {
               onChange={this.props.handleChange}
               {...createOptions()}
             />
-          </div>
-        </div>
-        <div className='stripe-header'>
-          <FormHelperText className="stripe-helpertext">
-            Name on Card
-          </FormHelperText>
-          <div className="stripe">
-            <input className="stripe-input" placeholder="Name" onChange={this.props.handleNameChange}/>
           </div>
         </div>
         <div className="stripe-pw">
@@ -85,13 +87,15 @@ class StripeForm extends Component {
 export default function InjectedCheckoutForm(props) {
   return (
     <ElementsConsumer>
-      {({stripe, elements}) => (
-        <StripeForm stripeCallback={props.stripeCallback} 
-        handleSellerPasswordChange={props.handleSellerPasswordChange} 
-        handleNameChange={props.handleNameChange}
-        handleChange={props.handleChange}
-        stripe={stripe} 
-        elements={elements} />
+      {({ stripe, elements }) => (
+        <StripeForm
+          stripeCallback={props.stripeCallback}
+          handleSellerPasswordChange={props.handleSellerPasswordChange}
+          handleNameChange={props.handleNameChange}
+          handleChange={props.handleChange}
+          stripe={stripe}
+          elements={elements}
+        />
       )}
     </ElementsConsumer>
   );
