@@ -82,7 +82,7 @@ class AdminDashboard extends Component {
   render() {
     const { tabIndex, beneficiaries, sellers, raffles, tickets } = this.state;
     const activeTab = tabs[tabIndex].id;
-    console.log('PATH INSIDE ADMIN DASHBOARD: ',this.props.path);
+
     return (
       <Card className="admin" variant="outlined">
         <CardContent>

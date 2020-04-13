@@ -10,7 +10,7 @@ import {
   WhatsappShareButton, WhatsappIcon,
   EmailShareButton, EmailIcon,
 } from 'react-share';
-import { NavigateActions, CheckoutActions } from '../../redux/actions';
+import { NavigateActions, CheckoutActions, AppActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService } from '../../services';
 import { Config, StorageUtil } from '../../utility';
@@ -32,6 +32,11 @@ class Header extends Component {
 
   navigateToAdminHome = () => {
     this.props.navigate(RouteConstants.ADMIN);
+  }
+
+  navigateToLogin = () => {
+    this.props.setLoggedIn(false);
+    this.props.navigate(RouteConstants.ADMIN_LOGIN);
   }
 
   componentDidMount = () => {
@@ -92,7 +97,7 @@ class Header extends Component {
       return (
         <div className="header-admin">
           <span onClick={this.navigateToAdminHome} className="header-admin-item">Admin Home</span>
-          <span className="header-admin-item">Logout</span>
+          <span onClick={this.navigateToLogin}className="header-admin-item">Logout</span>
         </div>
       )
     }
@@ -158,6 +163,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     setRaffleId: CheckoutActions.setRaffleId,
     setRoute: CheckoutActions.setCheckoutRoute,
     resetCheckout: CheckoutActions.resetCheckout,
+    setLoggedIn: AppActions.setLoggedIn
   },
   dispatch,
 );
