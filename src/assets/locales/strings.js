@@ -28,7 +28,7 @@ export default {
     infoHeader: 'Your Info',
     ticketsHeader: 'Tickets',
     ticketsSubtext: 'How many entries would you like?',
-    ticketDetachmentSubtext: 'Which detachment do you wish to support?',
+    ticketDetachmentSubtext: 'Which detachment would you like to support?',
     firstNameLabel: 'First Name',
     lastNameLabel: 'Last Name',
     emailLabel: 'Email Address',

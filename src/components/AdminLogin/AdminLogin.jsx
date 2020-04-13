@@ -20,7 +20,7 @@ class AdminLogin extends Component {
   doLogin = async(e) => {
     e.preventDefault();
     try{
-      await UserService.Login({
+      await UserService.login({
         email: this.state.username,
         password: this.state.password,
       });

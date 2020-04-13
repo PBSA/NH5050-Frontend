@@ -64,6 +64,14 @@ class OrderInfo extends Component {
     this.setState({emailCheck: !this.state.emailCheck});
   };
 
+  bundleLabel = (quantity, price) => {//${ticket.quantity} entry for $${ticket.price}
+    if (quantity <= 1) {
+      return `${quantity} entry for $${price}`;
+    } else {
+      return `${quantity} entries for $${price}`;
+    }
+  }
+
   navigateToPayment = () => {
     this.setState({errorText: ''});
     this.props.setOrderInfo({
@@ -249,7 +257,7 @@ class OrderInfo extends Component {
                   <FormControl component="fieldset">
                     <RadioGroup aria-label="Ticket Bundle" name="ticket-bundle" value={ticketSelected} onChange={this.handleTicketBundleChange}>
                       {ticketBundles.map((ticket, index) => {
-                        return <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={`${ticket.quantity} entry for $${ticket.price}`} />
+                        return <FormControlLabel key={index} value={index.toString()} control={<Radio />} label={this.bundleLabel(ticket.quantity, ticket.price)} />
                       })}
                     </RadioGroup>
                   </FormControl>
@@ -298,7 +306,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
     setOrderInfo: CheckoutActions.setOrderInfo,
-    setRoute: CheckoutActions.setCheckoutRoute
+    setRoute: CheckoutActions.setCheckoutRoute,
   },
   dispatch,
 );
