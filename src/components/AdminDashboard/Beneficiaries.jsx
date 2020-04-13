@@ -10,7 +10,7 @@ class Beneficiaries extends Component {
       return {
         total: 'Total',
         empty: '',
-        proceeds: proceeds
+        proceeds: proceeds.toFixed(2)
       }
     }
   }

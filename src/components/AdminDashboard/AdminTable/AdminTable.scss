@@ -13,4 +13,19 @@
   &-footer {
     color: $primary-app-color;
   }
+
+  &-dot {
+    height: 0.7rem;
+    width: 0.7rem;
+    margin-right: 5px;
+    background-color: $dashboard-buy-header;
+    border-radius: 50%;
+    display: inline-block;
+
+    &-active {
+      @extend .admin-table-dot;
+
+      background-color: $primary-app-color;
+    }
+  }
 }

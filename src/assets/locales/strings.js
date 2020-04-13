@@ -34,7 +34,9 @@ export default {
     emailLabel: 'Email Address',
     phoneLabel: 'Mobile Phone',
     ageCheckLabel: 'I\'m over the age of 16.',
-    emailCheckLabel: 'Send my ticket numbers via email.',
+    emailCheckLabel: 'I have read and accept the ',
+    emailCheckLabel2: 'Raffle Rules',
+    emailCheckLabel3: ' Terms & Conditions',
     detachmentSelectLabel: 'Select a detachment',
     errors: {
       noFirstName: 'First name not entered',
@@ -44,7 +46,7 @@ export default {
       noPhone: 'Mobile phone number not entered',
       invalidPhone: 'Invalid phone number. Format must be xxx-xxx-xxxx',
       ageCheck: 'I\'m over the age of 16 not selected',
-      ticketCheck: 'Send my ticket numbers via email not selected',
+      ticketCheck: 'I have read and accept the Raffle Rules, Terms & Conditions. not selected',
       noDetachment: 'Please select a detachment',
     },
   },
@@ -65,9 +67,9 @@ export default {
 
   confirmationPage: {
     header: 'Thank You!',
-    subtext1: 'We have proccessed your order and emailed you a digital ticket containing the information below. Please print this page for your records',
+    subtext1: 'We have processed your order and emailed you your entries containing the information below. Please print this ticket for your records.',
     subtext2: 'Here are your ticket numbers for the',
-    goodluck: ' and the progressive raffle to be drawn in November -- Good luck!',
+    goodluck: ' and the progressive raffle to be drawn in on the Marine Corps Birthday, November 10th, 2020 at 9 p.m. EST',
     jackpot: '5050 Jackpot',
     progressivejackpot: 'Progressive Jackpot',
     drawn: 'Drawn',
@@ -75,6 +77,10 @@ export default {
     printThisPage: 'Print This Page',
     growJackpot: 'Grow the Jackpot',
     processing: 'Your payment is still being processed. You will receive an email with your digital ticket containing the ticket numbers when the payment is processed',
+    assistance: 'If you need assistance, please contact our support center at',
+    regards: 'Warm regards,',
+    org: 'New Hampshire Marines',
+    terms: 'Terms & Conditions',
   },
 
   share: {

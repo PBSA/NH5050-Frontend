@@ -56,8 +56,37 @@ class AdminTable extends Component {
   renderTableRow = (rowData, styleClass) => {
     const rowArray = Object.values(rowData);
     let row;
-    row = rowArray.map((el, index) => { return <TableCell className={`admin-table-cell ${styleClass}`} align={index > 0 ? "right" : "left"} key={`${el}${index}`}>{el}</TableCell> });
+    row = rowArray.map((el, index) => { 
+      return (
+        <TableCell className={`admin-table-cell ${styleClass}`} 
+          align= {index > 0 ? "right" : "left"} key={`${el}${index}`}>
+          {index === 0 && el.includes(':') ?
+          this.renderDot(el)
+          : el}
+        </TableCell>
+      );
+    });
+
     return row;
+  }
+
+  renderDot = (el) => {
+    const elArr = el.split(':');
+    if(elArr[0] === 'active') {
+      return (
+      <div>
+        <span className="admin-table-dot-active"></span>
+        {elArr[1]}
+      </div>);
+    } else if(elArr[0] === 'inactive') {
+      return (
+        <div>
+          <span className="admin-table-dot"></span>
+          {elArr[1]}
+        </div>);
+    } else {
+      return elArr[1];
+    }
   }
 
   render() {
