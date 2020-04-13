@@ -3,8 +3,8 @@
 .confirmation {
   display: flex;
   flex-direction: column;
-  margin-right: 25%;
-  margin-left: 25%;
+  margin-right: 24%;
+  margin-left: 24%;
 
   &-card {
     background: white;
@@ -19,6 +19,23 @@
   &-subtext {
     font-size: 1.5rem;
     margin-bottom: 1.5em;
+  }
+
+  &-message {
+    font-size: 1.5rem;
+  }
+  
+  &-link {
+    width: 155px;
+    text-decoration: none;
+    color: #37378a;
+    font-size: 18px;
+    margin-top: 1.5em;
+
+    &:hover {
+      color: $primary-app-color;
+      text-decoration: none;
+    }
   }
 
   &-tickets {
@@ -36,7 +53,7 @@
   &-jackpots {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3em;
+    margin: 3em 0;
 
     &-5050 {
       display: flex;
