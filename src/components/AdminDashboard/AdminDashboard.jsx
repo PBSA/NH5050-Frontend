@@ -36,20 +36,25 @@ class AdminDashboard extends Component {
 
   getBeneficiaries = () => {
     OrganizationService.getBeneficiaries(this.props.organizationId).then((data) => {
-      let beneficiaries = data.map(item => {
-        return ({
+      let beneficiaries = data.map(item => ({
         name: item.user.name,
         type: item.user.type,
         proceeds: item.total_funds,
-        })
-      });
+      }));
+
       this.setState({beneficiaries});
     })
   }
 
   getSellers = () => {
-    OrganizationService.getSellers(this.props.organizationId).then((sellers) => {
-      
+    OrganizationService.getSellers(this.props.organizationId).then((data) => {
+      console.log(sellers);
+      let sellers = data.map(item => ({
+        name: `${item.firstname} ${item.lastname}`,
+        seller_sales: item.sales_count,
+        seller_funds: item.total_funds
+      }));
+
       this.setState({sellers});
     })
   }
@@ -62,7 +67,7 @@ class AdminDashboard extends Component {
 
   componentDidMount() {
     this.getBeneficiaries();
-    // this.getSellers();
+    this.getSellers();
     // this.getRaffles();
   }
 
