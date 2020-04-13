@@ -48,18 +48,27 @@ class AdminDashboard extends Component {
 
   getSellers = () => {
     OrganizationService.getSellers(this.props.organizationId).then((data) => {
-      let sellers = data.map(item => ({
-        name: `${item.firstname} ${item.lastname}`,
-        seller_sales: item.sales_count,
-        seller_funds: item.total_funds
-      }));
-
+      let sellers = data.map(item => {
+        return ({
+          seller_name: item.status + ':' + item.firstname + ' ' + item.lastname,
+          seller_sales: item.sales_count,
+          seller_funds: item.total_funds
+        })
+      });
       this.setState({sellers});
     })
   }
 
   getRaffles = () => {
-    RaffleService.getRaffles(this.props.organizationId).then((raffles) => {
+    RaffleService.getRaffle(this.props.organizationId).then((data) => {
+      let raffles = data.map(item => {
+        return ({
+          raffles_name: (new Date(item.draw_datetime) > new Date(Date.now()) && new Date(item.start_datetime) < new Date(Date.now()) ? 'active' : new Date(item.start_datetime) > new Date(Date.now()) ? ' ' : 'inactive') + ':' + item.raffle_name,
+          raffles_entries: item.total_entries,
+          raffles_jackpot: item.total_jackpot
+        })
+      })
+
       this.setState({raffles});
     })
   }
@@ -67,7 +76,7 @@ class AdminDashboard extends Component {
   componentDidMount() {
     this.getBeneficiaries();
     this.getSellers();
-    // this.getRaffles();
+    this.getRaffles();
   }
 
   render() {
