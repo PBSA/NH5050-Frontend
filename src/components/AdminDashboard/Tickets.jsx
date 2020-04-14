@@ -50,10 +50,6 @@ class Tickets extends Component {
   render() {
     const { raffles, rows } = this.state;
 
-    const handleRowClick = (row) => {
-      this.props.navigate(`${RouteConstants.ADMIN_TICKETS}/${row.id}`);
-    };
-
     const totalEntries = rows.reduce((sum, item) => sum + item.bundle.quantity, 0);
     const totalFunds = rows.reduce((sum, item) => sum + item.total_price, 0).toFixed(2);
 
@@ -66,7 +62,7 @@ class Tickets extends Component {
               value={this.state.raffleId}
               onChange={e => this.handleRaffleChanged(e.target.value)}
               label={'Filter by Raffle'}
-            >
+            > 
               {raffles.map((raffle, index) => <MenuItem key={index} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
             </Select>
         </FormControl>
@@ -75,7 +71,7 @@ class Tickets extends Component {
           columns={columns}
           rows={rows}
           extraRows={[['Total', '', totalEntries, totalFunds]]}
-          handleRowClick={handleRowClick}
+          onRowClick={row => this.props.navigate(`${RouteConstants.ADMIN_TICKETS}/${row.id}`)}
         />
       </div>
     );
