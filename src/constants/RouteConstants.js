@@ -13,5 +13,5 @@ export default {
   ADMIN_SELLERS: '/admin/sellers',
   ADMIN_EDIT_SELLER: '/admin/sellers/edit',
   ADMIN_RAFFLES: '/admin/raffles',
-  ADMIN_TICKETS: '/admin/tickets',
+  ADMIN_TICKETS: '/admin/tickets'
 };
