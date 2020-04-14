@@ -1,17 +1,35 @@
 import React, { Component } from 'react';
 import AdminTable from './AdminTable';
-import { RouteConstants } from '../../constants';
+import { OrganizationService } from '../../services';
+
+const columns = [
+  {id: 'name', label: 'Seller Name', render: item => `${item.firstname} ${item.lastname}`, active: item => item.status === 'active'},
+  {id: 'sales_count', label: 'Ticket Sales'},
+  {id: 'total_funds', label: 'Funds Raised'},
+];
 
 export default class Sellers extends Component {
-  render() {
-    const proceedSum = {
-      total: 'Total',
-      empty: this.props.data.reduce((sum, {seller_sales}) => sum + parseInt(seller_sales), 0),
-      proceeds: this.props.data.reduce((sum, {seller_funds}) => sum + parseFloat(seller_funds), 0).toFixed(2)
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rows: []
     };
+  }
+
+  componentDidMount() {
+    OrganizationService.getSellers(this.props.organizationId)
+      .then(rows => this.setState({rows}));
+  }
+
+  render() {
+    const { rows } = this.state;
+
+    const salesCount = rows.reduce((sum, item) => sum + parseInt(item.sales_count), 0);
+    const totalFunds = rows.reduce((sum, item) => sum + parseFloat(item.total_funds), 0).toFixed(2);
 
     return (
-      <AdminTable tableData={this.props.data} route={RouteConstants.ADMIN_SELLERS} sumRowData={proceedSum} />
+      <AdminTable columns={columns} rows={this.state.rows} extraRows={[['Total', salesCount, totalFunds]]} />
     );
   }
 }

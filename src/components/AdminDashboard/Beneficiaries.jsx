@@ -1,24 +1,32 @@
 import React, { Component } from 'react';
 import AdminTable from './AdminTable';
-import { RouteConstants } from '../../constants';
-import { GeneralUtil } from '../../utility';
+import { OrganizationService } from '../../services';
+
+const columns = [
+  {id: 'name', label: 'Beneficiaries Name', render: item => item.user.name},
+  {id: 'type', label: 'Type', render: item => item.user.type},
+  {id: 'proceeds', label: 'Proceeds', render: item => item.total_funds}
+];
 
 class Beneficiaries extends Component {
-  sumRow = () => {
-    const proceeds = GeneralUtil.sumProceeds(this.props.data);
-    if(!!proceeds) {
-      return {
-        total: 'Total',
-        empty: '',
-        proceeds: proceeds.toFixed(2)
-      }
-    }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rows: []
+    };
+  }
+
+  componentDidMount() {
+    OrganizationService.getBeneficiaries(this.props.organizationId)
+      .then(rows => this.setState({rows}));
   }
 
   render() {
-    const proceedSum = this.sumRow();
+    const { rows } = this.state;
+    const totalSales = rows.reduce((sum, item) => sum + parseFloat(item.total_funds), 0).toFixed(2);
     return (
-      <AdminTable tableData={this.props.data} route={RouteConstants.ADMIN_BENEFICIARIES} sumRowData={proceedSum} />
+      <AdminTable columns={columns} rows={this.state.rows} extraRows={[['Total', '', totalSales]]} />
     );
   }
 }
