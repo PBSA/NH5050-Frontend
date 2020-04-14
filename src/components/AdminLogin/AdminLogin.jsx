@@ -55,6 +55,12 @@ class AdminLogin extends Component {
     }
   }
 
+  componentDidMount() {
+    if(this.props.isLoggedIn) {
+      this.props.navigate(RouteConstants.ADMIN_LOGIN);
+    }
+  }
+
   render() {
     const { errorText, username, password } = this.state;
     return (
@@ -97,6 +103,10 @@ class AdminLogin extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.getIn(['app', 'isLoggedIn']),
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
@@ -105,4 +115,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   dispatch,
 );
 
-export default connect(null, mapDispatchToProps)(AdminLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminLogin);

@@ -6,6 +6,7 @@ import AdminDashboard from '../components/AdminDashboard';
 import SellerForm from '../components/SellerForm';
 import CheckoutContainer from '../components/CheckoutContainer';
 import { RouteConstants as Routes } from '../constants';
+import { requireAuthentication } from '../utility/AuthComponent';
 
 const routes = (
   <>
@@ -18,12 +19,12 @@ const routes = (
       <Route path={Routes.GROW_JACKPOT} component={CheckoutContainer} />
       {/* ADMIN SECTION */}
       <Route path={Routes.ADMIN_LOGIN} component={AdminLogin} />
-      <Route path={Routes.ADMIN} component={AdminDashboard} />
+      <Route path={Routes.ADMIN} component={requireAuthentication(AdminDashboard)} />
       {/* <Route path={Routes.ADMIN_EDIT_SELLER} component={SellerForm} /> */}
-      <Route path={Routes.ADMIN_BENEFICIARIES} component={AdminDashboard} />
-      <Route path={Routes.ADMIN_SELLERS} component={AdminDashboard} />
-      <Route path={Routes.ADMIN_RAFFLES} component={AdminDashboard} />
-      <Route path={Routes.ADMIN_TICKETS} component={AdminDashboard} />
+      <Route path={Routes.ADMIN_BENEFICIARIES} component={requireAuthentication(AdminDashboard)} />
+      <Route path={Routes.ADMIN_SELLERS} component={requireAuthentication(AdminDashboard)} />
+      <Route path={Routes.ADMIN_RAFFLES} component={requireAuthentication(AdminDashboard)} />
+      <Route path={Routes.ADMIN_TICKETS} component={requireAuthentication(AdminDashboard)} />
     </Switch>
   </>
 );
