@@ -25,6 +25,13 @@ const Config = {
    * @memberof Config
    */
   baseRoute: isDev ? 'https://5050dev.peerplays.global' : 'https://5050staging.peerplays.global',
+  /**
+   * Represents the stripe publishable key.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  stripePKey: isDev ? 'pk_test_eXMu4Pj53sjl7Ff2pj3xYPh8' : 'pk_live_Mhn5hRbCTBBnskMabdeooiLh',
 };
 
 export default Config;
