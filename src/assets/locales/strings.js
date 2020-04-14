@@ -68,8 +68,8 @@ export default {
   confirmationPage: {
     header: 'Thank You!',
     subtext1: 'We have processed your order and emailed you your entries containing the information below. Please print this ticket for your records.',
-    subtext2: 'Here are your ticket numbers for the',
-    goodluck: ' and the progressive raffle to be drawn in on the Marine Corps Birthday, November 10th, 2020 at 9 p.m. EST',
+    subtext2: 'Here are your entry numbers for the',
+    goodluck: ' and the progressive raffle to be drawn on the Marine Corps Birthday, November 10th, 2020 at 9 p.m. EST. Good luck!',
     jackpot: '5050 Jackpot',
     progressivejackpot: 'Progressive Jackpot',
     drawn: 'Drawn',
@@ -79,7 +79,7 @@ export default {
     processing: 'Your payment is still being processed. You will receive an email with your digital ticket containing the ticket numbers when the payment is processed',
     assistance: 'If you need assistance, please contact our support center at',
     regards: 'Warm regards,',
-    org: 'New Hampshire Marines',
+    org: 'New Hampshire Marine Corps League',
     terms: 'Terms & Conditions',
   },
 
