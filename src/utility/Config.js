@@ -1,4 +1,14 @@
 const isDev = process.env.NODE_ENV === 'development';
+
+const {
+  DEV_API_ROUTE,
+  PRODUCTION_API_ROUTE,
+  DEV_BASE_ROUTE,
+  PRODUCTION_BASE_ROUTE,
+  STRIPE_DEV_PKEY,
+  STRIPE_PROD_PKEY,
+} = process.env;
+
 /**
  * @namespace Config
  */
@@ -12,19 +22,26 @@ const Config = {
    * @type {text}
    * @memberof Config
    */
-  devApiRoute: 'https://5050dev.peerplays.global/api/v1',
+  devApiRoute: DEV_API_ROUTE,
   /**
    * @type {text}
    * @memberof Config
    */
-  prodApiRoute: 'https://5050staging.peerplays.global/api/v1',
+  prodApiRoute: PRODUCTION_API_ROUTE,
   /**
    * Represents the base uri.
    *
    * @type {string}
    * @memberof Config
    */
-  baseRoute: isDev ? 'https://5050dev.peerplays.global' : 'https://5050staging.peerplays.global',
+  baseRoute: isDev ? DEV_BASE_ROUTE : PRODUCTION_BASE_ROUTE,
+  /**
+   * Represents the stripe publishable key.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  stripePKey: isDev ? STRIPE_DEV_PKEY : STRIPE_PROD_PKEY,
 };
 
 export default Config;

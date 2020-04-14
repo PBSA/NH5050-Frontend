@@ -1,5 +1,15 @@
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const devMode = process.env.NODE_ENV !== 'production' ? true : false;
+const getClientEnvironment = require('./env');
+
+// `publicUrl` is just like `publicPath`, but we will provide it to our app
+// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
+// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
+var publicUrl = '';
+// Get environment variables to inject into our app.
+var env = getClientEnvironment(publicUrl);
+
 module.exports = {
   mode: devMode === true ? 'development' : 'production',
   output: {
@@ -75,6 +85,7 @@ module.exports = {
     }
   },
   plugins: [
+    new webpack.DefinePlugin(env.stringified),
     new HtmlWebPackPlugin({
       inject: true,
       template: "./src/index.html",
