@@ -57,7 +57,7 @@ class AdminLogin extends Component {
 
   componentDidMount() {
     if(this.props.isLoggedIn) {
-      this.props.navigate(RouteConstants.ADMIN_LOGIN);
+      this.props.navigate(RouteConstants.ADMIN);
     }
   }
 
