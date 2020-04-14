@@ -62,18 +62,20 @@ class Tickets extends Component {
 
     return (
       <div>
-        <FormControl variant="outlined">
-          <InputLabel id="raffle-select">Raffle</InputLabel>
-          <Select
-            id="raffle-select"
-            value={this.state.raffleId}
-            onChange={(e) => this.handleRaffleChanged(e.target.value)}
-            label="Filter by Raffle"
-          >
-            {raffles.map((raffle, index) => <MenuItem key={index} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
-          </Select>
-        </FormControl>
-        <Button className="csv-button" type="button" onClick={() => this.csvExport()}>CSV Export</Button>
+        <div className="tickets-wrapper">
+          <FormControl>
+            <InputLabel id="raffle-select">Filter By Raffle</InputLabel>
+            <Select
+              id="raffle-select"
+              value={this.state.raffleId}
+              onChange={(e) => this.handleRaffleChanged(e.target.value)}
+              label="Filter by Raffle"
+            >
+              {raffles.map((raffle, index) => <MenuItem key={index} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
+            </Select>
+          </FormControl>
+          <Button className="tickets-csv" type="button" onClick={() => this.csvExport()}>CSV Export</Button>
+        </div>
         <AdminTable
           columns={columns}
           rows={rows}
