@@ -47,6 +47,11 @@ class Tickets extends Component {
     this.setState({raffleId}, () => this.reloadTickets());
   }
 
+  csvExport() {
+    RaffleService.getReportUrl(this.state.raffleId)
+    .then(({url}) => window.open(url));
+  }
+
   render() {
     const { raffles, rows } = this.state;
 
@@ -66,7 +71,7 @@ class Tickets extends Component {
               {raffles.map((raffle, index) => <MenuItem key={index} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
             </Select>
         </FormControl>
-        <Button className="csv-button" type="button">CSV Export</Button>
+        <Button className="csv-button" type="button" onClick={() => this.csvExport()}>CSV Export</Button>
         <AdminTable
           columns={columns}
           rows={rows}
