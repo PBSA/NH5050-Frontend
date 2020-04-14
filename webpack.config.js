@@ -2,6 +2,9 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const devMode = process.env.NODE_ENV !== 'production' ? true : false;
 module.exports = {
   mode: devMode === true ? 'development' : 'production',
+  output: {
+    publicPath: '/'
+  },
   module: {
     rules: [
       {
