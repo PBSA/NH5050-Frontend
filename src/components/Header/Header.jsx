@@ -169,34 +169,3 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
-
-/*
-          {!this.props.path.includes('/admin') || this.props.path === RouteConstants.ADMIN_LOGIN ?
-            <div className="header-socials">
-              <span className="header-socials-text">SHARE</span>
-              <FacebookShareButton url={shareLink}>
-                <FacebookIcon size={32} borderRadius={5}/>
-              </FacebookShareButton>
-              <TwitterShareButton url={shareLink}>
-                <TwitterIcon size={32} borderRadius={5}/>
-              </TwitterShareButton>
-              <TelegramShareButton url={shareLink}>
-                <TelegramIcon size={32} borderRadius={5}/>
-              </TelegramShareButton>
-              <RedditShareButton url={shareLink}>
-                <RedditIcon size={32} borderRadius={5}/>
-              </RedditShareButton>
-              <WhatsappShareButton url={shareLink}>
-                <WhatsappIcon size={32} borderRadius={5}/>
-              </WhatsappShareButton>
-              <EmailShareButton url={shareLink}>
-                <EmailIcon size={32} borderRadius={5}/>
-              </EmailShareButton>
-            </div>
-            :
-            <div className=''>
-              <span>Admin Home</span>
-              <span>Logout</span>
-            </div>
-            }
-*/
