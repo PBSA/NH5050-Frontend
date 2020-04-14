@@ -1,0 +1,9 @@
+@import '../../assets/styles/common.scss';
+
+.admin-ticket-data { 
+  font-size: 1.5em;
+
+  span {
+    color: $primary-app-color;
+  }
+}
