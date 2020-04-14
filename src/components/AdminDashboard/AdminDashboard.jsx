@@ -33,7 +33,6 @@ class AdminDashboard extends Component {
 
       tabIndex++;
     }
-
     this.state = { tabIndex };
   }
 
@@ -44,7 +43,7 @@ class AdminDashboard extends Component {
   render() {
     const { organizationId } = this.props;
     const { tabIndex } = this.state;
-    const activeTab = tabs[tabIndex].id;
+    const activeTab = tabIndex < 4 ? tabs[tabIndex].id : false;
 
     return (
       <Card className="admin" variant="outlined">
@@ -56,6 +55,7 @@ class AdminDashboard extends Component {
           {activeTab === 'sellers' && <Sellers organizationId={organizationId} />}
           {activeTab === 'raffles' && <Raffles organizationId={organizationId} />}
           {activeTab === 'tickets' && <Tickets organizationId={organizationId} />}
+          {activeTab === false ? <h1>Admin Dashboard Goes Here!</h1> : null}
         </CardContent>
       </Card>
     );

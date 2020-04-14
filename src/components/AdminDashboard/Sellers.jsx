@@ -3,9 +3,11 @@ import AdminTable from './AdminTable';
 import { OrganizationService } from '../../services';
 
 const columns = [
-  {id: 'name', label: 'Seller Name', render: item => `${item.firstname} ${item.lastname}`, active: item => item.status === 'active'},
-  {id: 'sales_count', label: 'Ticket Sales'},
-  {id: 'total_funds', label: 'Funds Raised'},
+  {
+    id: 'name', label: 'Seller Name', render: (item) => `${item.firstname} ${item.lastname}`, active: (item) => item.status === 'active',
+  },
+  { id: 'sales_count', label: 'Ticket Sales' },
+  { id: 'total_funds', label: 'Funds Raised' },
 ];
 
 export default class Sellers extends Component {
@@ -13,13 +15,13 @@ export default class Sellers extends Component {
     super(props);
 
     this.state = {
-      rows: []
+      rows: [],
     };
   }
 
   componentDidMount() {
     OrganizationService.getSellers(this.props.organizationId)
-      .then(rows => this.setState({rows}));
+      .then((rows) => this.setState({ rows }));
   }
 
   render() {
@@ -29,7 +31,7 @@ export default class Sellers extends Component {
     const totalFunds = rows.reduce((sum, item) => sum + parseFloat(item.total_funds), 0).toFixed(2);
 
     return (
-      <AdminTable columns={columns} rows={this.state.rows} extraRows={[['Total', salesCount, totalFunds]]} />
+      <AdminTable columns={columns} rows={this.state.rows} extraRows={[['Total', salesCount, totalFunds]]} clickableRow />
     );
   }
 }

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import { Card, CardContent, Box } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  Card, CardContent, Box, Button,
+} from '@material-ui/core';
 import { RaffleService } from '../../services';
+import { NavigateActions } from '../../redux/actions';
+import { RouteConstants } from '../../constants';
 
 function padZeros(num, totalDigitsRequired) {
   let str = `${num}`;
@@ -10,9 +16,9 @@ function padZeros(num, totalDigitsRequired) {
 
 function TicketData({ label, value }) {
   return (
-    <div className="admin-ticket-data">
-      <label>{label}</label>
-      <div>{value}</div>
+    <div className="ticket-detail-data">
+      <span>{label}</span>
+      <span className="ticket-detail-data-value">{value}</span>
     </div>
   );
 }
@@ -22,7 +28,7 @@ function getTicketId(ticket) {
   return `R${padZeros(raffle_id, 2)}T${padZeros(id, 4)}`;
 }
 
-export default class AdminTicketDetails extends Component {
+class AdminTicketDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -39,12 +45,11 @@ export default class AdminTicketDetails extends Component {
 
   render() {
     const { ticket } = this.state;
-    console.log('TICKET DETAILS RENDERED: ', ticket);
     return (
-      <Card className="admin" variant="outlined">
+      <Card className="ticket-detail" variant="outlined">
         <CardContent>
           {ticket && (
-          <Box display="flex" flexDirection="row">
+          <Box className="ticket-detail-wrapper" display="flex" flexDirection="row">
             <Box>
               <TicketData label="Ticket ID" value={getTicketId(ticket)} />
               <TicketData label="First Name" value={ticket.ticket_sales.player.firstname} />
@@ -54,21 +59,30 @@ export default class AdminTicketDetails extends Component {
               <TicketData label="Detachment" value={ticket.ticket_sales.beneficiary.user.name} />
             </Box>
             <Box>
-              <label>Entries</label>
-              <div>
+              <div className="ticket-detail-data">
+                <span className="ticket-detail-header">Entries</span>
                 {ticket.entries.map((entry) => (
-                  <div key={entry.id}>
+                  <span className="ticket-detail-data-value" key={entry.id}>
                     {getTicketId(ticket)}
                     E
                     {padZeros(entry.id, 5)}
-                  </div>
+                  </span>
                 ))}
               </div>
             </Box>
           </Box>
           )}
+          <Button className="ticket-detail-button" type="button" onClick={() => this.props.navigate(RouteConstants.ADMIN_TICKETS)}>Back</Button>
         </CardContent>
       </Card>
     );
   }
 }
+
+
+export default (connect(null, (dispatch) => bindActionCreators(
+  {
+    navigate: NavigateActions.navigate,
+  },
+  dispatch,
+))(AdminTicketDetails));

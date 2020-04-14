@@ -81,6 +81,7 @@ class Tickets extends Component {
           rows={rows}
           extraRows={[['Total', '', totalEntries, totalFunds]]}
           onRowClick={(row) => this.props.navigate(`${RouteConstants.ADMIN_TICKETS}/${row.id}`)}
+          clickableRow
         />
       </div>
     );
