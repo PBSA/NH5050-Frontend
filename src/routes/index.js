@@ -20,12 +20,12 @@ const routes = (
       <Route path={Routes.GROW_JACKPOT} component={CheckoutContainer} />
       {/* ADMIN SECTION */}
       <Route path={Routes.ADMIN_LOGIN} component={AdminLogin} />
-      <Route path={Routes.ADMIN} component={requireAuthentication(AdminDashboard)} />
+      <Route exact path={Routes.ADMIN} component={requireAuthentication(AdminDashboard)} />
       {/* <Route path={Routes.ADMIN_EDIT_SELLER} component={SellerForm} /> */}
-      <Route path={Routes.ADMIN_BENEFICIARIES} component={requireAuthentication(AdminDashboard)} />
-      <Route path={Routes.ADMIN_SELLERS} component={requireAuthentication(AdminDashboard)} />
-      <Route path={Routes.ADMIN_RAFFLES} component={requireAuthentication(AdminDashboard)} />
-      <Route path={Routes.ADMIN_TICKETS} component={requireAuthentication(AdminDashboard)} />
+      <Route exact path={Routes.ADMIN_BENEFICIARIES} component={requireAuthentication(AdminDashboard)} />
+      <Route exact path={Routes.ADMIN_SELLERS} component={requireAuthentication(AdminDashboard)} />
+      <Route exact path={Routes.ADMIN_RAFFLES} component={requireAuthentication(AdminDashboard)} />
+      <Route exact path={Routes.ADMIN_TICKETS} component={requireAuthentication(AdminDashboard)} />
       <Route path={`${Routes.ADMIN_TICKETS}/:ticket_id`} component={requireAuthentication(AdminTicketDetails)} />
     </Switch>
   </>

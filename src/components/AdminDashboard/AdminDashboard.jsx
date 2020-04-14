@@ -22,10 +22,23 @@ const tabs = [
 
 class AdminDashboard extends Component {
   
-  state = {
-    tabIndex: 0,
-    sellers: [],
-    raffles: []
+  constructor(props) {
+    super(props);
+
+    let tabIndex = 0;
+    for (const tab of tabs) {
+      if (tab.route === props.path) {
+        break;
+      }
+
+      tabIndex++;
+    }
+
+    this.state = {
+      tabIndex,
+      sellers: [],
+      raffles: []
+    }
   }
 
   setTabIndex = (index) => {
