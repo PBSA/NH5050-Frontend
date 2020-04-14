@@ -6,6 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NavigateActions } from '../../redux/actions';
+import { AppActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 import { RouteConstants } from '../../constants';
 import { UserService } from '../../services';
@@ -24,6 +25,7 @@ class AdminLogin extends Component {
         email: this.state.username,
         password: this.state.password,
       });
+      this.props.setLoggedIn(true);
       this.props.navigate(RouteConstants.ADMIN);
     } catch(err) {
       console.error(err);
@@ -50,6 +52,12 @@ class AdminLogin extends Component {
           loading: false
         });
       }
+    }
+  }
+
+  componentDidMount() {
+    if(this.props.isLoggedIn) {
+      this.props.navigate(RouteConstants.ADMIN);
     }
   }
 
@@ -95,11 +103,16 @@ class AdminLogin extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.getIn(['app', 'isLoggedIn']),
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
+    setLoggedIn: AppActions.setLoggedIn
   },
   dispatch,
 );
 
-export default connect(null, mapDispatchToProps)(AdminLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminLogin);

@@ -34,7 +34,7 @@ class App extends Component {
         <StylesProvider injectFirst>
           <Header />
           {routes}
-          {!this.props.path.includes('/admin') ? <Footer /> : null }
+          {!this.props.path.includes('/admin') && !this.props.path.includes('/login') ? <Footer /> : null }
         </StylesProvider>
       </ConnectedRouter>
     );
