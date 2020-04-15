@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Card, CardContent, Tabs, Tab,
+  Card, CardContent, Tabs, Tab, CircularProgress
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -28,13 +28,12 @@ class AdminDashboard extends Component {
     super(props);
 
     let tabIndex = 0;
-    for (const tab of tabs) {
-      if (tab.route === props.path) {
-        break;
+    for (let i = 0; i < tabs.length; i++) {
+      if (tabs[i].route === props.path) {
+        tabIndex = i;
       }
-
-      tabIndex++;
     }
+
     this.state = { 
       tabIndex,
       progressiveRaffle: {},
@@ -88,10 +87,38 @@ class AdminDashboard extends Component {
     }
   }
 
+  renderDashboard(raffle, timeToDraw, progressiveRaffle, timeToProgressiveDraw) {
+    if(raffle && timeToDraw && Object.keys(progressiveRaffle).length !== 0 && timeToProgressiveDraw) {
+      return (
+        <div className="confirmation-jackpots">
+          <div className="confirmation-jackpots-5050">
+            <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
+            <span className="confirmation-jackpots-amount"> ${raffle.total_jackpot} </span>
+            <span className="confirmation-jackpots-header"> {timeToDraw} </span>
+            <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(raffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
+          </div>
+          <div className="confirmation-jackpots-progressive">
+            <span className="confirmation-jackpots-header"> {strings.confirmationPage.progressivejackpot} </span>
+            <span className="confirmation-jackpots-amount"> ${progressiveRaffle.total_progressive_jackpot} </span>
+            <span className="confirmation-jackpots-header"> {timeToProgressiveDraw} </span>
+            <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(progressiveRaffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="admin-loader">
+          <CircularProgress color="secondary" />
+        </div>
+      );
+    }
+  }
+
   render() {
-    const { organizationId, raffle } = this.props;
-    const { tabIndex, progressiveRaffle, timeToDraw, timeToProgressiveDraw } = this.state;
-    const activeTab = tabIndex < 4 ? tabs[tabIndex].id : false;
+    const { organizationId, raffle, path } = this.props;
+    const { progressiveRaffle, timeToDraw, timeToProgressiveDraw } = this.state;
+    const tabIndex = path === RouteConstants.ADMIN ? false : this.state.tabIndex;
+    const activeTab = path === RouteConstants.ADMIN ? false : tabs[tabIndex].id;
 
     return (
       <Card className="admin" variant="outlined">
@@ -104,20 +131,7 @@ class AdminDashboard extends Component {
           {activeTab === 'raffles' && <Raffles organizationId={organizationId} />}
           {activeTab === 'tickets' && <Tickets organizationId={organizationId} />}
           {activeTab === false ? 
-            <div className="confirmation-jackpots">
-              <div className="confirmation-jackpots-5050">
-                <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
-                <span className="confirmation-jackpots-amount"> ${raffle.total_jackpot} </span>
-                <span className="confirmation-jackpots-header"> {timeToDraw} </span>
-                <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(raffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
-              </div>
-              <div className="confirmation-jackpots-progressive">
-                <span className="confirmation-jackpots-header"> {strings.confirmationPage.progressivejackpot} </span>
-                <span className="confirmation-jackpots-amount"> ${progressiveRaffle.total_progressive_jackpot} </span>
-                <span className="confirmation-jackpots-header"> {timeToProgressiveDraw} </span>
-                <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(progressiveRaffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
-              </div>
-            </div>
+            this.renderDashboard(raffle, timeToDraw, progressiveRaffle, timeToProgressiveDraw)
           : null}
         </CardContent>
       </Card>

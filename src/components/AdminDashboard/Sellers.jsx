@@ -20,7 +20,7 @@ export default class Sellers extends Component {
     this.state = {
       rows: [],
       raffles: [],
-      raffleId: '',
+      raffleId: 1,
     };
   }
 
@@ -52,21 +52,23 @@ export default class Sellers extends Component {
     const totalFunds = rows.reduce((sum, item) => sum + parseFloat(item.total_funds), 0).toFixed(2);
 
     return (
-      <div>
-        <FormControl variant="outlined">
-          <InputLabel id="raffle-select">Raffle</InputLabel>
-          <Select
-            id="raffle-select"
-            value={raffleId}
-            onChange={(e) => this.handleRaffleChanged(e.target.value)}
-            label="Filter by Raffle"
-          >
-            <MenuItem key={0} value="">No Filter</MenuItem>
-            {raffles.map((raffle, index) => <MenuItem key={index} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
-          </Select>
-        </FormControl>
+      <>
+        <div className="sellers-wrapper">
+          <FormControl>
+            <InputLabel id="raffle-select">Filter by Raffle</InputLabel>
+            <Select
+              id="raffle-select"
+              value={raffleId}
+              onChange={(e) => this.handleRaffleChanged(e.target.value)}
+              label="Filter by Raffle"
+            >
+              <MenuItem key={0} value="">No Filter</MenuItem>
+              {raffles.map((raffle, index) => <MenuItem key={index} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
+            </Select>
+          </FormControl>
+        </div>
         <AdminTable columns={columns} rows={rows} extraRows={[['Total', salesCount, totalFunds]]} />
-      </div>
+      </>
     );
   }
 }

@@ -5,8 +5,22 @@
   flex-direction: column;
   margin: 2% 18%;
 
+  &-loader {
+    display: flex;
+    justify-content: center;
+    margin: 10%;
+  }
+
   @media only screen and (max-width: 1080px) {
     margin: 2% 2%;
+  }
+}
+
+.sellers {
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 1% 0;
   }
 }
 
