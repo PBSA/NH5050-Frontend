@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AdminTable from './AdminTable';
-import { OrganizationService } from '../../services';
+import { FormControl, Select, MenuItem, InputLabel } from '@material-ui/core';
+import { OrganizationService, RaffleService } from '../../services';
 
 const columns = [
   {id: 'name', label: 'Seller Name', render: item => `${item.firstname} ${item.lastname}`, active: item => item.status === 'active'},
@@ -13,23 +14,55 @@ export default class Sellers extends Component {
     super(props);
 
     this.state = {
-      rows: []
+      rows: [],
+      raffles: [],
+      raffleId: ''
     };
+  }
+  
+  async refreshRows() {
+    const { organizationId } = this.props;
+    const { raffleId } = this.state;
+
+    const rows = await OrganizationService.getSellers(organizationId, raffleId === '' ? null : raffleId);
+    this.setState({ rows });
   }
 
   componentDidMount() {
-    OrganizationService.getSellers(this.props.organizationId)
-      .then(rows => this.setState({rows}));
+    RaffleService.getRaffle(this.props.organizationId)
+    .then(raffles => {
+      this.setState({ raffles }, () => {
+        this.refreshRows();
+      });
+    });
+  }
+
+  handleRaffleChanged(raffleId) {
+    this.setState({raffleId}, () => this.refreshRows());
   }
 
   render() {
-    const { rows } = this.state;
+    const { rows, raffles, raffleId } = this.state;
 
     const salesCount = rows.reduce((sum, item) => sum + parseInt(item.sales_count), 0);
     const totalFunds = rows.reduce((sum, item) => sum + parseFloat(item.total_funds), 0).toFixed(2);
 
     return (
-      <AdminTable columns={columns} rows={this.state.rows} extraRows={[['Total', salesCount, totalFunds]]} />
+      <div>
+        <FormControl variant="outlined">
+          <InputLabel id="raffle-select">Raffle</InputLabel>
+            <Select
+              id="raffle-select"
+              value={raffleId}
+              onChange={e => this.handleRaffleChanged(e.target.value)}
+              label={'Filter by Raffle'}
+            > 
+              <MenuItem key={0} value="">No Filter</MenuItem>
+              {raffles.map((raffle, index) => <MenuItem key={index} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
+            </Select>
+        </FormControl>
+        <AdminTable columns={columns} rows={rows} extraRows={[['Total', salesCount, totalFunds]]} />
+      </div>
     );
   }
 }
