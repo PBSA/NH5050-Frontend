@@ -54,7 +54,7 @@ export default class Sellers extends Component {
     return (
       <>
         <div className="sellers-wrapper">
-          <FormControl>
+          <FormControl className="admin-filter">
             <InputLabel id="raffle-select">Filter by Raffle</InputLabel>
             <Select
               id="raffle-select"

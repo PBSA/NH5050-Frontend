@@ -63,7 +63,7 @@ class Tickets extends Component {
     return (
       <div>
         <div className="tickets-wrapper">
-          <FormControl>
+          <FormControl className="admin-filter">
             <InputLabel id="raffle-select">Filter By Raffle</InputLabel>
             <Select
               id="raffle-select"

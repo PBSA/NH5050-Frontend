@@ -11,6 +11,10 @@
     margin: 10%;
   }
 
+  &-filter {
+    min-width: 120px;
+  }
+
   @media only screen and (max-width: 1080px) {
     margin: 2% 2%;
   }

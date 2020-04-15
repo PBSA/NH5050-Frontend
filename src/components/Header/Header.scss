@@ -15,14 +15,14 @@
   }
 
   &-admin {
+    width: 200px;
     display: flex;
-    width: 10%;
-    display: flex;
-    justify-content: space-between;
+    justify-content: center;
 
     &-item {
       color: $primary-app-color;
       font-size: 16px;
+      margin: 0 10px;
 
       &:hover {
         cursor: pointer;
