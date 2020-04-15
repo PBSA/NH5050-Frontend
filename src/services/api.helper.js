@@ -8,11 +8,15 @@ const apiRoot = Config.isDev
   : Config.prodApiRoute;
 
 export async function apiCall(method, path, params, opts) {
-  console.log(method, path, params, opts);
-
   method = method.toLowerCase();
   params = params || {};
   opts = opts || {};
+
+  for (const [key, value] of Object.entries(params)) {
+    if (value === null) {
+      delete params[key];
+    }
+  }
 
   try {
     let response;

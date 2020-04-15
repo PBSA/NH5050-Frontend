@@ -17,8 +17,8 @@ export default class OrganizationService {
     return apiCall('post', 'organization/beneficiary', beneficiaryData);
   }
 
-  static getSellers(organizationId) {
-    return apiCall('get', 'organization/sellers', { organizationId });
+  static getSellers(organizationId, raffleId) {
+    return apiCall('get', 'organization/sellers', { organizationId, raffleId });
   }
 
   static createOrUpdateSeller(sellerData) {

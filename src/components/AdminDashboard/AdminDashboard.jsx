@@ -14,48 +14,37 @@ import Tickets from './Tickets';
 import { RouteConstants } from '../../constants';
 
 const tabs = [
-  { id: 'beneficiaries', label: strings.adminDashboard.tabs.beneficiaries, route: RouteConstants.ADMIN_BENEFICIARIES },
-  { id: 'sellers', label: strings.adminDashboard.tabs.sellers, route: RouteConstants.ADMIN_SELLERS },
-  { id: 'raffles', label: strings.adminDashboard.tabs.raffles, route: RouteConstants.ADMIN_RAFFLES },
-  { id: 'tickets', label: strings.adminDashboard.tabs.tickets, route: RouteConstants.ADMIN_TICKETS },
+  { label: strings.adminDashboard.tabs.beneficiaries, route: RouteConstants.ADMIN_BENEFICIARIES },
+  { label: strings.adminDashboard.tabs.sellers, route: RouteConstants.ADMIN_SELLERS },
+  { label: strings.adminDashboard.tabs.raffles, route: RouteConstants.ADMIN_RAFFLES },
+  { label: strings.adminDashboard.tabs.tickets, route: RouteConstants.ADMIN_TICKETS },
 ];
 
 class AdminDashboard extends Component {
-  
-  constructor(props) {
-    super(props);
-
-    let tabIndex = 0;
-    for (const tab of tabs) {
-      if (tab.route === props.path) {
-        break;
-      }
-
-      tabIndex++;
-    }
-
-    this.state = { tabIndex };
-  }
-
-  setTabIndex = (index) => {
-    this.setState({tabIndex: index});
-  }
 
   render() {
-    const { organizationId } = this.props;
-    const { tabIndex } = this.state;
-    const activeTab = tabs[tabIndex].id;
+    const { organizationId, path } = this.props;
+
+    let tabIndex = 0;
+    for (let i = 0; i < tabs.length; i++) {
+      if (tabs[i].route === path) {
+        tabIndex = i;
+        break;
+      }
+    }
+
+    const activeTab = tabs[tabIndex];
 
     return (
       <Card className="admin" variant="outlined">
         <CardContent>
-          <Tabs value={tabIndex} onChange={(e, index) => this.setTabIndex(index)} centered>
-            {tabs.map(({ id, label, route }) => <Tab onClick={() => this.props.navigate(route)} key={id} label={label} />)}
+          <Tabs value={tabIndex} centered>
+            {tabs.map(({ label, route }, index) => <Tab onClick={() => this.props.navigate(route)} key={index} label={label} />)}
           </Tabs>
-          {activeTab === 'beneficiaries' && <Beneficiaries organizationId={organizationId} />}
-          {activeTab === 'sellers' && <Sellers organizationId={organizationId} />}
-          {activeTab === 'raffles' && <Raffles organizationId={organizationId} />}
-          {activeTab === 'tickets' && <Tickets organizationId={organizationId} />}
+          {activeTab.route === RouteConstants.ADMIN_BENEFICIARIES && <Beneficiaries organizationId={organizationId} />}
+          {activeTab.route === RouteConstants.ADMIN_SELLERS && <Sellers organizationId={organizationId} />}
+          {activeTab.route === RouteConstants.ADMIN_RAFFLES && <Raffles organizationId={organizationId} />}
+          {activeTab.route === RouteConstants.ADMIN_TICKETS && <Tickets organizationId={organizationId} />}
         </CardContent>
       </Card>
     );
