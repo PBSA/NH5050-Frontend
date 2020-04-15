@@ -62,7 +62,7 @@ class Dashboard extends Component {
               <CardContent className="dashboard-buy-container">
                 <span className="dashboard-buy-header">Next Draw</span>
                 <span className="dashboard-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
-                <span className="dashboard-buy-header">Next 5050 jackpot</span>
+                <span className="dashboard-buy-header">Next 50-50/50 jackpot</span>
                 <span className="dashboard-buy-content">${raffle.total_jackpot}</span>
                 <span className="dashboard-buy-header">Progressive Jackpot</span>
                 <span className="dashboard-buy-content">${raffle.total_progressive_jackpot}</span>

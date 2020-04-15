@@ -54,8 +54,11 @@ class AdminDashboard extends Component {
   }
 
   timeToDraw = (drawdate) => {
-    const diff = moment.duration(moment(drawdate).diff(moment()));
+    if(new Date(drawdate) < new Date(Date.now())) {
+      return `0d 0h 0m 0s`
+    }
 
+    const diff = moment.duration(moment(drawdate).diff(moment()));
     let days = moment(drawdate).diff(moment(), 'days');
     return `${days}d ${diff.hours()}h ${diff.minutes()}m ${diff.seconds()}s`;
   }
