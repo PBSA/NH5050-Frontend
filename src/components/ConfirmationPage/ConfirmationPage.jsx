@@ -75,7 +75,7 @@ class ConfirmationPage extends Component {
   render() {
     const {entries, ticket_sales, totalJackpot, totalProgressive, raffle_id, ticket_sales_id} = this.props;
     const {raffle, progressive, timeToDraw, timeToProgressiveDraw} = this.state;
-
+    let totalPrice = ticket_sales.total_price ? ticket_sales.total_price : ticket_sales.get('total_price');
     return (
       <div className="checkout-container">
         <Card className="confirmation-card" variant="outlined">
@@ -84,7 +84,7 @@ class ConfirmationPage extends Component {
           {this.props.ticketConfirmation !== 'Processing' ? <div className="confirmation">
             <span className="confirmation-header">{strings.confirmationPage.header}</span>
             <span className="confirmation-subtext">{strings.confirmationPage.subtext0}</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.subtext01}{ticket_sales.total_price} {strings.confirmationPage.subtext1}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext01}{totalPrice} {strings.confirmationPage.subtext1}</span>
             <span className="confirmation-subtext">{strings.confirmationPage.subtext2} {raffle.raffle_name}{strings.confirmationPage.goodluck}</span>
             <div className="confirmation-tickets">
               {entries.map((ticket, index) => <span key={index} className="confirmation-tickets-ticket">{`R${this.addLeadingZeros(raffle_id,2)}T${this.addLeadingZeros(ticket_sales_id,4)}E${this.addLeadingZeros(ticket.id === undefined ? ticket.get('id') : ticket.id , 5)}`}</span>)}
