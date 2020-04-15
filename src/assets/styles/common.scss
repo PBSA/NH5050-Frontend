@@ -72,3 +72,12 @@ html, body, #content{
   color: white;
   background-color: $primary-app-color;
 }
+
+//admin panel dropdown
+.MuiInput-underline:before {
+  color: $primary-app-color;
+}
+
+.MuiFormLabel-root.Mui-focused {
+  color: rgba(0, 0, 0, 0.54);
+}

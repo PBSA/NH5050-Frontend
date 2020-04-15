@@ -42,7 +42,7 @@ class AdminTable extends Component {
   }
 
   render() {
-    const { columns, rows, extraRows, onRowClick } = this.props;
+    const { columns, rows, extraRows, onRowClick, clickableRow } = this.props;
     const { currentPage, rowsPerPage } = this.state;
     const tableLength = rows ? rows.length : 15;
     
@@ -61,7 +61,7 @@ class AdminTable extends Component {
             </TableHead>
             <TableBody>
               {rows && rows.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((rowData, i) => (
-                <TableRow hover key={i} onClick={e => onRowClick && onRowClick(rowData)}>
+                <TableRow className={clickableRow ? "admin-table-row" : null} hover key={i} onClick={e => onRowClick && onRowClick(rowData)}>
                   {this.renderTableRow(rowData)}
                 </TableRow>
               ))}
