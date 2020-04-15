@@ -66,7 +66,9 @@ export default {
   },
 
   confirmationPage: {
-    header: 'Thank you for contributing $',
+    header: 'Thank You!',
+    subtext0: 'We have processed your order and emailed you your entries containing the information below.',
+    subtext01: 'Thank you for contributing $',
     subtext1: 'towards the New Hampshire Marine Corps League\'s 50-50/50 Progressive Raffle to benefit the Marine Corps League Department New Hampshire!',
     subtext2: 'Below are your entry numbers for the',
     goodluck: ' drawing and the Progressive Jackpot drawing on the Marine Corps Birthday, November 10th, 2020.',

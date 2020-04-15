@@ -82,7 +82,9 @@ class ConfirmationPage extends Component {
           <CardContent className="confirmation-content">
           <ProgressBar activeStep={2}/>
           {this.props.ticketConfirmation !== 'Processing' ? <div className="confirmation">
-            <span className="confirmation-subtext">{strings.confirmationPage.header}{ticket_sales.total_price} {strings.confirmationPage.subtext1}</span>
+            <span className="confirmation-header">{strings.confirmationPage.header}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext0}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext01}{ticket_sales.total_price} {strings.confirmationPage.subtext1}</span>
             <span className="confirmation-subtext">{strings.confirmationPage.subtext2} {raffle.raffle_name}{strings.confirmationPage.goodluck}</span>
             <div className="confirmation-tickets">
               {entries.map((ticket, index) => <span key={index} className="confirmation-tickets-ticket">{`R${this.addLeadingZeros(raffle_id,2)}T${this.addLeadingZeros(ticket_sales_id,4)}E${this.addLeadingZeros(ticket.id === undefined ? ticket.get('id') : ticket.id , 5)}`}</span>)}
