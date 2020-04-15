@@ -79,6 +79,14 @@ class Header extends Component {
     });
   }
 
+  getProgressiveRaffle = (id) => {
+    RaffleService.getRaffleById(id).then((progressiveRaffle) => {
+      this.props.setProgressiveRaffle(progressiveRaffle);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
   sortDraws = (draws) => {
     const sortedDraws = draws.filter((draw) => {
       return (new Date(draw.draw_datetime) > new Date(Date.now()) && new Date(draw.start_datetime) < new Date(Date.now()) && draw.draw_type === "5050");
@@ -88,6 +96,7 @@ class Header extends Component {
       return;
     }
 
+    this.getProgressiveRaffle(sortedDraws[0].progressive_draw_id);
     this.props.setRaffleId(sortedDraws[0].id)
     this.props.setRaffle(sortedDraws[0]);
   }
@@ -159,6 +168,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     navigate: NavigateActions.navigate,
     setOrganization: CheckoutActions.setOrganization,
     setRaffle: CheckoutActions.setRaffle,
+    setProgressiveRaffle: CheckoutActions.setProgressiveRaffle,
     setOrganizationId: CheckoutActions.setOrganizationId,
     setRaffleId: CheckoutActions.setRaffleId,
     setRoute: CheckoutActions.setCheckoutRoute,
