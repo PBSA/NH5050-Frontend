@@ -49,8 +49,8 @@ class AdminDashboard extends Component {
 
   tick = () => {
     this.setState({
-      timeToDraw: this.timeToDraw(this.state.raffle.draw_datetime),
-      timeToProgressiveDraw: this.timeToDraw(this.state.progressive.draw_datetime)
+      timeToDraw: this.timeToDraw(this.props.raffle.draw_datetime),
+      timeToProgressiveDraw: this.timeToDraw(this.state.progressiveRaffle.draw_datetime)
     });
   }
 
@@ -69,10 +69,23 @@ class AdminDashboard extends Component {
     });
   }
 
+  componentDidMount() {
+    this.intervalID = setInterval(
+      () => this.tick(),
+      1000);
+  }
+
   componentDidUpdate(prevProps) {
     
     if(prevProps.raffle !== this.props.raffle) {
       this.getProgressiveRaffle()
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.intervalID) {
+      clearInterval(this.intervalID);
+      this.intervalID = null;
     }
   }
 
