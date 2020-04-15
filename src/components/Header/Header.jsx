@@ -10,7 +10,7 @@ import {
   WhatsappShareButton, WhatsappIcon,
   EmailShareButton, EmailIcon,
 } from 'react-share';
-import { NavigateActions, CheckoutActions, AppActions } from '../../redux/actions';
+import { NavigateActions, CheckoutActions, AdminActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService } from '../../services';
 import { Config, StorageUtil } from '../../utility';
@@ -173,7 +173,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     setRaffleId: CheckoutActions.setRaffleId,
     setRoute: CheckoutActions.setCheckoutRoute,
     resetCheckout: CheckoutActions.resetCheckout,
-    setLoggedIn: AppActions.setLoggedIn
+    setLoggedIn: AdminActions.setLoggedIn
   },
   dispatch,
 );
