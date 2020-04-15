@@ -66,10 +66,12 @@ export default {
   },
 
   confirmationPage: {
-    header: 'Thank You!',
-    subtext1: 'We have processed your order and emailed you your entries containing the information below. Please print this ticket for your records.',
-    subtext2: 'Here are your entry numbers for the',
-    goodluck: ' and the progressive raffle to be drawn on the Marine Corps Birthday, November 10th, 2020 at 9 p.m. EST. Good luck!',
+    header: 'Thank you for contributing $',
+    subtext1: 'towards the New Hampshire Marine Corps League\'s 50-50/50 Progressive Raffle to benefit the Marine Corps League Department New Hampshire!',
+    subtext2: 'Below are your entry numbers for the',
+    goodluck: ' drawing and the Progressive Jackpot drawing on the Marine Corps Birthday, November 10th, 2020.',
+    subtext3: 'All drawings shall be held at 9 pm on the last Sunday of the month from April through October 2020 with the final progressive drawing on November 10th, 2020 in Rochester, NH.',
+    subtext4: 'The prize is 50% of the jackpot with half of the prize amount awarded to the monthly winner and the other half added to the final progressive jackpot drawing prize.',
     jackpot: '50-50/50 Jackpot',
     progressivejackpot: 'Progressive Jackpot',
     drawn: 'Drawn',
@@ -81,6 +83,10 @@ export default {
     regards: 'Warm regards,',
     org: 'New Hampshire Marine Corps League',
     terms: 'Terms & Conditions',
+    join: 'Join today!',
+    notmember: 'Not yet a member of your local Marine Corps League?',
+    joinsidetext: 'Marines, family and supporters of the Marine Corps values are welcome!',
+    rules: 'Raffle Rules',
   },
 
   share: {
