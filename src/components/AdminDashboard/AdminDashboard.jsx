@@ -64,7 +64,6 @@ class AdminDashboard extends Component {
   getProgressiveRaffle() {
     const progressiveId = this.props.raffle.progressive_draw_id
     RaffleService.getRaffleById(progressiveId).then((progressiveRaffle) => {
-      console.log('PROGRESSIVE RAFFLE: ', progressiveRaffle);
       this.setState({progressiveRaffle});
     });
   }
@@ -93,8 +92,7 @@ class AdminDashboard extends Component {
     const { organizationId, raffle } = this.props;
     const { tabIndex, progressiveRaffle, timeToDraw, timeToProgressiveDraw } = this.state;
     const activeTab = tabIndex < 4 ? tabs[tabIndex].id : false;
-    console.log('admin dashboard: ',this.props);
-    debugger;
+
     return (
       <Card className="admin" variant="outlined">
         <CardContent>

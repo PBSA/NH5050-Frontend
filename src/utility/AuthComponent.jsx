@@ -23,7 +23,6 @@ export function requireAuthentication(Component) {
     }
 
     render() {
-      console.log(this.props);
       return this.props.isLoggedIn ? <Component {...this.props} /> : null;
     }
   }
