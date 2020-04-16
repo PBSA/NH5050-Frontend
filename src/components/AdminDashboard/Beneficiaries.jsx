@@ -3,9 +3,9 @@ import AdminTable from './AdminTable';
 import { OrganizationService } from '../../services';
 
 const columns = [
-  {id: 'name', label: 'Beneficiaries Name', render: item => item.user.name},
-  {id: 'type', label: 'Type', render: item => item.user.type},
-  {id: 'proceeds', label: 'Proceeds', render: item => item.total_funds}
+  { id: 'name', label: 'Beneficiaries Name', render: (item) => item.user.name },
+  { id: 'type', label: 'Type', render: (item) => item.user.type },
+  { id: 'proceeds', label: 'Proceeds', render: (item) => item.total_funds },
 ];
 
 class Beneficiaries extends Component {
@@ -13,13 +13,25 @@ class Beneficiaries extends Component {
     super(props);
 
     this.state = {
-      rows: []
+      rows: [],
     };
   }
 
   componentDidMount() {
-    OrganizationService.getBeneficiaries(this.props.organizationId)
-      .then(rows => this.setState({rows}));
+    let rows;
+    OrganizationService.getOrganizationInfo(this.props.organizationId)
+      .then((org) => {
+        rows = [{
+          user:
+          { name: org.name, type: org.type },
+          total_funds: org.total_funds,
+        }];
+      })
+      .then(() => OrganizationService.getBeneficiaries(this.props.organizationId)
+        .then((beneficiaries) => {
+          rows.push(...beneficiaries);
+          this.setState({ rows });
+        }));
   }
 
   render() {
