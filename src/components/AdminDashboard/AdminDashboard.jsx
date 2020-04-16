@@ -38,6 +38,7 @@ class AdminDashboard extends Component {
       tabIndex,
       timeToDraw: '',
       timeToProgressiveDraw: '',
+      loadFail: false,
      };
   }
 
@@ -74,6 +75,9 @@ class AdminDashboard extends Component {
 
   renderDashboard(raffle, timeToDraw, progressiveRaffle, timeToProgressiveDraw) {
     if(raffle && timeToDraw && Object.keys(progressiveRaffle).length !== 0 && timeToProgressiveDraw) {
+        if(this.timer) {
+          clearTimeout(this.timer);
+        }
       return (
         <div className="confirmation-jackpots">
           <div className="confirmation-jackpots-5050">
@@ -90,7 +94,17 @@ class AdminDashboard extends Component {
           </div>
         </div>
       );
-    } else {
+    } else if(this.state.loadFailed) {
+        return (
+          <div className="admin-loader">
+            <span className="admin-error">There are currently no active raffles, please check back later.</span>
+          </div>
+        )
+      } else {
+      this.timer = setTimeout(() => {
+        this.setState({loadFailed: true});
+      }, 5000);
+
       return (
         <div className="admin-loader">
           <CircularProgress color="secondary" />

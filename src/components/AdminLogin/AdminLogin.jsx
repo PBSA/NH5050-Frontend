@@ -20,6 +20,15 @@ class AdminLogin extends Component {
 
   doLogin = async(e) => {
     e.preventDefault();
+
+    if(this.state.username === '') {
+      this.setState({errorText: 'Username not entered'});
+      return;
+    } else if(this.state.password === '') {
+      this.setState({errorText: 'Password not entered'})
+      return;
+    }
+
     try{
       await UserService.login({
         email: this.state.username,
@@ -28,30 +37,7 @@ class AdminLogin extends Component {
       this.props.setLoggedIn(true);
       this.props.navigate(RouteConstants.ADMIN);
     } catch(err) {
-      console.error(err);
-
-      if(err.hasOwnProperty('data')) {
-        if(err.status === 400 && typeof err.data.error !== 'string') {
-          let errText = '';
-          Object.keys(err.data.error).map((key)=>{
-            errText += err.data.error[key] + '\n'
-          });
-          this.setState({
-            errorText: errText,
-            loading: false
-          });
-        } else {
-          this.setState({
-            errorText: err.data.error,
-            loading: false
-          });
-        }
-      } else {
-        this.setState({
-          errorText: err.message,
-          loading: false
-        });
-      }
+      this.setState({errorText: 'Username or password is incorrect'});
     }
   }
 

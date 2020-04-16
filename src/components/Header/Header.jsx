@@ -105,7 +105,7 @@ class Header extends Component {
     if(this.props.path !== RouteConstants.ADMIN_LOGIN) {
       return (
         <div className="header-admin">
-          <span onClick={this.navigateToAdminHome} className="header-admin-item">Admin Home</span>
+          <span onClick={this.navigateToAdminHome} className={this.props.path === RouteConstants.ADMIN ? "header-admin-item-disabled" : "header-admin-item"}>Admin Home</span>
           <span onClick={this.navigateToLogin}className="header-admin-item">Logout</span>
         </div>
       )

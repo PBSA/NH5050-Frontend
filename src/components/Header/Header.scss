@@ -28,6 +28,12 @@
         cursor: pointer;
         color: $dashboard-buy-header;
       }
+
+      &-disabled {
+        font-size: 16px;
+        margin: 10px 10px;
+        color: $dashboard-buy-header;
+      }
     }
   }
 
