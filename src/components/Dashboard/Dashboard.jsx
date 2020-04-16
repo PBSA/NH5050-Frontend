@@ -46,15 +46,18 @@ class Dashboard extends Component {
 
   render() {
     const {raffle} = this.props;
-
+    console.log('process.env: ', process.env);
     return (
       <div className="dashboard">
         {raffle.id ?
         <>
           <MetaTags>
-            <meta name="description" content="Some description." />
-            <meta property="og:title" content="New Hampshire Marine Corps League 50-50/50 Progressive Raffle" />
+            <meta property="og:description" content={raffle.raffle_description} />
             <meta property="og:image" content={raffle.image_url} />
+            <meta property="og:url" content={process.env.NODE_ENV === 'development' ? process.env.DEV_BASE_ROUTE : process.env.PRODUCTION_BASE_ROUTE} />
+            <meta name="twitter:title" content="New Hampshire Marine Corps League 50-50/50 Progressive Raffle" />
+            <meta name="twitter:description" content={raffle.raffle_description} />
+            <meta name="twitter:image" content={raffle.image_url} />
           </MetaTags>
           <div className="dashboard-panel">
             {this.displayImage()}
