@@ -55,7 +55,7 @@ class Dashboard extends Component {
             <meta property="og:description" content={raffle.raffle_description} />
             <meta property="og:image" content={raffle.image_url} />
             <meta property="og:url" content={process.env.NODE_ENV === 'development' ? process.env.DEV_BASE_ROUTE : process.env.PRODUCTION_BASE_ROUTE} />
-            <meta name="twitter:title" content="New Hampshire Marine Corps League 50-50/50 Progressive Raffle" />
+            <meta name="twitter:title" content="New Hampshire Marine Corps League 50-50/50 Raffle" />
             <meta name="twitter:description" content={raffle.raffle_description} />
             <meta name="twitter:image" content={raffle.image_url} />
           </MetaTags>
@@ -71,9 +71,9 @@ class Dashboard extends Component {
               <CardContent className="dashboard-buy-container">
                 <span className="dashboard-buy-header">Next Draw</span>
                 <span className="dashboard-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
-                <span className="dashboard-buy-header">Next 50-50/50 jackpot</span>
+                <span className="dashboard-buy-header">Next 50-50/50 Jackpot</span>
                 <span className="dashboard-buy-content">${raffle.total_jackpot}</span>
-                <span className="dashboard-buy-header">Progressive Jackpot</span>
+                <span className="dashboard-buy-header">Grand Prize Jackpot</span>
                 <span className="dashboard-buy-content">${raffle.total_progressive_jackpot}</span>
                 <Button className="dashboard-buy-button" variant="outlined" size="medium" onClick={this.navigateToOrderInfo}>
                   Buy Now
