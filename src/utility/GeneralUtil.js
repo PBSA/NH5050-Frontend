@@ -10,6 +10,11 @@ class GeneralUtil {
 
     return data;
   }
+
+  static isActive5050Raffle(raffle) {
+    const now = new Date();
+    return raffle.draw_type === '5050' && new Date(raffle.start_datetime) < now && new Date(raffle.draw_datetime) > now;
+  }
 }
 
 export default GeneralUtil;
