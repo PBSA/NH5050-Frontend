@@ -20,16 +20,8 @@ export default class Sellers extends Component {
     this.state = {
       rows: [],
       raffles: [],
-      raffleId: 1,
+      raffleId: 'all',
     };
-  }
-
-  async refreshRows() {
-    const { organizationId } = this.props;
-    const { raffleId } = this.state;
-
-    const rows = await OrganizationService.getSellers(organizationId, raffleId === '' ? null : raffleId);
-    this.setState({ rows });
   }
 
   componentDidMount() {
@@ -41,6 +33,14 @@ export default class Sellers extends Component {
       });
   }
 
+  async refreshRows() {
+    const { organizationId } = this.props;
+    const { raffleId } = this.state;
+
+    const rows = await OrganizationService.getSellers(organizationId, raffleId === 'all' ? null : raffleId);
+    this.setState({ rows });
+  }
+
   handleRaffleChanged(raffleId) {
     this.setState({ raffleId }, () => this.refreshRows());
   }
@@ -48,7 +48,7 @@ export default class Sellers extends Component {
   render() {
     const { rows, raffles, raffleId } = this.state;
 
-    const salesCount = rows.reduce((sum, item) => sum + parseInt(item.sales_count), 0);
+    const salesCount = rows.reduce((sum, item) => sum + parseInt(item.sales_count, 10), 0);
     const totalFunds = rows.reduce((sum, item) => sum + parseFloat(item.total_funds), 0).toFixed(2);
 
     return (
@@ -62,8 +62,8 @@ export default class Sellers extends Component {
               onChange={(e) => this.handleRaffleChanged(e.target.value)}
               label="Filter by Raffle"
             >
-              <MenuItem key={0} value="">No Filter</MenuItem>
-              {raffles.map((raffle, index) => <MenuItem key={index} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
+              <MenuItem key={0} value="all">All Raffles</MenuItem>
+              {raffles.map((raffle) => <MenuItem key={raffle.id} value={raffle.id}>{raffle.raffle_name}</MenuItem>)}
             </Select>
           </FormControl>
         </div>
