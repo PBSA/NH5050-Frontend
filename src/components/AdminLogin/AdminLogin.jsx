@@ -25,7 +25,6 @@ class AdminLogin extends Component {
         email: this.state.username,
         password: this.state.password,
       });
-      debugger;
       this.props.setLoggedIn(true);
       this.props.navigate(RouteConstants.ADMIN);
     } catch(err) {

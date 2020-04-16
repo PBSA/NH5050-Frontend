@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import {
   FormControl, Select, MenuItem, InputLabel, Button,
 } from '@material-ui/core';
-import { NavigateActions, AdminActions } from '../../redux/actions';
+import { NavigateActions } from '../../redux/actions';
 import AdminTable from './AdminTable';
 import { RouteConstants } from '../../constants';
 import RaffleService from '../../services/RaffleService';
@@ -27,6 +27,7 @@ class Tickets extends Component {
     super(props);
 
     this.state = {
+      raffleId: 1,
       raffles: [],
       rows: [],
     };
@@ -45,12 +46,11 @@ class Tickets extends Component {
   }
 
   handleRaffleChanged(raffleId) {
-    this.props.setTicketFilter(raffleId);
-    this.reloadTickets();
+    this.setState({ raffleId }, () => this.reloadTickets());
   }
 
   csvExport() {
-    RaffleService.getReportUrl(this.props.raffleId)
+    RaffleService.getReportUrl(this.state.raffleId)
       .then(({ url }) => window.open(url));
   }
 
@@ -67,7 +67,7 @@ class Tickets extends Component {
             <InputLabel id="raffle-select">Filter By Raffle</InputLabel>
             <Select
               id="raffle-select"
-              value={this.props.raffleId}
+              value={this.state.raffleId}
               onChange={(e) => this.handleRaffleChanged(e.target.value)}
               label="Filter by Raffle"
             >
@@ -91,7 +91,6 @@ class Tickets extends Component {
 export default (connect(null, (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
-    setTicketFilter: AdminActions.setTicketFilter,
   },
   dispatch,
 ))(Tickets));
