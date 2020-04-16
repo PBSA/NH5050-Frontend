@@ -13,7 +13,7 @@ import { UserService } from '../../services';
 
 class AdminLogin extends Component {
   state = {
-    username: '',
+    email: '',
     password: '',
     errorText: ''
   };
@@ -21,8 +21,8 @@ class AdminLogin extends Component {
   doLogin = async(e) => {
     e.preventDefault();
 
-    if(this.state.username === '') {
-      this.setState({errorText: 'Username not entered'});
+    if(this.state.email === '') {
+      this.setState({errorText: 'Email not entered'});
       return;
     } else if(this.state.password === '') {
       this.setState({errorText: 'Password not entered'})
@@ -31,13 +31,13 @@ class AdminLogin extends Component {
 
     try{
       await UserService.login({
-        email: this.state.username,
+        email: this.state.email,
         password: this.state.password,
       });
       this.props.setLoggedIn(true);
       this.props.navigate(RouteConstants.ADMIN);
     } catch(err) {
-      this.setState({errorText: 'Username or password is incorrect'});
+      this.setState({errorText: 'Email or password is incorrect'});
     }
   }
 
@@ -48,7 +48,7 @@ class AdminLogin extends Component {
   }
 
   render() {
-    const { errorText, username, password } = this.state;
+    const { errorText, email, password } = this.state;
     return (
       <Card className="login" variant="outlined">
         <CardContent>
@@ -60,10 +60,10 @@ class AdminLogin extends Component {
               </div>
               <TextField
                 className="login-form-info-input"
-                label={strings.adminLogin.username}
+                label={strings.adminLogin.email}
                 variant="outlined"
-                value={username}
-                onChange={(e) => this.setState({username: e.target.value})}
+                value={email}
+                onChange={(e) => this.setState({email: e.target.value})}
               />
               <TextField
                 className="login-form-info-input"
