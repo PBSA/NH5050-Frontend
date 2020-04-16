@@ -7,6 +7,7 @@ import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import strings from '../../assets/locales/strings';
 import { OrganizationService, RaffleService } from '../../services';
+import MetaTags from 'react-meta-tags';
 var parse = require('html-react-parser');
 
 class Dashboard extends Component {
@@ -50,6 +51,11 @@ class Dashboard extends Component {
       <div className="dashboard">
         {raffle.id ?
         <>
+          <MetaTags>
+            <meta name="description" content="Some description." />
+            <meta property="og:title" content="New Hampshire Marine Corps League 50-50/50 Progressive Raffle" />
+            <meta property="og:image" content={raffle.image_url} />
+          </MetaTags>
           <div className="dashboard-panel">
             {this.displayImage()}
             <p className="dashboard-panel-text">
