@@ -5,14 +5,19 @@ import { RaffleService } from '../../services';
 function isRaffleActive(item) {
   const now = new Date();
 
-  return new Date(item.draw_datetime) > now &&
-         new Date(item.start_datetime) < now;
+  if (new Date(item.draw_datetime) > now && new Date(item.start_datetime) < now) {
+    return true;
+  }
+  if (new Date(item.start_datetime) > now) {
+    return undefined;
+  }
+  return false;
 }
 
 const columns = [
-  {id: 'raffle_name', label: 'Raffle Name', active: isRaffleActive},
-  {id: 'total_entries', label: 'Entries'},
-  {id: 'total_jackpot', label: 'Jackpot'}
+  { id: 'raffle_name', label: 'Raffle Name', active: isRaffleActive },
+  { id: 'total_entries', label: 'Entries' },
+  { id: 'total_jackpot', label: 'Jackpot' },
 ];
 
 class Raffles extends Component {
@@ -20,13 +25,13 @@ class Raffles extends Component {
     super(props);
 
     this.state = {
-      rows: []
+      rows: [],
     };
   }
 
   componentDidMount() {
     RaffleService.getRaffle(this.props.organizationId)
-      .then(rows => this.setState({rows}));
+      .then((rows) => this.setState({ rows }));
   }
 
   render() {

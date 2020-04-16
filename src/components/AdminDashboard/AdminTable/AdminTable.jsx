@@ -34,7 +34,7 @@ class AdminTable extends Component {
       return <TableCell className={`admin-table-cell ${styleClass}`} 
         align={index > 0 ? "right" : "left"} key={index}>
         <div>
-          {column.active && <span className={isActive ? 'admin-table-dot-active' : 'admin-table-dot'}></span>}
+          {column.active && isActive !== undefined && <span className={isActive ? 'admin-table-dot-active' : 'admin-table-dot'}></span>}
           {el}
         </div>
       </TableCell>;
