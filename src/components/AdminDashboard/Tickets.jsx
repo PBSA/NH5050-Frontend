@@ -8,6 +8,7 @@ import { NavigateActions } from '../../redux/actions';
 import AdminTable from './AdminTable';
 import { RouteConstants } from '../../constants';
 import RaffleService from '../../services/RaffleService';
+import { GeneralUtil } from '../../utility';
 
 function padZeros(num, totalDigitsRequired) {
   let str = `${num}`;
@@ -27,7 +28,7 @@ class Tickets extends Component {
     super(props);
 
     this.state = {
-      raffleId: 1,
+      raffleId: '',
       raffles: [],
       rows: [],
     };
@@ -35,14 +36,38 @@ class Tickets extends Component {
 
   componentDidMount() {
     RaffleService.getRaffle(this.props.organizationId)
-      .then((raffles) => this.setState({ raffles }));
-
-    this.reloadTickets();
+      .then((raffles) => {
+        const filteredRaffles = raffles.filter((raffle) => new Date(raffle.start_datetime) < new Date())
+          .sort((a, b) => new Date(b.start_datetime) - new Date(a.start_datetime));
+        const activeRaffle = raffles.find((raffle) => GeneralUtil.isActive5050Raffle(raffle));
+        this.setState({ raffles: filteredRaffles, raffleId: activeRaffle.id });
+      }).then(() => {
+        if (this.state.raffleId !== '') this.reloadTickets();
+      });
   }
 
-  reloadTickets() {
-    RaffleService.getTicketSalesForRaffle(this.state.raffleId)
-      .then((rows) => this.setState({ rows }));
+  async reloadTickets() {
+    const selectedRaffle = this.state.raffles.find((raffle) => raffle.id === this.state.raffleId);
+    let rafflesInProgressive;
+
+    if (selectedRaffle.draw_type === 'progressive') {
+      rafflesInProgressive = this.state.raffles.filter((raffle) => raffle.progressive_draw_id === selectedRaffle.id);
+      const rows = [];
+
+      for (let i = 0; i < rafflesInProgressive.length; i++) {
+        const entries = await RaffleService.getTicketSalesForRaffle(rafflesInProgressive[i].id);
+        entries.sort((a, b) => b.id - a.id);
+        rows.push(...entries);
+      }
+
+      this.setState({ rows });
+    } else {
+      RaffleService.getTicketSalesForRaffle(this.state.raffleId)
+        .then((rows) => {
+          rows.sort((a, b) => b.id - a.id);
+          this.setState({ rows });
+        });
+    }
   }
 
   handleRaffleChanged(raffleId) {
