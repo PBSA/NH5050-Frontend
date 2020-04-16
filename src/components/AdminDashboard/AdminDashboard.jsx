@@ -36,9 +36,9 @@ class AdminDashboard extends Component {
 
     this.state = { 
       tabIndex,
-      progressiveRaffle: {},
       timeToDraw: '',
       timeToProgressiveDraw: '',
+      loadFail: false,
      };
   }
 
@@ -49,7 +49,7 @@ class AdminDashboard extends Component {
   tick = () => {
     this.setState({
       timeToDraw: this.timeToDraw(this.props.raffle.draw_datetime),
-      timeToProgressiveDraw: this.timeToDraw(this.state.progressiveRaffle.draw_datetime)
+      timeToProgressiveDraw: this.timeToDraw(this.props.progressiveRaffle.draw_datetime)
     });
   }
 
@@ -63,24 +63,10 @@ class AdminDashboard extends Component {
     return `${days}d ${diff.hours()}h ${diff.minutes()}m ${diff.seconds()}s`;
   }
 
-  getProgressiveRaffle() {
-    const progressiveId = this.props.raffle.progressive_draw_id
-    RaffleService.getRaffleById(progressiveId).then((progressiveRaffle) => {
-      this.setState({progressiveRaffle});
-    });
-  }
-
   componentDidMount() {
     this.intervalID = setInterval(
       () => this.tick(),
       1000);
-  }
-
-  componentDidUpdate(prevProps) {
-    
-    if(prevProps.raffle !== this.props.raffle) {
-      this.getProgressiveRaffle()
-    }
   }
 
   componentWillUnmount() {
@@ -92,6 +78,9 @@ class AdminDashboard extends Component {
 
   renderDashboard(raffle, timeToDraw, progressiveRaffle, timeToProgressiveDraw) {
     if(raffle && timeToDraw && Object.keys(progressiveRaffle).length !== 0 && timeToProgressiveDraw) {
+        if(this.timer) {
+          clearTimeout(this.timer);
+        }
       return (
         <div className="confirmation-jackpots">
           <div className="confirmation-jackpots-5050">
@@ -108,7 +97,17 @@ class AdminDashboard extends Component {
           </div>
         </div>
       );
-    } else {
+    } else if(this.state.loadFailed) {
+        return (
+          <div className="admin-loader">
+            <span className="admin-error">There are currently no active raffles, please check back later.</span>
+          </div>
+        )
+      } else {
+      this.timer = setTimeout(() => {
+        this.setState({loadFailed: true});
+      }, 5000);
+
       return (
         <div className="admin-loader">
           <CircularProgress color="secondary" />
@@ -118,8 +117,8 @@ class AdminDashboard extends Component {
   }
 
   render() {
-    const { organizationId, raffle, path } = this.props;
-    const { progressiveRaffle, timeToDraw, timeToProgressiveDraw } = this.state;
+    const { organizationId, raffle, path, progressiveRaffle } = this.props;
+    const { timeToDraw, timeToProgressiveDraw } = this.state;
     const tabIndex = path === RouteConstants.ADMIN ? false : this.state.tabIndex;
     const activeTab = path === RouteConstants.ADMIN ? false : tabs[tabIndex].id;
 
@@ -147,7 +146,8 @@ const mapStateToProps = (state) => {
     organizationId: state.getIn(['checkout', 'organizationId']),
     path: state.getIn(['router', 'location', 'pathname']),
     organization: state.getIn(['checkout', 'organization']),
-    raffle: state.getIn(['checkout', 'raffle'])
+    raffle: state.getIn(['checkout', 'raffle']),
+    progressiveRaffle: state.getIn(['checkout', 'progressiveRaffle'])
   };
 };
 

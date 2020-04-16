@@ -6,7 +6,7 @@ export default {
 
   adminLogin: {
     title: 'Admin Login',
-    username: 'Username',
+    email: 'Email',
     password: 'Password',
     signIn: 'Sign In',
   },

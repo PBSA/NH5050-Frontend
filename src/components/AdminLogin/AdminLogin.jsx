@@ -6,52 +6,38 @@ import Alert from '@material-ui/lab/Alert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NavigateActions } from '../../redux/actions';
-import { AppActions } from '../../redux/actions';
+import { AdminActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 import { RouteConstants } from '../../constants';
 import { UserService } from '../../services';
 
 class AdminLogin extends Component {
   state = {
-    username: '',
+    email: '',
     password: '',
     errorText: ''
   };
 
   doLogin = async(e) => {
     e.preventDefault();
+
+    if(this.state.email === '') {
+      this.setState({errorText: 'Email not entered'});
+      return;
+    } else if(this.state.password === '') {
+      this.setState({errorText: 'Password not entered'})
+      return;
+    }
+
     try{
       await UserService.login({
-        email: this.state.username,
+        email: this.state.email,
         password: this.state.password,
       });
       this.props.setLoggedIn(true);
       this.props.navigate(RouteConstants.ADMIN);
     } catch(err) {
-      console.error(err);
-
-      if(err.hasOwnProperty('data')) {
-        if(err.status === 400 && typeof err.data.error !== 'string') {
-          let errText = '';
-          Object.keys(err.data.error).map((key)=>{
-            errText += err.data.error[key] + '\n'
-          });
-          this.setState({
-            errorText: errText,
-            loading: false
-          });
-        } else {
-          this.setState({
-            errorText: err.data.error,
-            loading: false
-          });
-        }
-      } else {
-        this.setState({
-          errorText: err.message,
-          loading: false
-        });
-      }
+      this.setState({errorText: 'Email or password is incorrect'});
     }
   }
 
@@ -62,7 +48,7 @@ class AdminLogin extends Component {
   }
 
   render() {
-    const { errorText, username, password } = this.state;
+    const { errorText, email, password } = this.state;
     return (
       <Card className="login" variant="outlined">
         <CardContent>
@@ -74,10 +60,10 @@ class AdminLogin extends Component {
               </div>
               <TextField
                 className="login-form-info-input"
-                label={strings.adminLogin.username}
+                label={strings.adminLogin.email}
                 variant="outlined"
-                value={username}
-                onChange={(e) => this.setState({username: e.target.value})}
+                value={email}
+                onChange={(e) => this.setState({email: e.target.value})}
               />
               <TextField
                 className="login-form-info-input"
@@ -104,13 +90,13 @@ class AdminLogin extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.getIn(['app', 'isLoggedIn']),
+  isLoggedIn: state.getIn(['admin', 'isLoggedIn']),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
-    setLoggedIn: AppActions.setLoggedIn
+    setLoggedIn: AdminActions.setLoggedIn
   },
   dispatch,
 );

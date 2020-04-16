@@ -1,9 +1,9 @@
 import NavigateActions from './NavigateActions';
 import CheckoutActions from './CheckoutActions';
-import AppActions from './AppActions';
+import AdminActions from './AdminActions';
 
 export {
   NavigateActions,
   CheckoutActions,
-  AppActions,
+  AdminActions,
 };

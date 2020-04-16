@@ -28,7 +28,7 @@ export function requireAuthentication(Component) {
   }
 
   const mapStateToProps = (state) => ({
-    isLoggedIn: state.getIn(['app', 'isLoggedIn']),
+    isLoggedIn: state.getIn(['admin', 'isLoggedIn']),
     path: state.getIn(['router', 'location', 'pathname']),
   });
 

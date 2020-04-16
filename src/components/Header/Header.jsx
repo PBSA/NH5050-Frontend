@@ -10,7 +10,7 @@ import {
   WhatsappShareButton, WhatsappIcon,
   EmailShareButton, EmailIcon,
 } from 'react-share';
-import { NavigateActions, CheckoutActions, AppActions } from '../../redux/actions';
+import { NavigateActions, CheckoutActions, AdminActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService } from '../../services';
 import { Config, StorageUtil } from '../../utility';
@@ -79,6 +79,14 @@ class Header extends Component {
     });
   }
 
+  getProgressiveRaffle = (id) => {
+    RaffleService.getRaffleById(id).then((progressiveRaffle) => {
+      this.props.setProgressiveRaffle(progressiveRaffle);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
   sortDraws = (draws) => {
     const sortedDraws = draws.filter((draw) => {
       return (new Date(draw.draw_datetime) > new Date(Date.now()) && new Date(draw.start_datetime) < new Date(Date.now()) && draw.draw_type === "5050");
@@ -88,6 +96,7 @@ class Header extends Component {
       return;
     }
 
+    this.getProgressiveRaffle(sortedDraws[0].progressive_draw_id);
     this.props.setRaffleId(sortedDraws[0].id)
     this.props.setRaffle(sortedDraws[0]);
   }
@@ -96,7 +105,7 @@ class Header extends Component {
     if(this.props.path !== RouteConstants.ADMIN_LOGIN) {
       return (
         <div className="header-admin">
-          <span onClick={this.navigateToAdminHome} className="header-admin-item">Admin Home</span>
+          <span onClick={this.navigateToAdminHome} className={this.props.path === RouteConstants.ADMIN ? "header-admin-item-disabled" : "header-admin-item"}>Admin Home</span>
           <span onClick={this.navigateToLogin}className="header-admin-item">Logout</span>
         </div>
       )
@@ -159,11 +168,12 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     navigate: NavigateActions.navigate,
     setOrganization: CheckoutActions.setOrganization,
     setRaffle: CheckoutActions.setRaffle,
+    setProgressiveRaffle: CheckoutActions.setProgressiveRaffle,
     setOrganizationId: CheckoutActions.setOrganizationId,
     setRaffleId: CheckoutActions.setRaffleId,
     setRoute: CheckoutActions.setCheckoutRoute,
     resetCheckout: CheckoutActions.resetCheckout,
-    setLoggedIn: AppActions.setLoggedIn
+    setLoggedIn: AdminActions.setLoggedIn
   },
   dispatch,
 );
