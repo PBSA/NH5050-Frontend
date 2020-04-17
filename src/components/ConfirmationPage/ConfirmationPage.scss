@@ -3,8 +3,8 @@
 .confirmation {
   display: flex;
   flex-direction: column;
-  margin-right: 24%;
-  margin-left: 24%;
+  margin-right: 18%;
+  margin-left: 18%;
 
   &-card {
     background: white;
@@ -58,13 +58,14 @@
     &-5050 {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      flex: 1 1 0px;
+      align-items: center;
       text-align: center;
     }
 
     &-progressive {
       @extend .confirmation-jackpots-5050;
-      align-items: flex-end;
+      align-items: center;
     }
 
     &-header {
@@ -80,6 +81,7 @@
     &-date {
       font-size: 1.5rem;
       color: $dashboard-buy-header;
+      white-space: pre-wrap;
     }
   }
 
@@ -92,6 +94,7 @@
       font-size: 1.2rem;
       height: 3.5rem;
       width: 13rem;
+      margin: 5px;
       color: white;
       background-color: $dashboard-buy-header;
 
@@ -104,6 +107,7 @@
       font-size: 1.2rem;
       height: 3.5rem;
       width: 13rem;
+      margin: 5px;
       color: white;
       background-color: $dashboard-buy-header;
 
@@ -116,6 +120,7 @@
       font-size: 1.2rem;
       height: 3.5rem;
       width: 18rem;
+      margin: 5px;
       color: white;
       background-color: $primary-app-color;
 
@@ -142,7 +147,7 @@
 
     &-buttons {
       justify-content: space-around;
-      height: 10em;
+      height: 100%;
     }
   
     &-jackpots {
