@@ -79,7 +79,7 @@ export default {
     jackpot: '50-50/50 Jackpot',
     progressivejackpot: 'Grand Prize',
     drawn: 'Drawn',
-    fundsRaisedSubText: 'For the New Hampshire Marine Corps League',
+    fundsRaisedSubText: 'For the New Hampshire \nMarine Corps League',
     orderMore: 'Order More',
     printThisPage: 'Print This Page',
     growJackpot: 'Grow the Jackpot',
