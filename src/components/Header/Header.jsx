@@ -120,7 +120,9 @@ class Header extends Component {
       <AppBar className="header" position="static">
         <Toolbar className="header-wrapper">
           <div className="header-socials-wrapper">
-            <img className="header-icon" onClick={this.navgiateToOrderInfo} src={organization.logo_url} alt="" />
+            <div className="header-icon-wrapper">
+              <img className="header-icon" onClick={this.navgiateToOrderInfo} src={organization.logo_url} alt="" />
+            </div>
             <div className="header-text">
               <span>{organization.name}</span>
               <span>{raffle.raffle_name}</span>

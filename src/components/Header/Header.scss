@@ -37,9 +37,14 @@
     }
   }
 
+  &-icon-wrapper {
+    height: 100px;
+    display: flex;
+    align-items: center;
+  }
+
   &-icon {
     width: 100px;
-    height: 100%;
     padding: 10px;
     margin-right: 16px;
     cursor: pointer;
