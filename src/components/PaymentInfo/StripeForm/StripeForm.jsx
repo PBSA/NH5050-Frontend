@@ -5,6 +5,7 @@ import {
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js';
+import strings from '../../../assets/locales/strings';
 
 const createOptions = () => ({
   style: {
@@ -59,6 +60,7 @@ class StripeForm extends Component {
               {...createOptions()}
             />
           </div>
+        <div className="stripe-debittext">{strings.paymentInfo.onlyDebit}</div>
         </div>
         <div className="stripe-pw">
           <Input
