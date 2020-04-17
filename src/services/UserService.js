@@ -28,4 +28,12 @@ export default class UserService {
   static login(credentials) {
     return apiCall('post', 'users/login', credentials);
   }
+
+  static getUserDetails(id) {
+    return apiCall('get', `users/${id}`);
+  }
+
+  static logout() {
+    return apiCall('post', 'users/logout');
+  }
 }
