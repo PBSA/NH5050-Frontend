@@ -60,7 +60,7 @@ export default {
     text2: 'entries in the Grand Prize on',
     back: 'Back',
     buyNow: 'Buy Now',
-    onlyDebit: 'Only debit cards allowed',
+    onlyDebit: 'Debit Only-No Credit Cards Accepted',
     errors: {
       noName: 'No card holder name',
     },
