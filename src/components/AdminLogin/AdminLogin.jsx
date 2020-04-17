@@ -30,13 +30,22 @@ class AdminLogin extends Component {
     }
 
     try{
-      await UserService.login({
+      const res = await UserService.login({
         email: this.state.email,
         password: this.state.password,
       });
+
+      await UserService.getUserDetails(res.id);
+
       this.props.setLoggedIn(true);
       this.props.navigate(RouteConstants.ADMIN);
     } catch(err) {
+      if(err.status === 403) {
+        this.setState({errorText: 'Not an administrator'});
+        await UserService.logout();
+        return;
+      }
+
       this.setState({errorText: 'Email or password is incorrect'});
     }
   }

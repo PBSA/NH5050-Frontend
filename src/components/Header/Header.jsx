@@ -12,7 +12,7 @@ import {
 } from 'react-share';
 import { NavigateActions, CheckoutActions, AdminActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
-import { RaffleService, OrganizationService } from '../../services';
+import { RaffleService, OrganizationService, UserService } from '../../services';
 import { Config, StorageUtil } from '../../utility';
 
 const organizationId = 1;
@@ -46,6 +46,11 @@ class Header extends Component {
     setInterval(async () => {
       this.getRaffles();
     }, 30000);
+  }
+
+  logout = async () => {
+    await UserService.logout();
+    this.navigateToLogin();
   }
 
   getOrganization = () => {
@@ -106,7 +111,7 @@ class Header extends Component {
       return (
         <div className="header-admin">
           <span onClick={this.navigateToAdminHome} className={this.props.path === RouteConstants.ADMIN ? "header-admin-item-disabled" : "header-admin-item"}>Admin Home</span>
-          <span onClick={this.navigateToLogin}className="header-admin-item">Logout</span>
+          <span onClick={this.logout} className="header-admin-item">Logout</span>
         </div>
       )
     }
