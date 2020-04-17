@@ -7,6 +7,7 @@ const {
   PRODUCTION_BASE_ROUTE,
   STRIPE_DEV_PKEY,
   STRIPE_PROD_PKEY,
+  GOOGLE_ANALYTICS_KEY,
 } = process.env;
 
 /**
@@ -42,6 +43,13 @@ const Config = {
    * @memberof Config
    */
   stripePKey: isDev ? STRIPE_DEV_PKEY : STRIPE_PROD_PKEY,
+  /**
+   * Represents the stripe publishable key.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  googleAnalyticsKey: GOOGLE_ANALYTICS_KEY,
 };
 
 export default Config;

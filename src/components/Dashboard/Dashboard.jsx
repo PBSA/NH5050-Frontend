@@ -46,7 +46,6 @@ class Dashboard extends Component {
 
   render() {
     const {raffle} = this.props;
-    console.log('process.env: ', process.env);
     return (
       <div className="dashboard">
         {raffle.id ?
