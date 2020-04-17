@@ -7,6 +7,7 @@ const {
   PRODUCTION_BASE_ROUTE,
   STRIPE_DEV_PKEY,
   STRIPE_PROD_PKEY,
+  GOOGLE_ANALYTICS_KEY,
 } = process.env;
 
 /**
@@ -48,7 +49,7 @@ const Config = {
    * @type {string}
    * @memberof Config
    */
-  googleAnalyticsKey: 'UA-163877025-1',
+  googleAnalyticsKey: GOOGLE_ANALYTICS_KEY,
 };
 
 export default Config;
