@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ConnectedRouter } from 'connected-react-router/immutable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ReactGA from 'react-ga';
 import { hot } from 'react-hot-loader/root';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from './Header';
