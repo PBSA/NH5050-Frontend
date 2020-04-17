@@ -100,16 +100,21 @@ class ConfirmationPage extends Component {
             <a className="confirmation-link" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/terms-conditions/">{strings.confirmationPage.terms}</a>
             <div className="confirmation-jackpots">
               <div className="confirmation-jackpots-5050">
-                <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
-                <span className="confirmation-jackpots-amount"> ${totalJackpot} </span>
-                <span className="confirmation-jackpots-header"> {timeToDraw} </span>
-                <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(raffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.fundsRaised} </span>
+                <span className="confirmation-jackpots-amount"> ${(+totalProgressive * 2).toFixed(2)} </span>
+                <span className="confirmation-jackpots-date"> {strings.confirmationPage.fundsRaisedSubText} </span>
               </div>
               <div className="confirmation-jackpots-progressive">
                 <span className="confirmation-jackpots-header"> {strings.confirmationPage.progressivejackpot} </span>
                 <span className="confirmation-jackpots-amount"> ${totalProgressive} </span>
                 <span className="confirmation-jackpots-header"> {timeToProgressiveDraw} </span>
-                <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(progressive.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
+                <span className="confirmation-jackpots-date"> {moment(progressive.draw_datetime).format('MMMM D - h:mm A')} </span>
+              </div>
+              <div className="confirmation-jackpots-5050">
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
+                <span className="confirmation-jackpots-amount"> ${totalJackpot} </span>
+                <span className="confirmation-jackpots-header"> {timeToDraw} </span>
+                <span className="confirmation-jackpots-date"> {moment(raffle.draw_datetime).format('MMMM D - h:mm A')} </span>
               </div>
             </div>
 
