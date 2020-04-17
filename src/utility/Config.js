@@ -42,6 +42,13 @@ const Config = {
    * @memberof Config
    */
   stripePKey: isDev ? STRIPE_DEV_PKEY : STRIPE_PROD_PKEY,
+  /**
+   * Represents the stripe publishable key.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  googleAnalyticsKey: 'UA-163877025-1',
 };
 
 export default Config;
