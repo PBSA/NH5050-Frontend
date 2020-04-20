@@ -169,6 +169,16 @@
     }
   }
 
+  @media only screen and (max-width: 500px) {
+    &-jackpots {
+      flex-direction: column;
+
+      &-5050 {
+        margin: 10px;
+      }
+    }
+  }
+
   @media print {
     margin-right: 1em;
     margin-left: 1em;
