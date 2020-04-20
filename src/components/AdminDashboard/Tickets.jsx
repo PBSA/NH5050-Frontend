@@ -40,14 +40,19 @@ class Tickets extends Component {
         const filteredRaffles = raffles.filter((raffle) => new Date(raffle.start_datetime) < new Date())
           .sort((a, b) => new Date(b.start_datetime) - new Date(a.start_datetime));
         const activeRaffle = raffles.find((raffle) => GeneralUtil.isActive5050Raffle(raffle));
-        this.setState({ raffles: filteredRaffles, raffleId: activeRaffle.id });
+        this.setState({ raffles: filteredRaffles, raffleId: activeRaffle ? activeRaffle.id : '' });
       }).then(() => {
         if (this.state.raffleId !== '') this.reloadTickets();
       });
   }
 
   async reloadTickets() {
+    if (this.state.raffleId === '') return;
+
     const selectedRaffle = this.state.raffles.find((raffle) => raffle.id === this.state.raffleId);
+
+    if (!selectedRaffle) return;
+
     let rafflesInProgressive;
 
     if (selectedRaffle.draw_type === 'progressive') {
