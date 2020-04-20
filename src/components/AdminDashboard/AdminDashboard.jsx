@@ -77,7 +77,7 @@ class AdminDashboard extends Component {
   }
 
   renderDashboard(raffle, timeToDraw, progressiveRaffle, timeToProgressiveDraw) {
-    if(raffle && timeToDraw && Object.keys(progressiveRaffle).length !== 0 && timeToProgressiveDraw) {
+    if(raffle && timeToDraw && progressiveRaffle.size !== 0 && timeToProgressiveDraw) {
         if(this.timer) {
           clearTimeout(this.timer);
         }
