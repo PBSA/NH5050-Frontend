@@ -84,17 +84,22 @@ class AdminDashboard extends Component {
       return (
         <div className="confirmation-jackpots">
           <div className="confirmation-jackpots-5050">
-            <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
-            <span className="confirmation-jackpots-amount"> ${raffle.total_jackpot} </span>
-            <span className="confirmation-jackpots-header"> {timeToDraw} </span>
-            <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(raffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
-          </div>
-          <div className="confirmation-jackpots-progressive">
-            <span className="confirmation-jackpots-header"> {strings.confirmationPage.progressivejackpot} </span>
-            <span className="confirmation-jackpots-amount"> ${progressiveRaffle.total_progressive_jackpot} </span>
-            <span className="confirmation-jackpots-header"> {timeToProgressiveDraw} </span>
-            <span className="confirmation-jackpots-date"> {strings.confirmationPage.drawn} {moment(progressiveRaffle.draw_datetime).format('ha ddd, MMM D, YYYY')} </span>
-          </div>
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.fundsRaised} </span>
+                <span className="confirmation-jackpots-amount"> ${(+progressiveRaffle.total_progressive_jackpot * 2).toFixed(2)} </span>
+                <span className="confirmation-jackpots-date"> {strings.confirmationPage.fundsRaisedSubText} </span>
+              </div>
+              <div className="confirmation-jackpots-progressive">
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.progressivejackpot} </span>
+                <span className="confirmation-jackpots-amount"> ${progressiveRaffle.total_progressive_jackpot} </span>
+                <span className="confirmation-jackpots-header"> {timeToProgressiveDraw} </span>
+                <span className="confirmation-jackpots-date"> {moment(progressiveRaffle.draw_datetime).format('MMMM D - h:mm A')} </span>
+              </div>
+              <div className="confirmation-jackpots-5050">
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
+                <span className="confirmation-jackpots-amount"> ${raffle.total_jackpot} </span>
+                <span className="confirmation-jackpots-header"> {timeToDraw} </span>
+                <span className="confirmation-jackpots-date"> {moment(raffle.draw_datetime).format('MMMM D - h:mm A')} </span>
+              </div>
         </div>
       );
     } else if(this.state.loadFailed) {
