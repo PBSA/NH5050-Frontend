@@ -70,7 +70,7 @@ class Dashboard extends Component {
             <Card>
               <CardContent className="dashboard-buy-container">
                 <span className="dashboard-buy-header">Funds Raised</span>
-                <span className="dashboard-buy-content">${+raffle.total_progressive_jackpot * 2}</span>
+                <span className="dashboard-buy-content">${(+raffle.total_progressive_jackpot * 2).toFixed(2)}</span>
                 <span className="dashboard-buy-header">Grand Prize</span>
                 <span className="dashboard-buy-content">${raffle.total_progressive_jackpot}</span>
                 <span className="dashboard-buy-header">Next 50-50/50 Jackpot</span>
