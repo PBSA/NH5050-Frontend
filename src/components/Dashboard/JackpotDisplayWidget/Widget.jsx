@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import { createPortal } from 'react-dom'
 import { Card, CardContent, Button } from '@material-ui/core';
 import { RouteConstants } from '../../../constants';
+import { RaffleService } from '../../../services';
 
-export default class JackpotDisplayWidget extends Component {
+export default class Widget extends Component {
+
+  state = {
+    raffle: {}
+  }
 
   navigateToOrderInfo = () => {
-    this.props.navigate(RouteConstants.ORDER_INFO);
-    this.props.setRoute(RouteConstants.ORDER_INFO);
+    // this.props.navigate(RouteConstants.ORDER_INFO);
+    // this.props.setRoute(RouteConstants.ORDER_INFO);
   }
 
   formatDate = (drawDate) => {
@@ -16,18 +21,40 @@ export default class JackpotDisplayWidget extends Component {
     date = new Date(drawDate);
     const twelveHourOptions = {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
     const twentyFourHourOptions = {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-
-    if(this.props.organization.time_format === '24h') {
-      formattedDate = date.toLocaleDateString('en-ZA', twentyFourHourOptions);
-    } else {
-      formattedDate = date.toLocaleDateString('en-US', twelveHourOptions);
-    }
+    
+    formattedDate = date.toLocaleDateString('en-ZA', twentyFourHourOptions);
 
     return formattedDate;
   }
+
+  getRaffles = () => {
+    //get current raffle data
+    RaffleService.getRaffle(1).then((raffle) => {
+      this.sortDraws(raffle);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  sortDraws = (draws) => {
+    const sortedDraws = draws.filter((draw) => {
+      return (new Date(draw.draw_datetime) > new Date(Date.now()) && new Date(draw.start_datetime) < new Date(Date.now()) && draw.draw_type === "5050");
+    });
+
+    if(!sortedDraws[0]) {
+      return;
+    }
+
+    this.setState({raffle: sortedDraws[0]});
+  }
+
+  componentDidMount() {
+    this.getRaffles();
+  }
   
   render() {
-    const { raffle } = this.props;
+    const { raffle } = this.state;
+    console.log('raffle: ', raffle);
     return (
       <div className="widget-buy">
         <Card>
