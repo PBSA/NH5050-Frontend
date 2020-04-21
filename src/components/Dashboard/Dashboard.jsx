@@ -27,15 +27,15 @@ class Dashboard extends Component {
       <div className="dashboard">
         {raffle.id ?
         <>
-          <MetaTags>
+          {/* <MetaTags>
             <meta property="og:title" content="New Hampshire Marine Corps League 50-50/50 Raffle" />
             <meta property="og:description" content={raffle.raffle_description} />
             <meta property="og:image" content={raffle.image_url} />
-            <meta property="og:url" content={process.env.NODE_ENV === 'development' ? process.env.DEV_BASE_ROUTE : process.env.PRODUCTION_BASE_ROUTE} />
+            <meta property="og:url" content={process.env.NODE_ENV === 'development' ? process.env.DEV_BASE_ROUTE : process.env.PRODUCTION_BASE_ROUTE} /> 
             <meta name="twitter:title" content="New Hampshire Marine Corps League 50-50/50 Raffle" />
             <meta name="twitter:description" content={raffle.raffle_description} />
             <meta name="twitter:image" content={raffle.image_url} />
-          </MetaTags>
+          </MetaTags> */}
           <div className="dashboard-panel">
             {this.displayImage()}
             <p className="dashboard-panel-text">
