@@ -42,7 +42,7 @@ class JackpotDisplayWidget extends Component {
         <Card>
           <CardContent className="widget-buy-container">
             <span className="widget-buy-header">Funds Raised</span>
-            <span className="widget-buy-content">${+raffle.total_progressive_jackpot * 2}</span>
+            <span className="widget-buy-content">${(+raffle.total_progressive_jackpot * 2).toFixed(2)}</span>
             <span className="widget-buy-header">Grand Prize</span>
             <span className="widget-buy-content">${raffle.total_progressive_jackpot}</span>
             <span className="widget-buy-header">Next 50-50/50 Jackpot</span>
