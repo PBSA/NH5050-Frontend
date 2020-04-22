@@ -3,16 +3,7 @@ import { createPortal } from 'react-dom'
 import { Card, CardContent, Button } from '@material-ui/core';
 import { RouteConstants } from '../../../constants';
 
-class JackpotDisplayWidget extends Component {
-  
-  constructor(props) {
-    super(props)
-
-    this.setContentRef = node =>
-      (this.contentRef =
-        ((!node || !node.contentWindow) && null) ||
-        node.contentWindow.document.body)
-  }
+export default class JackpotDisplayWidget extends Component {
 
   navigateToOrderInfo = () => {
     this.props.navigate(RouteConstants.ORDER_INFO);
@@ -58,5 +49,3 @@ class JackpotDisplayWidget extends Component {
     );
   }
 }
-
-export default JackpotDisplayWidget;
