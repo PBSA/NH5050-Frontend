@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createPortal } from 'react-dom'
 import { Card, CardContent, Button, CircularProgress } from '@material-ui/core';
 import { RouteConstants } from '../../../constants';
+import { Config } from '../../../utility';
 import { RaffleService } from '../../../services';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -65,7 +66,7 @@ class Widget extends Component {
               <span className="widget-buy-content">${raffle.total_jackpot}</span>
               <span className="widget-buy-header">Next Draw</span>
               <span className="widget-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
-              <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href="https://play.communityraffles.org/order">
+              <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href={`${Config.baseRoute}/order`}>
                 <Button className="widget-buy-button" variant="outlined" size="medium">
                   Buy Now
                 </Button>
