@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom'
-import { Card, CardContent, Button } from '@material-ui/core';
+import { Card, CardContent, Button, CircularProgress } from '@material-ui/core';
 import { RouteConstants } from '../../../constants';
 import { RaffleService } from '../../../services';
-
-export default class Widget extends Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { NavigateActions } from '../../../redux/actions';
+class Widget extends Component {
 
   state = {
-    raffle: {}
-  }
-
-  navigateToOrderInfo = () => {
-    // this.props.navigate(RouteConstants.ORDER_INFO);
-    // this.props.setRoute(RouteConstants.ORDER_INFO);
+    raffle: {},
+    loadFailed: false
   }
 
   formatDate = (drawDate) => {
@@ -51,28 +49,55 @@ export default class Widget extends Component {
   componentDidMount() {
     this.getRaffles();
   }
+
+  renderWidget = () => {
+    const {raffle} = this.state;
+    if(Object.keys(raffle).length !== 0 && raffle.constructor === Object) {
+      return (
+        <div className="widget-buy">
+          <Card>
+            <CardContent className="widget-buy-container">
+              <span className="widget-buy-header">Funds Raised</span>
+              <span className="widget-buy-content">${(+raffle.total_progressive_jackpot * 2).toFixed(2)}</span>
+              <span className="widget-buy-header">Grand Prize</span>
+              <span className="widget-buy-content">${raffle.total_progressive_jackpot}</span>
+              <span className="widget-buy-header">Next 50-50/50 Jackpot</span>
+              <span className="widget-buy-content">${raffle.total_jackpot}</span>
+              <span className="widget-buy-header">Next Draw</span>
+              <span className="widget-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
+              <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href="https://play.communityraffles.org/order">
+                <Button className="widget-buy-button" variant="outlined" size="medium">
+                  Buy Now
+                </Button>
+              </a>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    } else if(this.state.loadFailed) {
+      return (
+        <div className="widget-loader">
+          <span className="admin-error">There are currently no active raffles, please check back later.</span>
+        </div>
+      )
+    } else {
+    this.timer = setTimeout(() => {
+      this.setState({loadFailed: true});
+    }, 5000);
+
+    return (
+      <div className="widget-loader">
+        <CircularProgress color="secondary" />
+      </div>
+    );
+    }
+  }
   
   render() {
-    const { raffle } = this.state;
-    console.log('raffle: ', raffle);
     return (
-      <div className="widget-buy">
-        <Card>
-          <CardContent className="widget-buy-container">
-            <span className="widget-buy-header">Funds Raised</span>
-            <span className="widget-buy-content">${(+raffle.total_progressive_jackpot * 2).toFixed(2)}</span>
-            <span className="widget-buy-header">Grand Prize</span>
-            <span className="widget-buy-content">${raffle.total_progressive_jackpot}</span>
-            <span className="widget-buy-header">Next 50-50/50 Jackpot</span>
-            <span className="widget-buy-content">${raffle.total_jackpot}</span>
-            <span className="widget-buy-header">Next Draw</span>
-            <span className="widget-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
-            <Button className="widget-buy-button" variant="outlined" size="medium" onClick={this.navigateToOrderInfo}>
-              Buy Now
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+      this.renderWidget()
     );
   }
 }
+
+export default Widget;
