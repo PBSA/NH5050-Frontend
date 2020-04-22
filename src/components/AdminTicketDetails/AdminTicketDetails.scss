@@ -1,0 +1,44 @@
+@import '../../assets/styles/common.scss';
+
+.ticket-detail { 
+  font-size: 1.5em;
+  margin: 5% 25%;
+
+  &-wrapper {
+    margin: 2%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-data {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+
+    &-value {
+      color: $primary-app-color;
+    }
+  }
+
+  &-header {
+    margin-bottom: 1em;
+  }
+
+  &-button {
+    font-size: 1rem;
+    height: 3em;
+    width: 9em;
+    color: white;
+    background-color: $primary-app-color;
+    margin: 1% 0 0 2%;
+
+    &:hover {
+      background: $primary-app-color-hover;
+    }
+  }
+
+  @media only screen and (max-width: 1080px) {
+    font-size: 1em;
+    margin: 5% 1%;
+  }
+}

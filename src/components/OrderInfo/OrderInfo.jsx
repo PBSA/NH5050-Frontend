@@ -244,7 +244,15 @@ class OrderInfo extends Component {
                         />
                         <FormControlLabel
                           control={<Checkbox checked={emailCheck} name="emailCheck" onChange={this.handleCheckboxEmailChange}/>}
-                          label={strings.orderInfo.emailCheckLabel}
+                          label={
+                            <>
+                              <span>{strings.orderInfo.emailCheckLabel}</span>
+                              <a className="order-form-links" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/">{strings.orderInfo.emailCheckLabel2}</a>
+                              <span>,</span>
+                              <a className="order-form-links" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/terms-conditions/">{strings.orderInfo.emailCheckLabel3}</a>
+                              <span>.</span>
+                            </>
+                          }
                           />
                       </FormGroup>
                     </FormControl>

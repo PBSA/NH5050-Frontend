@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import {
-  TableContainer, Table, TablePagination, TableHead, TableBody, TableRow, TableCell,
+  TableContainer, Table, TablePagination, TableHead, TableBody, TableRow, TableCell, Paper,
 } from '@material-ui/core';
-import { RouteConstants } from '../../../constants';
 
 class AdminTable extends Component {
-  
-  state = {
-    currentPage: 0,
-    rowsPerPage: 15,
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentPage: 0,
+      rowsPerPage: 15
+    };
   }
 
   changePage = (e, index) => {
@@ -20,81 +23,67 @@ class AdminTable extends Component {
 		this.setState({rowsPerPage: event.target.value});
 		this.changePage(event, 0);
   };
-  
-  generateHeadCells = () => {
-  	switch(this.props.route) {
-  		case RouteConstants.ADMIN_BENEFICIARIES:
-  			return [
-  				{id: 'beneficiaries_name', label: 'Beneficiaries Name'},
-  				{id: 'beneficiaries_type', label: 'Type'},
-  				{id: 'beneficiaries_proceeds', label: 'Proceeds'}
-  			];
-        case RouteConstants.ADMIN_SELLERS:
-  			return [
-  				{id: 'seller_name', label: 'Seller Name'},
-  				{id: 'seller_sales', label: 'Ticket Sales'},
-  				{id: 'seller_funds', label: 'Funds Raised'},
-  			];
-  		case RouteConstants.ADMIN_RAFFLES:
-  			return [
-  				{id: 'raffles_name', label: 'Raffle Name'},
-  				{id: 'raffles_entries', label: 'Entries'},
-  				{id: 'raffles_jackpot', label: 'Jackpot'},
-        ];
-      case RouteConstants.ADMIN_TICKETS:
-        return [
-          {id: 'ticket_id', label: 'Ticket Id'},
-          {id: 'ticket_player', label: 'Player'},
-          {id: 'ticket_entries', label: 'Entries'},
-          {id: 'ticket_value', label: 'Value'}
-        ];
-  		default:
-  			return [];
-  	}
-  }
 
-  renderTableRow = (rowData, i) => {
-    const rowArray = Object.values(rowData);
-    let row;
-    row = rowArray.map(el => { return <TableCell key={el}>{el}</TableCell> });
-    return row;
+  renderTableRow = (rowData, styleClass) => {
+    const { columns } = this.props;
+
+    return columns.map((column, index) => {
+      const el = column.render ? column.render(rowData) : rowData[column.id];
+      const isActive = column.active && column.active(rowData);
+
+      return <TableCell className={`admin-table-cell ${styleClass}`} 
+        align={index > 0 ? "right" : "left"} key={index}>
+        <div>
+          {column.active && isActive !== undefined && <span className={isActive ? 'admin-table-dot-active' : 'admin-table-dot'}></span>}
+          {el}
+        </div>
+      </TableCell>;
+    });
   }
 
   render() {
-    const {tableData} = this.props;
-    const {currentPage, rowsPerPage} = this.state;
-    let pages = Math.ceil(tableData.length/rowsPerPage);
+    const { columns, rows, extraRows, onRowClick, clickableRow } = this.props;
+    const { currentPage, rowsPerPage } = this.state;
+    const tableLength = rows ? rows.length : 15;
+    
     return (
       <>
         <TableContainer>
           <Table stickyHeader>
             <TableHead>
               <TableRow hover>
-              {this.generateHeadCells().map(headCell =>
-  					    <TableCell key={headCell.id}>
-                  {headCell.label}
-                </TableCell>
-              )}
+                {columns.map((column, index) =>
+                  <TableCell className="admin-table-header" align={index > 0 ? 'right' : 'left'} key={index}>
+                    {column.label}
+                  </TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
-                {tableData && tableData.slice( currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((rowData, i) =>
-                  <TableRow>
-                    {this.renderTableRow(rowData, i)}
-                  </TableRow>
+              {rows && rows.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage).map((rowData, i) => (
+                <TableRow className={clickableRow ? "admin-table-row" : null} hover key={i} onClick={e => onRowClick && onRowClick(rowData)}>
+                  {this.renderTableRow(rowData)}
+                </TableRow>
+              ))}
+              {extraRows && extraRows.map((rowData, index) => <TableRow hover key={index}>
+                {rowData.map((cellData, index2) =>
+                  <TableCell align={index2 > 0 ? 'right' : 'left'} key={index2} className="admin-table-cell admin-table-footer">
+                    {cellData}
+                  </TableCell>
                 )}
+              </TableRow>)}
             </TableBody>
           </Table>
+          <TablePagination
+            rowsPerPageOptions={[15, 25, 50]}
+            component="div"
+            count={tableLength}
+            rowsPerPage={rowsPerPage}
+            page={currentPage}
+            onChangePage={this.changePage}
+            onChangeRowsPerPage={this.changeRowsPerPage}
+          />
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[15, 25, 50]}
-          component="div"
-          count={tableData.length}
-          rowsPerPage={rowsPerPage}
-          page={currentPage}
-          onChangePage={this.changePage}
-          onChangeRowsPerPage={this.changeRowsPerPage}
-        />
       </>
     );
   }

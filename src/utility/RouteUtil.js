@@ -3,9 +3,10 @@ import { RouteConstants } from '../constants';
 
 class RouteUtil {
   static isKnownPath = (path) => {
-    const routeValues = Object.values(RouteConstants);
-    if (routeValues.indexOf(path) !== -1) {
-      return true;
+    for (const route of Object.values(RouteConstants)) {
+      if (path.startsWith(route)) {
+        return true;
+      }
     }
 
     return false;

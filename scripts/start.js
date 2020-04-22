@@ -81,7 +81,7 @@ function runDevServer(host, port, protocol) {
     compress: true,
     clientLogLevel: 'none',
     // contentBase: paths.appPublic,
-    // publicPath: config.output.publicPath,
+    publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
     quiet: true,

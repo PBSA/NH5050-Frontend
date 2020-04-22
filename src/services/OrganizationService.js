@@ -1,7 +1,6 @@
 import { apiCall } from './api.helper';
 
 export default class OrganizationService {
-
   static getOrganizationInfo(organizationId) {
     return apiCall('get', 'organization', { organizationId });
   }
@@ -18,8 +17,8 @@ export default class OrganizationService {
     return apiCall('post', 'organization/beneficiary', beneficiaryData);
   }
 
-  static getSellers(organizationId) {
-    return apiCall('get', 'organization/sellers', { organizationId });
+  static getSellers(organizationId, raffleId) {
+    return apiCall('get', 'organization/sellers', { organizationId, raffleId });
   }
 
   static createOrUpdateSeller(sellerData) {
@@ -37,5 +36,4 @@ export default class OrganizationService {
   static deleteAdmin(userId) {
     return apiCall('delete', 'organizations/admins', { userId });
   }
-  
 }

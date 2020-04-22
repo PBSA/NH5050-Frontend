@@ -62,3 +62,22 @@ html, body, #content{
 .MuiCheckbox-colorSecondary.Mui-checked, .MuiRadio-colorSecondary.Mui-checked {
   color: $primary-app-color;
 }
+
+//admin panel tab navigation
+.MuiTabs-indicator {
+  display: none;
+}
+
+.Mui-selected {
+  color: white;
+  background-color: $primary-app-color;
+}
+
+//admin panel dropdown
+.MuiInput-underline:before {
+  color: $primary-app-color;
+}
+
+.MuiFormLabel-root.Mui-focused {
+  color: rgba(0, 0, 0, 0.54);
+}

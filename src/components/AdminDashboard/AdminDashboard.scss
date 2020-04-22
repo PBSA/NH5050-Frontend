@@ -1,0 +1,55 @@
+@import '../../assets/styles/common.scss';
+
+.admin {
+  display: flex;
+  flex-direction: column;
+  margin: 2% 18%;
+  min-height: 50%;
+
+  &-loader {
+    display: flex;
+    justify-content: center;
+    margin: 10%;
+  }
+
+  &-error {
+    font-size: 16px;
+  }
+
+  &-filter {
+    min-width: 120px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    margin: 2% 2%;
+  }
+}
+
+.sellers {
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 1% 0;
+  }
+}
+
+.tickets {
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1% 0;
+  }
+
+  &-csv {
+    font-size: 1rem;
+    height: 3em;
+    width: 9em;
+    color: white;
+    background-color: $primary-app-color;
+
+    &:hover {
+      background: $primary-app-color-hover;
+      }
+  }
+}

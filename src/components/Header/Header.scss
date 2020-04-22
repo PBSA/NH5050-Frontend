@@ -14,9 +14,37 @@
     justify-content: space-between;
   }
 
+  &-admin {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+
+    &-item {
+      color: $primary-app-color;
+      font-size: 16px;
+      margin: 10px 10px;
+
+      &:hover {
+        cursor: pointer;
+        color: $dashboard-buy-header;
+      }
+
+      &-disabled {
+        font-size: 16px;
+        margin: 10px 10px;
+        color: $dashboard-buy-header;
+      }
+    }
+  }
+
+  &-icon-wrapper {
+    height: 100px;
+    display: flex;
+    align-items: center;
+  }
+
   &-icon {
     width: 100px;
-    height: 100%;
     padding: 10px;
     margin-right: 16px;
     cursor: pointer;

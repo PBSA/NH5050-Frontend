@@ -3,8 +3,8 @@
 .confirmation {
   display: flex;
   flex-direction: column;
-  margin-right: 25%;
-  margin-left: 25%;
+  margin-right: 18%;
+  margin-left: 18%;
 
   &-card {
     background: white;
@@ -19,6 +19,23 @@
   &-subtext {
     font-size: 1.5rem;
     margin-bottom: 1.5em;
+  }
+
+  &-message {
+    font-size: 1.5rem;
+  }
+  
+  &-link {
+    width: 155px;
+    text-decoration: none;
+    color: #37378a;
+    font-size: 18px;
+    margin-top: 1.5em;
+
+    &:hover {
+      color: $primary-app-color;
+      text-decoration: none;
+    }
   }
 
   &-tickets {
@@ -36,18 +53,19 @@
   &-jackpots {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3em;
+    margin: 3em 0;
 
     &-5050 {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      flex: 1 1 0px;
+      align-items: center;
       text-align: center;
     }
 
     &-progressive {
       @extend .confirmation-jackpots-5050;
-      align-items: flex-end;
+      align-items: center;
     }
 
     &-header {
@@ -63,6 +81,7 @@
     &-date {
       font-size: 1.5rem;
       color: $dashboard-buy-header;
+      white-space: pre-wrap;
     }
   }
 
@@ -75,6 +94,7 @@
       font-size: 1.2rem;
       height: 3.5rem;
       width: 13rem;
+      margin: 5px;
       color: white;
       background-color: $dashboard-buy-header;
 
@@ -87,6 +107,7 @@
       font-size: 1.2rem;
       height: 3.5rem;
       width: 13rem;
+      margin: 5px;
       color: white;
       background-color: $dashboard-buy-header;
 
@@ -99,6 +120,7 @@
       font-size: 1.2rem;
       height: 3.5rem;
       width: 18rem;
+      margin: 5px;
       color: white;
       background-color: $primary-app-color;
 
@@ -125,7 +147,7 @@
 
     &-buttons {
       justify-content: space-around;
-      height: 10em;
+      height: 100%;
     }
   
     &-jackpots {
@@ -143,6 +165,17 @@
 
       &-amount {
         font-size: 2rem;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    &-jackpots {
+      flex-direction: column;
+
+      &-5050 {
+        margin: 10px;
+        flex: initial;
       }
     }
   }

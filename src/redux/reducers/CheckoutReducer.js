@@ -8,6 +8,7 @@ const initialState = fromJS({
   organization: {},
   organizationId: StorageUtil.get('organization_id') ? StorageUtil.get('organization_id') : '',
   raffle: {},
+  progressiveRaffle: {},
   raffleId: StorageUtil.get('raffle_id') ? StorageUtil.get('raffle_id') : '',
   firstName: orderInfo ? orderInfo.firstName : '',
   lastName: orderInfo ? orderInfo.lastName : '',
@@ -48,6 +49,12 @@ export default (state = initialState, action) => {
     case ActionTypes.SET_RAFFLE: {
       return state.merge({
         raffle: action.raffle,
+      });
+    }
+
+    case ActionTypes.SET_PROGRESSIVE_RAFFLE: {
+      return state.merge({
+        progressiveRaffle: action.progressiveRaffle,
       });
     }
 

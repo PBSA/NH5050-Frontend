@@ -1,167 +1,46 @@
-import React from 'react';
-import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-} from '@material-ui/core';
+import React, { Component } from 'react';
 import AdminTable from './AdminTable';
-import { RouteConstants } from '../../constants';
+import { OrganizationService } from '../../services';
 
-export default function Beneficiaries() {
-  const rows = [{
-    name: 'New Hampshire Marine Corps League',
-    type: 'Organization',
-    proceeds: '$775',
-  }, {
-    name: 'Detachment #345',
-    type: 'Beneficiary',
-    proceeds: '$525',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }, {
-    name: 'Detachment #550',
-    type: 'Beneficiary',
-    proceeds: '$600',
-  }];
+const columns = [
+  { id: 'name', label: 'Beneficiaries Name', render: (item) => item.user.name },
+  { id: 'type', label: 'Type', render: (item) => item.user.type },
+  { id: 'proceeds', label: 'Proceeds', render: (item) => item.total_funds },
+];
 
-  return (
-    <AdminTable tableData={rows} route={RouteConstants.ADMIN_BENEFICIARIES} />
-    // <TableContainer component={Paper}>
-    //   <Table className="beneficiaries-table" aria-label="simple table">
-    //     <TableHead>
-    //       <TableRow>
-    //         <TableCell>Beneficiaries Name</TableCell>
-    //         <TableCell align="right">Type</TableCell>
-    //         <TableCell align="right">Proceeds</TableCell>
-    //       </TableRow>
-    //     </TableHead>
-    //     <TableBody>
-    //       {rows.map((row) => (
-    //         <TableRow key={row.name}>
-    //           <TableCell component="th" scope="row">{row.name}</TableCell>
-    //           <TableCell align="right">{row.type}</TableCell>
-    //           <TableCell align="right">{row.proceeds}</TableCell>
-    //         </TableRow>
-    //       ))}
-    //       <TableRow>
-    //         <TableCell component="th" scope="row">Total</TableCell>
-    //         <TableCell align="right"></TableCell>
-    //         <TableCell align="right">$1900</TableCell>
-    //       </TableRow>
-    //     </TableBody>
-    //   </Table>
-    // </TableContainer>
-  );
+class Beneficiaries extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rows: [],
+    };
+  }
+
+  componentDidMount() {
+    let rows;
+    OrganizationService.getOrganizationInfo(this.props.organizationId)
+      .then((org) => {
+        rows = [{
+          user:
+          { name: org.name, type: org.type },
+          total_funds: org.total_funds,
+        }];
+      })
+      .then(() => OrganizationService.getBeneficiaries(this.props.organizationId)
+        .then((beneficiaries) => {
+          rows.push(...beneficiaries);
+          this.setState({ rows });
+        }));
+  }
+
+  render() {
+    const { rows } = this.state;
+    const totalSales = rows.reduce((sum, item) => sum + parseFloat(item.total_funds), 0).toFixed(2);
+    return (
+      <AdminTable columns={columns} rows={this.state.rows} extraRows={[['Total', '', totalSales]]} />
+    );
+  }
 }
+
+export default Beneficiaries;

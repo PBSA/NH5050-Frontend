@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import {
-  Card, CardContent, Tabs, Tab,
+  Card, CardContent, Tabs, Tab, CircularProgress
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 import { NavigateActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 
@@ -11,32 +12,149 @@ import Beneficiaries from './Beneficiaries';
 import Sellers from './Sellers';
 import Raffles from './Raffles';
 import Tickets from './Tickets';
+import { RouteConstants } from '../../constants';
+import { RaffleService } from '../../services';
 
 const tabs = [
-  { id: 'beneficiaries', label: strings.adminDashboard.tabs.beneficiaries },
-  { id: 'sellers', label: strings.adminDashboard.tabs.sellers },
-  { id: 'raffles', label: strings.adminDashboard.tabs.raffles },
-  { id: 'tickets', label: strings.adminDashboard.tabs.tickets },
+  { id: 'beneficiaries', label: strings.adminDashboard.tabs.beneficiaries, route: RouteConstants.ADMIN_BENEFICIARIES },
+  { id: 'sellers', label: strings.adminDashboard.tabs.sellers, route: RouteConstants.ADMIN_SELLERS },
+  { id: 'raffles', label: strings.adminDashboard.tabs.raffles, route: RouteConstants.ADMIN_RAFFLES },
+  { id: 'tickets', label: strings.adminDashboard.tabs.tickets, route: RouteConstants.ADMIN_TICKETS },
 ];
 
-function AdminDashboard() {
-  const [tabIndex, setTabIndex] = useState(0);
-  const activeTab = tabs[tabIndex].id;
+class AdminDashboard extends Component {
+  
+  constructor(props) {
+    super(props);
 
-  return (
-    <Card className="order" variant="outlined">
-      <CardContent>
-        <Tabs value={tabIndex} onChange={(e, index) => setTabIndex(index)} centered>
-          {tabs.map(({ id, label }) => <Tab key={id} label={label} />)}
-        </Tabs>
-        {activeTab === 'beneficiaries' && <Beneficiaries />}
-        {activeTab === 'sellers' && <Sellers />}
-        {activeTab === 'raffles' && <Raffles />}
-        {activeTab === 'tickets' && <Tickets />}
-      </CardContent>
-    </Card>
-  );
+    let tabIndex = 0;
+    for (let i = 0; i < tabs.length; i++) {
+      if (tabs[i].route === props.path) {
+        tabIndex = i;
+      }
+    }
+
+    this.state = { 
+      tabIndex,
+      timeToDraw: '',
+      timeToProgressiveDraw: '',
+      loadFail: false,
+     };
+  }
+
+  setTabIndex = (index) => {
+    this.setState({tabIndex: index});
+  }
+
+  tick = () => {
+    this.setState({
+      timeToDraw: this.timeToDraw(this.props.raffle.draw_datetime),
+      timeToProgressiveDraw: this.timeToDraw(this.props.progressiveRaffle.draw_datetime)
+    });
+  }
+
+  timeToDraw = (drawdate) => {
+    if(new Date(drawdate) < new Date(Date.now())) {
+      return `0d 0h 0m 0s`
+    }
+
+    const diff = moment.duration(moment(drawdate).diff(moment()));
+    let days = moment(drawdate).diff(moment(), 'days');
+    return `${days}d ${diff.hours()}h ${diff.minutes()}m ${diff.seconds()}s`;
+  }
+
+  componentDidMount() {
+    this.intervalID = setInterval(
+      () => this.tick(),
+      1000);
+  }
+
+  componentWillUnmount() {
+    if(this.intervalID) {
+      clearInterval(this.intervalID);
+      this.intervalID = null;
+    }
+  }
+
+  renderDashboard(raffle, timeToDraw, progressiveRaffle, timeToProgressiveDraw) {
+    if(raffle && timeToDraw && progressiveRaffle.size !== 0 && timeToProgressiveDraw) {
+        if(this.timer) {
+          clearTimeout(this.timer);
+        }
+      return (
+        <div className="confirmation-jackpots">
+          <div className="confirmation-jackpots-5050">
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.fundsRaised} </span>
+                <span className="confirmation-jackpots-amount"> ${(+progressiveRaffle.total_progressive_jackpot * 2).toFixed(2)} </span>
+                <span className="confirmation-jackpots-date"> {strings.confirmationPage.fundsRaisedSubText} </span>
+              </div>
+              <div className="confirmation-jackpots-progressive">
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.progressivejackpot} </span>
+                <span className="confirmation-jackpots-amount"> ${progressiveRaffle.total_progressive_jackpot} </span>
+                <span className="confirmation-jackpots-header"> {timeToProgressiveDraw} </span>
+                <span className="confirmation-jackpots-date"> {moment(progressiveRaffle.draw_datetime).format('MMMM D - h:mm A')} </span>
+              </div>
+              <div className="confirmation-jackpots-5050">
+                <span className="confirmation-jackpots-header"> {strings.confirmationPage.jackpot} </span>
+                <span className="confirmation-jackpots-amount"> ${raffle.total_jackpot} </span>
+                <span className="confirmation-jackpots-header"> {timeToDraw} </span>
+                <span className="confirmation-jackpots-date"> {moment(raffle.draw_datetime).format('MMMM D - h:mm A')} </span>
+              </div>
+        </div>
+      );
+    } else if(this.state.loadFailed) {
+        return (
+          <div className="admin-loader">
+            <span className="admin-error">There are currently no active raffles, please check back later.</span>
+          </div>
+        )
+      } else {
+      this.timer = setTimeout(() => {
+        this.setState({loadFailed: true});
+      }, 5000);
+
+      return (
+        <div className="admin-loader">
+          <CircularProgress color="secondary" />
+        </div>
+      );
+    }
+  }
+
+  render() {
+    const { organizationId, raffle, path, progressiveRaffle } = this.props;
+    const { timeToDraw, timeToProgressiveDraw } = this.state;
+    const tabIndex = path === RouteConstants.ADMIN ? false : this.state.tabIndex;
+    const activeTab = path === RouteConstants.ADMIN ? false : tabs[tabIndex].id;
+
+    return (
+      <Card className="admin" variant="outlined">
+        <CardContent>
+          <Tabs value={tabIndex} onChange={(e, index) => this.setTabIndex(index)} centered>
+            {tabs.map(({ id, label, route }) => <Tab onClick={() => this.props.navigate(route)} key={id} label={label} />)}
+          </Tabs>
+          {activeTab === 'beneficiaries' && <Beneficiaries organizationId={organizationId} />}
+          {activeTab === 'sellers' && <Sellers organizationId={organizationId} />}
+          {activeTab === 'raffles' && <Raffles organizationId={organizationId} />}
+          {activeTab === 'tickets' && <Tickets organizationId={organizationId} />}
+          {activeTab === false ? 
+            this.renderDashboard(raffle, timeToDraw, progressiveRaffle, timeToProgressiveDraw)
+          : null}
+        </CardContent>
+      </Card>
+    );
+  }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    organizationId: state.getIn(['checkout', 'organizationId']),
+    path: state.getIn(['router', 'location', 'pathname']),
+    organization: state.getIn(['checkout', 'organization']),
+    raffle: state.getIn(['checkout', 'raffle']),
+    progressiveRaffle: state.getIn(['checkout', 'progressiveRaffle'])
+  };
+};
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
@@ -45,4 +163,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   dispatch,
 );
 
-export default connect(null, mapDispatchToProps)(AdminDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminDashboard);

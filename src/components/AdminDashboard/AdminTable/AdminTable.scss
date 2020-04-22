@@ -1,0 +1,35 @@
+@import '../../../assets/styles/common.scss';
+
+.admin-table {
+  &-header {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  &-row {
+    cursor: pointer;
+  }
+
+  &-cell {
+    font-size: 1rem;
+  }
+
+  &-footer {
+    color: $primary-app-color;
+  }
+
+  &-dot {
+    height: 0.7rem;
+    width: 0.7rem;
+    margin-right: 5px;
+    background-color: $dashboard-buy-header;
+    border-radius: 50%;
+    display: inline-block;
+
+    &-active {
+      @extend .admin-table-dot;
+
+      background-color: $primary-app-color;
+    }
+  }
+}
