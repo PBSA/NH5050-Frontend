@@ -6,7 +6,7 @@ import { Config } from '../../../utility';
 import { RaffleService } from '../../../services';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { NavigateActions } from '../../../redux/actions';
+import { NavigateActions, CheckoutActions } from '../../../redux/actions';
 class Widget extends Component {
 
   state = {
@@ -19,9 +19,8 @@ class Widget extends Component {
     let date, formattedDate;
     date = new Date(drawDate);
     const twelveHourOptions = {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-    const twentyFourHourOptions = {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
     
-    formattedDate = date.toLocaleDateString('en-ZA', twentyFourHourOptions);
+    formattedDate = date.toLocaleDateString('en-US', twelveHourOptions);
 
     return formattedDate;
   }
@@ -53,11 +52,15 @@ class Widget extends Component {
 
   renderWidget = () => {
     const {raffle} = this.state;
+    console.log('raffle: ', raffle);
     if(Object.keys(raffle).length !== 0 && raffle.constructor === Object) {
       return (
         <div className="widget-buy">
           <Card>
             <CardContent className="widget-buy-container">
+              <span className="widget-buy-header">MCL NH</span>
+              <img className="widget-img" src={raffle.image_url} alt=""/>
+              <span className="widget-buy-content-bg">{raffle.raffle_name}</span>
               <span className="widget-buy-header">Funds Raised</span>
               <span className="widget-buy-content">${(+raffle.total_progressive_jackpot * 2).toFixed(2)}</span>
               <span className="widget-buy-header">Grand Prize</span>
@@ -66,7 +69,7 @@ class Widget extends Component {
               <span className="widget-buy-content">${raffle.total_jackpot}</span>
               <span className="widget-buy-header">Next Draw</span>
               <span className="widget-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
-              <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href={`${Config.baseRoute}/order`}>
+              <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href={`${Config.baseRoute}/order`} onClick={() => this.props.setRoute(RouteConstants.ORDER_INFO)}>
                 <Button className="widget-buy-button" variant="outlined" size="medium">
                   Buy Now
                 </Button>
@@ -101,4 +104,12 @@ class Widget extends Component {
   }
 }
 
-export default Widget;
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    navigate: NavigateActions.navigate,
+    setRoute: CheckoutActions.setCheckoutRoute,
+  },
+  dispatch,
+);
+
+export default connect(null, mapDispatchToProps)(Widget);
