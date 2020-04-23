@@ -13,15 +13,24 @@
     width: 60%;
     height: 50px;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
       cursor: pointer;
     }
   }
 
+  &-background {
+    height: 100%;
+    background: white;
+  }
+
   &-img {
     width: 50%;
     margin: 2% 0;
+    min-width: 300px;
   }
 
   &-buy {
@@ -31,6 +40,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      &-padded {
+        @extend .widget-buy-container;
+        padding: 16px;
+      }
     }
   
     &-header {

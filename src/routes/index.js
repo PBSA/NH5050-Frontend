@@ -9,7 +9,6 @@ import CheckoutContainer from '../components/CheckoutContainer';
 import { RouteConstants as Routes } from '../constants';
 import { requireAuthentication } from '../utility/AuthComponent';
 import Widget from '../components/Dashboard/JackpotDisplayWidget/Widget';
-import IFrameTest from '../components/IFrameTest/IFrameTest';
 
 const routes = (
   <>
@@ -21,7 +20,6 @@ const routes = (
       <Route path={Routes.CONFIRMATION_PAGE} component={CheckoutContainer} />
       <Route path={Routes.GROW_JACKPOT} component={CheckoutContainer} />
       <Route exact path={Routes.JACKPOT_WIDGET} component={Widget} />
-      <Route exact path={Routes.TEST} component={IFrameTest} />
       {/* ADMIN SECTION */}
       <Route path={Routes.ADMIN_LOGIN} component={AdminLogin} />
       <Route exact path={Routes.ADMIN} component={requireAuthentication(AdminDashboard)} />

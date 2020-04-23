@@ -55,9 +55,8 @@ class Widget extends Component {
     console.log('raffle: ', raffle);
     if(Object.keys(raffle).length !== 0 && raffle.constructor === Object) {
       return (
-        <div className="widget-buy">
-          <Card>
-            <CardContent className="widget-buy-container">
+        <div className="widget-background">
+            <div className="widget-buy-container-padded">
               <span className="widget-buy-header-black">New Hampshire Marine Corps League</span>
               <span className="widget-buy-content">{raffle.raffle_name}</span>
               <span className="widget-buy-header">Funds Raised</span>
@@ -73,8 +72,7 @@ class Widget extends Component {
                   Buy Now
                 </Button>
               </a>
-            </CardContent>
-          </Card>
+            </div>
         </div>
       );
     } else if(this.state.loadFailed) {
