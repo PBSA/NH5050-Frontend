@@ -19,6 +19,11 @@
     }
   }
 
+  &-img {
+    width: 50%;
+    margin: 2% 0;
+  }
+
   &-buy {
     width: 300px;
   
@@ -32,6 +37,11 @@
       font-size: 1.5rem;
       color: $dashboard-buy-header;
       text-align: center;
+
+      &-black {
+        @extend .widget-buy-header;
+        color: black;
+      }
     }
   
     &-content {
@@ -40,7 +50,12 @@
       color: $dashboard-buy-content;
       padding-bottom: 10px;
       text-align: center;
-  
+      
+      &-bg {
+        @extend .widget-buy-content;
+        font-size: 2.7rem;
+      }
+
       &-sm {
         @extend .widget-buy-content;
         font-size: 1.5rem;
