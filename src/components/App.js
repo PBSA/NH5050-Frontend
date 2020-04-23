@@ -19,7 +19,7 @@ class App extends Component {
     if (this.props.path === RouteConstants.DASHBOARD || this.props.path === RouteConstants.ROOT) { // check if trying to access non checkout related route
       this.props.navigate(RouteConstants.DASHBOARD);
       this.props.resetCheckout();
-    } else if (this.props.path !== this.props.checkoutRoute && !this.props.path.includes('/admin') && !this.props.path.includes('/login') && !this.props.path.includes('/widget')) { // check if user is in checkout flow, and tries to access unauthorized page
+    } else if (this.props.path !== this.props.checkoutRoute && !this.props.path.includes('/admin') && !this.props.path.includes('/login') && !this.props.path.includes('/widget/jackpots')) { // check if user is in checkout flow, and tries to access unauthorized page
       this.props.navigate(this.props.checkoutRoute);
     } else if (this.props.path === RouteConstants.PAYMENT_INFO) {
       RouteUtil.paymentRedirect(this.props.paymentResponse, this.props.navigate, this.props.setRoute);
