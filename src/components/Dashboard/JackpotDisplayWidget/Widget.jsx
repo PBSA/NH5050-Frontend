@@ -58,9 +58,9 @@ class Widget extends Component {
         <div className="widget-buy">
           <Card>
             <CardContent className="widget-buy-container">
-              <span className="widget-buy-header">MCL NH</span>
+              <span className="widget-buy-header-black">New Hampshire Marine Corps League</span>
               <img className="widget-img" src={raffle.image_url} alt=""/>
-              <span className="widget-buy-content-bg">{raffle.raffle_name}</span>
+              <span className="widget-buy-content">{raffle.raffle_name}</span>
               <span className="widget-buy-header">Funds Raised</span>
               <span className="widget-buy-content">${(+raffle.total_progressive_jackpot * 2).toFixed(2)}</span>
               <span className="widget-buy-header">Grand Prize</span>
