@@ -22,7 +22,7 @@ class RouteUtil {
   }
 
   static isCheckoutRoute = (path, checkoutRoute) => {
-    return path === checkoutRoute && !path.includes('/admin');
+    return path === checkoutRoute && !path.includes('/admin') && !path.includes('/widget');
   }
 }
 

@@ -4,10 +4,11 @@ import Dashboard from '../components/Dashboard';
 import AdminLogin from '../components/AdminLogin';
 import AdminDashboard from '../components/AdminDashboard';
 import AdminTicketDetails from '../components/AdminTicketDetails';
-import SellerForm from '../components/SellerForm';
+// import SellerForm from '../components/SellerForm';
 import CheckoutContainer from '../components/CheckoutContainer';
 import { RouteConstants as Routes } from '../constants';
 import { requireAuthentication } from '../utility/AuthComponent';
+import Widget from '../components/Dashboard/JackpotDisplayWidget/Widget';
 
 const routes = (
   <>
@@ -18,6 +19,7 @@ const routes = (
       <Route path={Routes.PAYMENT_INFO} component={CheckoutContainer} />
       <Route path={Routes.CONFIRMATION_PAGE} component={CheckoutContainer} />
       <Route path={Routes.GROW_JACKPOT} component={CheckoutContainer} />
+      <Route exact path={Routes.JACKPOT_WIDGET} component={Widget} />
       {/* ADMIN SECTION */}
       <Route path={Routes.ADMIN_LOGIN} component={AdminLogin} />
       <Route exact path={Routes.ADMIN} component={requireAuthentication(AdminDashboard)} />
