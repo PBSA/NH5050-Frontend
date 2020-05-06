@@ -1,13 +1,63 @@
 import React, { Component } from 'react';
-import { createPortal } from 'react-dom'
+import { createPortal } from 'react-dom';
 import { Card, CardContent, Button } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { RouteConstants } from '../../../constants';
+import { Config } from '../../../utility';
+import strings from '../../../assets/locales/strings';
+import Geocode from "react-geocode";
+
+Geocode.setApiKey(Config.googleAPIKey);
+Geocode.setLanguage("en");
 
 export default class JackpotDisplayWidget extends Component {
+  state = {
+    errorText: ''
+  }
 
-  navigateToOrderInfo = () => {
-    this.props.navigate(RouteConstants.ORDER_INFO);
-    this.props.setRoute(RouteConstants.ORDER_INFO);
+  navigateToOrderInfo = (e) => {
+    e.preventDefault();
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.geocodeLookupAndNavigate(position.coords.latitude, position.coords.longitude);
+      });
+    } else {
+      this.setState({
+        errorText: strings.dashboard.errors.locationerror
+      });
+    }
+  }
+
+  geocodeLookupAndNavigate = (lat, long) => {
+    const {navigate, setRoute} = this.props;
+    Geocode.fromLatLng(lat, long).then(
+      response => {
+        const addresses = response.results[0].address_components;
+        if(addresses.length > 0) {
+          if(addresses.find((address) => address.short_name === 'NH')) {
+            this.setState({
+              errorText: ''
+            });
+            navigate(RouteConstants.ORDER_INFO);
+            setRoute(RouteConstants.ORDER_INFO);
+          } else {
+            this.setState({
+              errorText: strings.dashboard.errors.outsidenh
+            });
+          }
+        } else {
+          this.setState({
+            errorText: strings.dashboard.errors.locationerror
+          });
+        }
+      },
+      error => {
+        this.setState({
+          errorText: strings.dashboard.errors.locationerror
+        });
+      }
+    );
   }
 
   formatDate = (drawDate) => {
@@ -28,6 +78,7 @@ export default class JackpotDisplayWidget extends Component {
   
   render() {
     const { raffle } = this.props;
+    const { errorText } = this.state;
     return (
       <div className="widget-buy">
         <Card>
@@ -43,6 +94,7 @@ export default class JackpotDisplayWidget extends Component {
             <Button className="widget-buy-button" variant="outlined" size="medium" onClick={this.navigateToOrderInfo}>
               Buy Now
             </Button>
+            {errorText !== '' ? <Alert severity="error">{errorText}</Alert> : null}
           </CardContent>
         </Card>
       </div>

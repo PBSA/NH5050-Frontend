@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom'
 import { Card, CardContent, Button, CircularProgress } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { RouteConstants } from '../../../constants';
 import { Config } from '../../../utility';
 import { RaffleService } from '../../../services';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { NavigateActions, CheckoutActions } from '../../../redux/actions';
+import strings from '../../../assets/locales/strings';
+import Geocode from "react-geocode";
+
+Geocode.setApiKey(Config.googleAPIKey);
+Geocode.setLanguage("en");
+
 class Widget extends Component {
 
   state = {
     raffle: {},
-    loadFailed: false
+    loadFailed: false,
+    errorText: ''
   }
 
   formatDate = (drawDate) => {
@@ -47,11 +55,48 @@ class Widget extends Component {
   }
 
   componentDidMount() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.geocodeLookupAndNavigate(position.coords.latitude, position.coords.longitude);
+      });
+    } else {
+      this.setState({
+        errorText: strings.dashboard.errors.locationerror
+      });
+    }
     this.getRaffles();
   }
 
+  geocodeLookupAndNavigate = (lat, long) => {
+    Geocode.fromLatLng(lat, long).then(
+      response => {
+        const addresses = response.results[0].address_components;
+        if(addresses.length > 0) {
+          if(addresses.find((address) => address.short_name === 'NH')) {
+            this.setState({
+              errorText: ''
+            });
+          } else {
+            this.setState({
+              errorText: strings.dashboard.errors.outsidenh
+            });
+          }
+        } else {
+          this.setState({
+            errorText: strings.dashboard.errors.locationerror
+          });
+        }
+      },
+      error => {
+        this.setState({
+          errorText: strings.dashboard.errors.locationerror
+        });
+      }
+    );
+  }
+
   renderWidget = () => {
-    const {raffle} = this.state;
+    const {raffle, errorText} = this.state;
     console.log('raffle: ', raffle);
     if(Object.keys(raffle).length !== 0 && raffle.constructor === Object) {
       return (
@@ -67,11 +112,13 @@ class Widget extends Component {
               <span className="widget-buy-content">${raffle.total_jackpot}</span>
               <span className="widget-buy-header">Next Draw</span>
               <span className="widget-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
-              <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href={`${Config.baseRoute}/order`} onClick={() => this.props.setRoute(RouteConstants.ORDER_INFO)}>
-                <Button className="widget-buy-button" variant="outlined" size="medium">
-                  Buy Now
-                </Button>
-              </a>
+              {errorText !== '' ? <Alert severity="error">{errorText}</Alert>
+              : <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href={`${Config.baseRoute}/order`} onClick={() => this.props.setRoute(RouteConstants.ORDER_INFO)}>
+                  <Button className="widget-buy-button" variant="outlined" size="medium">
+                    Buy Now
+                  </Button>
+                </a>
+              }
             </div>
         </div>
       );

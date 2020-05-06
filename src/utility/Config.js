@@ -8,6 +8,7 @@ const {
   STRIPE_DEV_PKEY,
   STRIPE_PROD_PKEY,
   GOOGLE_ANALYTICS_KEY,
+  GOOGLE_API_KEY,
 } = process.env;
 
 /**
@@ -44,12 +45,19 @@ const Config = {
    */
   stripePKey: isDev ? STRIPE_DEV_PKEY : STRIPE_PROD_PKEY,
   /**
-   * Represents the stripe publishable key.
+   * Represents the google analytics key.
    *
    * @type {string}
    * @memberof Config
    */
   googleAnalyticsKey: GOOGLE_ANALYTICS_KEY,
+  /**
+   * Represents the google api key.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  googleAPIKey: GOOGLE_API_KEY,
 };
 
 export default Config;
