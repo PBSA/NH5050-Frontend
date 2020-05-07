@@ -58,6 +58,11 @@ class Widget extends Component {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.geocodeLookupAndNavigate(position.coords.latitude, position.coords.longitude);
+      },
+      () => {
+        this.setState({
+          errorText: strings.dashboard.errors.locationerror
+        });
       });
     } else {
       this.setState({
