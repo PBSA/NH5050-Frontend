@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { createPortal } from 'react-dom';
 import { Card, CardContent, Button } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { RouteConstants } from '../../../constants';
@@ -21,6 +20,11 @@ export default class JackpotDisplayWidget extends Component {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.geocodeLookupAndNavigate(position.coords.latitude, position.coords.longitude);
+      },
+      () => {
+        this.setState({
+          errorText: strings.dashboard.errors.locationerror
+        });
       });
     } else {
       this.setState({
@@ -91,10 +95,11 @@ export default class JackpotDisplayWidget extends Component {
             <span className="widget-buy-content">${raffle.total_jackpot}</span>
             <span className="widget-buy-header">Next Draw</span>
             <span className="widget-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
-            <Button className="widget-buy-button" variant="outlined" size="medium" onClick={this.navigateToOrderInfo}>
-              Buy Now
-            </Button>
-            {errorText !== '' ? <Alert severity="error">{errorText}</Alert> : null}
+            {errorText !== '' ? <Alert severity="error">{errorText}</Alert> 
+            : <Button className="widget-buy-button" variant="outlined" size="medium" onClick={this.navigateToOrderInfo}>
+                Buy Now
+              </Button>
+            }
           </CardContent>
         </Card>
       </div>
