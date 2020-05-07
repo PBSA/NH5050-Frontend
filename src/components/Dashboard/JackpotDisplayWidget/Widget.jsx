@@ -19,7 +19,8 @@ class Widget extends Component {
   state = {
     raffle: {},
     loadFailed: false,
-    errorText: ''
+    errorText: '',
+    disablebtn: true
   }
 
   formatDate = (drawDate) => {
@@ -61,12 +62,14 @@ class Widget extends Component {
       },
       () => {
         this.setState({
-          errorText: strings.dashboard.errors.locationerror
+          errorText: strings.dashboard.errors.locationerror,
+          disablebtn: true
         });
       });
     } else {
       this.setState({
-        errorText: strings.dashboard.errors.locationerror
+        errorText: strings.dashboard.errors.locationerror,
+        disablebtn: true
       });
     }
     this.getRaffles();
@@ -79,30 +82,33 @@ class Widget extends Component {
         if(addresses.length > 0) {
           if(addresses.find((address) => address.short_name === 'NH')) {
             this.setState({
-              errorText: ''
+              errorText: '',
+              disablebtn: false
             });
           } else {
             this.setState({
-              errorText: strings.dashboard.errors.outsidenh
+              errorText: strings.dashboard.errors.outsidenh,
+              disablebtn: true
             });
           }
         } else {
           this.setState({
-            errorText: strings.dashboard.errors.locationerror
+            errorText: strings.dashboard.errors.locationerror,
+            disablebtn: true
           });
         }
       },
       error => {
         this.setState({
-          errorText: strings.dashboard.errors.locationerror
+          errorText: strings.dashboard.errors.locationerror,
+          disablebtn: true
         });
       }
     );
   }
 
   renderWidget = () => {
-    const {raffle, errorText} = this.state;
-    console.log('raffle: ', raffle);
+    const {raffle, errorText, disablebtn} = this.state;
     if(Object.keys(raffle).length !== 0 && raffle.constructor === Object) {
       return (
         <div className="widget-background">
@@ -117,8 +123,8 @@ class Widget extends Component {
               <span className="widget-buy-content">${raffle.total_jackpot}</span>
               <span className="widget-buy-header">Next Draw</span>
               <span className="widget-buy-content-sm">{this.formatDate(raffle.draw_datetime)}</span>
-              {errorText !== '' ? <Alert severity="error">{errorText}</Alert>
-              : <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href={`${Config.baseRoute}/order`} onClick={() => this.props.setRoute(RouteConstants.ORDER_INFO)}>
+              {errorText !== '' ? <Alert severity="error">{errorText}</Alert> : null }
+              {disablebtn ? null : <a className="widget-redirect" target="_blank" rel="noopener noreferrer" href={`${Config.baseRoute}/order`} onClick={() => this.props.setRoute(RouteConstants.ORDER_INFO)}>
                   <Button className="widget-buy-button" variant="outlined" size="medium">
                     Buy Now
                   </Button>
