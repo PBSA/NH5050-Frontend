@@ -9,7 +9,7 @@ import {withRouter} from 'react-router';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import { RouteConstants } from '../../constants';
 import { RaffleService, OrganizationService, UserService } from '../../services';
-import { ValidationUtil } from '../../utility';
+import { ValidationUtil, Config } from '../../utility';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import strings from '../../assets/locales/strings';
 import ProgressBar from '../ProgressBar';
@@ -196,7 +196,15 @@ class OrderInfo extends Component {
     const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText} = this.state;
     return (
       <div className="checkout-container">
-        <Card className="order" variant="outlined">
+        {Config.isMaintenance ?
+        <article>
+          <h1>We&rsquo;ll be back soon!</h1>
+          <div>
+            <p>The app is currently unavailable for maintenance. Please check back in a few hours. We apologize for the inconvenience. If you have any questions please contact <a href="mailto:raffles@seacoastmarines.org">raffles@seacoastmarines.org</a></p>
+            <p>&mdash; The Team</p>
+          </div>
+        </article>
+        : <Card className="order" variant="outlined">
           <CardContent>
             <ProgressBar activeStep={0}/>
             <form className="order-form" onSubmit={this.submitOrder}>
@@ -293,7 +301,7 @@ class OrderInfo extends Component {
               </div>
             </form>
           </CardContent>
-        </Card>
+        </Card>}
         {this.state.loading && <div className='order-backdrop'>
           <CircularProgress color="secondary" />
         </div>}

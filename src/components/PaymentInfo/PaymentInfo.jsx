@@ -230,7 +230,15 @@ class PaymentInfo extends Component {
   render() {
     return (
       <div className="checkout-container">
-        <Card className="payment-card" variant="outlined">
+        {Config.isMaintenance ?
+        <article>
+          <h1>We&rsquo;ll be back soon!</h1>
+          <div>
+            <p>The app is currently unavailable for maintenance. Please check back in a few hours. We apologize for the inconvenience. If you have any questions please contact <a href="mailto:raffles@seacoastmarines.org">raffles@seacoastmarines.org</a></p>
+            <p>&mdash; The Team</p>
+          </div>
+        </article>
+        : <Card className="payment-card" variant="outlined">
         <CardContent>
           <ProgressBar activeStep={1}/>
           <div className="payment">
@@ -256,7 +264,7 @@ class PaymentInfo extends Component {
             </div>
           </div>
           </CardContent>
-        </Card>
+        </Card>}
         {this.state.loading && <div className='payment-backdrop'>
           <CircularProgress color="secondary" />
         </div>}
