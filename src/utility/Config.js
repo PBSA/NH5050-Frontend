@@ -9,6 +9,7 @@ const {
   STRIPE_PROD_PKEY,
   GOOGLE_ANALYTICS_KEY,
   GOOGLE_API_KEY,
+  IS_MAINTENANCE,
 } = process.env;
 
 /**
@@ -58,6 +59,13 @@ const Config = {
    * @memberof Config
    */
   googleAPIKey: GOOGLE_API_KEY,
+  /**
+   * Represents if the app is in maintenance.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  isMaintenance: IS_MAINTENANCE === 'yes',
 };
 
 export default Config;

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import PanoramaIcon from '@material-ui/icons/Panorama';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
-import MetaTags from 'react-meta-tags';
+import { Config } from '../../utility';
 import JackpotDisplayWidget from './JackpotDisplayWidget'
 var parse = require('html-react-parser');
 
@@ -16,26 +15,22 @@ class Dashboard extends Component {
     } else {
       return <CircularProgress color="secondary"/>;
     }
-      // else {
-      //   return <PanoramaIcon className="dashboard-panel-icon" fontSize="large" />;
-      // }
   }
 
   render() {
     const {raffle, navigate, setRoute, organization} = this.props;
     return (
       <div className="dashboard">
-        {raffle.id ?
+        {Config.isMaintenance ?
+        <article>
+          <h1>We&rsquo;ll be back soon!</h1>
+          <div>
+            <p>The app is currently unavailable for maintenance. Please check back in a few hours. We apologize for the inconvenience. If you have any questions please contact <a href="mailto:raffles@seacoastmarines.org">raffles@seacoastmarines.org</a></p>
+            <p>&mdash; The Team</p>
+          </div>
+        </article>
+        : raffle.id ?
         <>
-          {/* <MetaTags>
-            <meta property="og:title" content="New Hampshire Marine Corps League 50-50/50 Raffle" />
-            <meta property="og:description" content={raffle.raffle_description} />
-            <meta property="og:image" content={raffle.image_url} />
-            <meta property="og:url" content={process.env.NODE_ENV === 'development' ? process.env.DEV_BASE_ROUTE : process.env.PRODUCTION_BASE_ROUTE} /> 
-            <meta name="twitter:title" content="New Hampshire Marine Corps League 50-50/50 Raffle" />
-            <meta name="twitter:description" content={raffle.raffle_description} />
-            <meta name="twitter:image" content={raffle.image_url} />
-          </MetaTags> */}
           <div className="dashboard-panel">
             {this.displayImage()}
             <p className="dashboard-panel-text">
