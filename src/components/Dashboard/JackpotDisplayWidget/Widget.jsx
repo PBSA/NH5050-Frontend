@@ -56,20 +56,27 @@ class Widget extends Component {
   }
 
   componentDidMount() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.geocodeLookupAndNavigate(position.coords.latitude, position.coords.longitude);
-      },
-      () => {
+    if(Config.isGeofencingEnabled) {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.geocodeLookupAndNavigate(position.coords.latitude, position.coords.longitude);
+        },
+        () => {
+          this.setState({
+            errorText: strings.dashboard.errors.locationerror,
+            disablebtn: true
+          });
+        });
+      } else {
         this.setState({
           errorText: strings.dashboard.errors.locationerror,
           disablebtn: true
         });
-      });
+      }
     } else {
       this.setState({
-        errorText: strings.dashboard.errors.locationerror,
-        disablebtn: true
+        errorText: '',
+        disablebtn: false
       });
     }
     this.getRaffles();
@@ -80,7 +87,7 @@ class Widget extends Component {
       response => {
         const addresses = response.results[0].address_components;
         if(addresses.length > 0) {
-          if(addresses.find((address) => address.short_name === 'NH')) {
+          if(addresses.find((address) => address.short_name === Config.usState)) {
             this.setState({
               errorText: '',
               disablebtn: false
