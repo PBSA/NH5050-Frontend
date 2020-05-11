@@ -10,6 +10,8 @@ const {
   GOOGLE_ANALYTICS_KEY,
   GOOGLE_API_KEY,
   IS_MAINTENANCE,
+  GEOFENCING_ENABLED,
+  GEOFENCING_US_STATE,
 } = process.env;
 
 /**
@@ -66,6 +68,20 @@ const Config = {
    * @memberof Config
    */
   isMaintenance: IS_MAINTENANCE === 'yes',
+  /**
+   * Represents if geofencing is enabled.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  isGeofencingEnabled: GEOFENCING_ENABLED === 'enabled',
+  /**
+   * Represents the us state/canadian province shortname.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  usState: GEOFENCING_US_STATE,
 };
 
 export default Config;
