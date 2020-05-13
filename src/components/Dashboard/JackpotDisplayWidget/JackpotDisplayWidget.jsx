@@ -16,7 +16,7 @@ export default class JackpotDisplayWidget extends Component {
 
   navigateToOrderInfo = (e) => {
     e.preventDefault();
-
+    const {navigate, setRoute} = this.props;
     if(Config.isGeofencingEnabled) {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
