@@ -1,7 +1,7 @@
 {
-  "name": "nhmc-5050",
+  "name": "diamond-gaming-5050",
   "version": "0.5.0",
-  "description": "5050 application for the New Hampshire Marine Corps",
+  "description": "5050 application for Diamond Gaming",
   "main": "index.js",
   "scripts": {
     "start": "node scripts/start.js",

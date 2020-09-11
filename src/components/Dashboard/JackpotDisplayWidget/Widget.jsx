@@ -57,7 +57,7 @@ class Widget extends Component {
       return (
         <div className="widget-background">
             <div className="widget-buy-container-padded">
-              <span className="widget-buy-header-black">New Hampshire Marine Corps League</span>
+              <span className="widget-buy-header-black">Diamond Gaming</span>
               <span className="widget-buy-content">{raffle.raffle_name}</span>
               <span className="widget-buy-header">Funds Raised</span>
               <span className="widget-buy-content">${(+raffle.total_progressive_jackpot * 2).toFixed(2)}</span>

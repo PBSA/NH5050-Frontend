@@ -1,6 +1,6 @@
-# New Hampshire 5050
+# Diamond Gaming 5050
 
-5050 Application for New Hampshire Marine Corps
+5050 Application for Diamond Gaming
 <hr>
 
 ## Technology Stack

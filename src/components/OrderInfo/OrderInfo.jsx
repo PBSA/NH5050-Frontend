@@ -247,9 +247,9 @@ class OrderInfo extends Component {
                           label={
                             <>
                               <span>{strings.orderInfo.emailCheckLabel}</span>
-                              <a className="order-form-links" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/">{strings.orderInfo.emailCheckLabel2}</a>
+                              <a className="order-form-links" target="_blank" rel="noopener noreferrer" href="https://example@example.com">{strings.orderInfo.emailCheckLabel2}</a>
                               <span>,</span>
-                              <a className="order-form-links" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/terms-conditions/">{strings.orderInfo.emailCheckLabel3}</a>
+                              <a className="order-form-links" target="_blank" rel="noopener noreferrer" href="https://example@example.com">{strings.orderInfo.emailCheckLabel3}</a>
                               <span>.</span>
                             </>
                           }

@@ -91,13 +91,13 @@ class ConfirmationPage extends Component {
             </div>
             <span className="confirmation-subtext">{strings.confirmationPage.subtext3}</span>
             <span className="confirmation-subtext">{strings.confirmationPage.subtext4}</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.assistance} <a href="mailto:raffles@seacoastmarines.org" className="confirmation-link">raffles@seacoastmarines.org</a>.</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.assistance} <a href="mailto:example@example.com" className="confirmation-link">example@example.com</a>.</span>
             <span className="confirmation-subtext">{strings.confirmationPage.notmember}</span>
-            <span className="confirmation-subtext"><a target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/mcl-nh/" className="confirmation-link">{strings.confirmationPage.join}</a> {strings.confirmationPage.joinsidetext}</span>
+            <span className="confirmation-subtext"><a target="_blank" rel="noopener noreferrer" href="https://example.com" className="confirmation-link">{strings.confirmationPage.join}</a> {strings.confirmationPage.joinsidetext}</span>
             <span className="confirmation-message">{strings.confirmationPage.regards}</span>
             <span className="confirmation-message">{strings.confirmationPage.org}</span>
-            <a className="confirmation-link" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/">{strings.confirmationPage.rules}</a>
-            <a className="confirmation-link" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/terms-conditions/">{strings.confirmationPage.terms}</a>
+            <a className="confirmation-link" target="_blank" rel="noopener noreferrer" href="https://example.com">{strings.confirmationPage.rules}</a>
+            <a className="confirmation-link" target="_blank" rel="noopener noreferrer" href="https:/example.com">{strings.confirmationPage.terms}</a>
             <div className="confirmation-jackpots">
               <div className="confirmation-jackpots-5050">
                 <span className="confirmation-jackpots-header"> {strings.confirmationPage.fundsRaised} </span>
@@ -123,7 +123,7 @@ class ConfirmationPage extends Component {
               <Button className="confirmation-buttons-print" onClick={() => window.print()}>{strings.confirmationPage.printThisPage}</Button>
               <Button className="confirmation-buttons-grow" onClick={this.navigateToShare}endIcon={<ArrowRightAltIcon />}>{strings.confirmationPage.growJackpot}</Button>
             </div>
-          </div> 
+          </div>
           : <div className="confirmation">
             {strings.confirmationPage.processing}
             </div>}

@@ -25,7 +25,7 @@ class Dashboard extends Component {
         <article>
           <h1>We&rsquo;ll be back soon!</h1>
           <div>
-            <p>The app is currently unavailable for maintenance. Please check back in a few hours. We apologize for the inconvenience. If you have any questions please contact <a href="mailto:raffles@seacoastmarines.org">raffles@seacoastmarines.org</a></p>
+            <p>The app is currently unavailable for maintenance. Please check back in a few hours. We apologize for the inconvenience. If you have any questions please contact <a href="mailto:example@example.com">example@example.com</a></p>
             <p>&mdash; The Team</p>
           </div>
         </article>
