@@ -121,6 +121,10 @@ class AdminDashboard extends Component {
     }
   }
 
+  navigateToCreateLottery = () => {
+    this.props.navigate(RouteConstants.CREATE_LOTTERY);
+  }
+
   render() {
     const { organizationId, raffle, path, progressiveRaffle } = this.props;
     const { timeToDraw, timeToProgressiveDraw } = this.state;
@@ -135,7 +139,7 @@ class AdminDashboard extends Component {
           </Tabs>
           {activeTab === 'beneficiaries' && <Beneficiaries organizationId={organizationId} />}
           {activeTab === 'sellers' && <Sellers organizationId={organizationId} />}
-          {activeTab === 'raffles' && <Raffles organizationId={organizationId} />}
+          {activeTab === 'raffles' && <Raffles organizationId={organizationId} navigateToCreateLottery={this.navigateToCreateLottery} />}
           {activeTab === 'tickets' && <Tickets organizationId={organizationId} />}
           {activeTab === false ? 
             this.renderDashboard(raffle, timeToDraw, progressiveRaffle, timeToProgressiveDraw)

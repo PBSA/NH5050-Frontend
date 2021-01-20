@@ -94,6 +94,22 @@ export default {
     rules: 'Raffle Rules',
   },
 
+  createLottery: {
+    buttonText: 'Create a New Lottery',
+    raffleName: 'Raffle Name',
+    raffleDescription: 'Raffle Description',
+    slug: 'Slug',
+    startDate: 'Start Date and Time',
+    endDate: 'End Date and Time',
+    drawDate: 'Draw Date and Time',
+    adminFeesPercent: 'Admin Fees Percent',
+    donationPercent: 'Donation Percent',
+    raffleDrawPercent: 'Raffle Draw Percent',
+    progressiveDrawPercent: 'Progressive Draw Percent',
+    organizationPercent: 'Organization Percent',
+    beneficiaryPercent: 'Beneficiary Percent',
+  },
+
   share: {
     header: 'Help Grow the Jackpot!',
     subtext: 'Share this raffle with friends and family members to grow the jackpot and to show your support for the New Hampshire Marine Corps League and military families. Thank you for your support!',

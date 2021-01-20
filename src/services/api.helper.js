@@ -38,7 +38,7 @@ export async function apiCall(method, path, params, opts) {
       const url = `${path}?${queryParams}`;
       response = await apiClient.delete(`${apiRoot}/${url}`);
     } else {
-      throw new Error(`invalid http method: ${method}`)
+      throw new Error(`invalid http method: ${method}`);
     }
 
     if (response.data.status !== 200) {

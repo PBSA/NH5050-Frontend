@@ -15,4 +15,5 @@ export default {
   ADMIN_RAFFLES: '/admin/raffles',
   ADMIN_TICKETS: '/admin/tickets',
   JACKPOT_WIDGET: '/widget/jackpots',
+  CREATE_LOTTERY: '/admin/createlottery',
 };

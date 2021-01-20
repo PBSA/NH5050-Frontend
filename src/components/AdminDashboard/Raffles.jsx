@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Button } from '@material-ui/core';
+
 import AdminTable from './AdminTable';
 import { RaffleService } from '../../services';
+import strings from '../../assets/locales/strings';
 
 function isRaffleActive(item) {
   const now = new Date();
@@ -36,7 +39,15 @@ class Raffles extends Component {
 
   render() {
     return (
-      <AdminTable columns={columns} rows={this.state.rows} />
+      <div>
+        <Button
+          className="lottery-form-button"
+          onClick={this.props.navigateToCreateLottery}
+        >
+          {strings.createLottery.buttonText}
+        </Button>
+        <AdminTable columns={columns} rows={this.state.rows} />
+      </div>
     );
   }
 }
