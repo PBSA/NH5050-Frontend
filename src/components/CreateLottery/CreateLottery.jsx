@@ -117,6 +117,13 @@ class CreateLottery extends Component {
       return;
     }
 
+    if(this.state.raffleName.match(/^\d/)) {
+      this.setState({
+        errorText: 'Raffle name should start with an alphabet'
+      });
+      return;
+    }
+
     if(this.state.raffleDescription.trim().length === 0) {
       this.setState({
         errorText: 'Raffle description is required'
