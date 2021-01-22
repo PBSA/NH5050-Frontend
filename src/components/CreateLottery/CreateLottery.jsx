@@ -97,6 +97,12 @@ class CreateLottery extends Component {
     })
   }
 
+  validateDecimalInteger(decimalInt) {
+    var regexp = /^[0-9]+([,.][0-9]+)?$/g;
+
+    return !regexp.test(decimalInt);
+  }
+
   async createOrUpdateSeller(e) {
     e.preventDefault();
 
@@ -155,7 +161,7 @@ class CreateLottery extends Component {
         return;
       }
 
-      if(this.state.adminFeesPercent + this.state.donationPercent + this.state.raffleDrawPercent + this.state.progressiveDrawPercent + this.state.organizationPercent + this.state.beneficiaryPercent !== 100.0) {
+      if(Number(this.state.adminFeesPercent) + Number(this.state.donationPercent) + Number(this.state.raffleDrawPercent) + Number(this.state.progressiveDrawPercent) + Number(this.state.organizationPercent) + Number(this.state.beneficiaryPercent) !== 100.0) {
         this.setState({
           errorText: 'Sum of percentages should always be 100 for a 5050 raffle'
         });
@@ -332,42 +338,54 @@ class CreateLottery extends Component {
                     <TextField
                       className="lottery-form-info-input"
                       label={strings.createLottery.adminFeesPercent}
+                      error={this.validateDecimalInteger(adminFeesPercent)}
                       variant="outlined"
+                      helperText={this.validateDecimalInteger(adminFeesPercent) ? 'Only numbers allowed' : ''}
                       value={adminFeesPercent}
                       onChange={(e) => this.setState({ adminFeesPercent: e.target.value })}
                     />
                     <TextField
                       className="lottery-form-info-input"
                       label={strings.createLottery.donationPercent}
+                      error={this.validateDecimalInteger(donationPercent)}
                       variant="outlined"
+                      helperText={this.validateDecimalInteger(donationPercent) ? 'Only numbers allowed' : ''}
                       value={donationPercent}
                       onChange={(e) => this.setState({ donationPercent: e.target.value })}
                     />
                     <TextField
                       className="lottery-form-info-input"
                       label={strings.createLottery.raffleDrawPercent}
+                      error={this.validateDecimalInteger(raffleDrawPercent)}
                       variant="outlined"
+                      helperText={this.validateDecimalInteger(raffleDrawPercent) ? 'Only numbers allowed' : ''}
                       value={raffleDrawPercent}
                       onChange={(e) => this.setState({ raffleDrawPercent: e.target.value })}
                     />
                     <TextField
                       className="lottery-form-info-input"
                       label={strings.createLottery.progressiveDrawPercent}
+                      error={this.validateDecimalInteger(progressiveDrawPercent)}
                       variant="outlined"
+                      helperText={this.validateDecimalInteger(progressiveDrawPercent) ? 'Only numbers allowed' : ''}
                       value={progressiveDrawPercent}
                       onChange={(e) => this.setState({ progressiveDrawPercent: e.target.value })}
                     />
                     <TextField
                       className="lottery-form-info-input"
                       label={strings.createLottery.organizationPercent}
+                      error={this.validateDecimalInteger(organizationPercent)}
                       variant="outlined"
+                      helperText={this.validateDecimalInteger(organizationPercent) ? 'Only numbers allowed' : ''}
                       value={organizationPercent}
                       onChange={(e) => this.setState({ organizationPercent: e.target.value })}
                     />
                     <TextField
                       className="lottery-form-info-input"
                       label={strings.createLottery.beneficiaryPercent}
+                      error={this.validateDecimalInteger(beneficiaryPercent)}
                       variant="outlined"
+                      helperText={this.validateDecimalInteger(beneficiaryPercent) ? 'Only numbers allowed' : ''}
                       value={beneficiaryPercent}
                       onChange={(e) => this.setState({ beneficiaryPercent: e.target.value })}
                     />

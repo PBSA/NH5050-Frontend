@@ -95,7 +95,7 @@ export default {
   },
 
   createLottery: {
-    buttonText: 'Create a New Lottery',
+    buttonText: 'Create New Lottery',
     raffleName: 'Raffle Name',
     raffleDescription: 'Raffle Description',
     slug: 'Slug',
