@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {
-  Card, CardContent, CircularProgress,
-  TextField, Button, IconButton,
-  Select, MenuItem, InputLabel,
+  Card, CardContent, CircularProgress, Checkbox,
+  TextField, Button, IconButton, InputAdornment,
+  Select, MenuItem, InputLabel, FormControlLabel,
   Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, Paper
 } from '@material-ui/core';
@@ -37,6 +37,9 @@ class CreateLottery extends Component {
     organizationPercent: 4.1,
     beneficiaryPercent: 36.9,
     progressiveDraws: [],
+    isSellable: false,
+    isTransferable: false,
+    deleteTicketsAfterDraw: true,
     ticketBundles: [{
       quantity: 0,
       price: 0.0
@@ -204,6 +207,9 @@ class CreateLottery extends Component {
         end_datetime: this.state.endDatetime.toISOString(),
         draw_datetime: this.state.drawDatetime.toISOString(),
         draw_type: this.state.drawType,
+        is_sellable: this.state.isSellable,
+        is_transferable: this.state.isTransferable,
+        delete_tickets_after_draw: this.state.deleteTicketsAfterDraw
       };
     } else {
       body = {
@@ -222,6 +228,9 @@ class CreateLottery extends Component {
         progressive_draw_percent: this.state.progressiveDrawPercent,
         organization_percent: this.state.organizationPercent,
         beneficiary_percent: this.state.beneficiaryPercent,
+        is_sellable: this.state.isSellable,
+        is_transferable: this.state.isTransferable,
+        delete_tickets_after_draw: this.state.deleteTicketsAfterDraw
       };
     }
 
@@ -253,7 +262,7 @@ class CreateLottery extends Component {
       errorText, raffleName, raffleDescription, slug, startDatetime, endDatetime,
       drawDatetime, drawType, progressiveDrawId, adminFeesPercent, donationPercent,
       raffleDrawPercent, progressiveDrawPercent, organizationPercent, beneficiaryPercent,
-      progressiveDraws, ticketBundles
+      progressiveDraws, ticketBundles, isSellable, isTransferable, deleteTicketsAfterDraw
     } = this.state;
 
     return (
@@ -346,6 +355,9 @@ class CreateLottery extends Component {
                       className="lottery-form-info-input"
                       label={strings.createLottery.adminFeesPercent}
                       error={this.validateDecimalInteger(adminFeesPercent)}
+                      InputProps={{
+                        endAdornment: <InputAdornment position="end">%</InputAdornment>
+                      }}
                       variant="outlined"
                       helperText={this.validateDecimalInteger(adminFeesPercent) ? 'Only numbers allowed' : ''}
                       value={adminFeesPercent}
@@ -355,6 +367,9 @@ class CreateLottery extends Component {
                       className="lottery-form-info-input"
                       label={strings.createLottery.donationPercent}
                       error={this.validateDecimalInteger(donationPercent)}
+                      InputProps={{
+                        endAdornment: <InputAdornment position="end">%</InputAdornment>
+                      }}
                       variant="outlined"
                       helperText={this.validateDecimalInteger(donationPercent) ? 'Only numbers allowed' : ''}
                       value={donationPercent}
@@ -364,6 +379,9 @@ class CreateLottery extends Component {
                       className="lottery-form-info-input"
                       label={strings.createLottery.raffleDrawPercent}
                       error={this.validateDecimalInteger(raffleDrawPercent)}
+                      InputProps={{
+                        endAdornment:<InputAdornment position="end">%</InputAdornment>
+                      }}
                       variant="outlined"
                       helperText={this.validateDecimalInteger(raffleDrawPercent) ? 'Only numbers allowed' : ''}
                       value={raffleDrawPercent}
@@ -373,6 +391,9 @@ class CreateLottery extends Component {
                       className="lottery-form-info-input"
                       label={strings.createLottery.progressiveDrawPercent}
                       error={this.validateDecimalInteger(progressiveDrawPercent)}
+                      InputProps={{
+                        endAdornment:<InputAdornment position="end">%</InputAdornment>
+                      }}
                       variant="outlined"
                       helperText={this.validateDecimalInteger(progressiveDrawPercent) ? 'Only numbers allowed' : ''}
                       value={progressiveDrawPercent}
@@ -382,6 +403,9 @@ class CreateLottery extends Component {
                       className="lottery-form-info-input"
                       label={strings.createLottery.organizationPercent}
                       error={this.validateDecimalInteger(organizationPercent)}
+                      InputProps={{
+                        endAdornment:<InputAdornment position="end">%</InputAdornment>
+                      }}
                       variant="outlined"
                       helperText={this.validateDecimalInteger(organizationPercent) ? 'Only numbers allowed' : ''}
                       value={organizationPercent}
@@ -391,11 +415,44 @@ class CreateLottery extends Component {
                       className="lottery-form-info-input"
                       label={strings.createLottery.beneficiaryPercent}
                       error={this.validateDecimalInteger(beneficiaryPercent)}
+                      InputProps={{
+                        endAdornment: <InputAdornment position="end">%</InputAdornment>
+                      }}
                       variant="outlined"
                       helperText={this.validateDecimalInteger(beneficiaryPercent) ? 'Only numbers allowed' : ''}
                       value={beneficiaryPercent}
                       onChange={(e) => this.setState({ beneficiaryPercent: e.target.value })}
                     />
+                    <div className="lottery-form-info">
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isSellable}
+                            onChange={(e) => this.setState({isSellable: e.target.checked})}
+                          />
+                        }
+                        label="The buyer can sell the bought tickets"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isTransferable}
+                            onChange={(e) => this.setState({isTransferable: e.target.checked})}
+                          />
+                        }
+                        label="The buyer can transfer the tickets"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={deleteTicketsAfterDraw}
+                            onChange={(e) => this.setState({deleteTicketsAfterDraw: e.target.checked})}
+                          />
+                        }
+                        label="The tickets should be burned after the draw date"
+                      />
+                    </div>
+                    <InputLabel>Ticket Bundles</InputLabel>
                     <TableContainer component={Paper} className="lottery-form-info-input">
                       <Table aria-label="ticket-bundles">
                         <TableHead>
@@ -421,9 +478,12 @@ class CreateLottery extends Component {
                                   }}
                                 />
                               </TableCell>
-                              <TableCell align="right">
+                              <TableCell align="center">
                                 <TextField
                                     value={row.price}
+                                    InputProps={{
+                                      startAdornment: <InputAdornment position="start">$</InputAdornment>
+                                    }}
                                     onChange={(e) => {
                                       ticketBundles[index].price = e.target.value;
                                       this.setState({ticketBundles});
