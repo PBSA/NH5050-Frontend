@@ -250,10 +250,30 @@ class CreateLottery extends Component {
       this.setState({loading: false});
       this.props.navigate(RouteConstants.ADMIN_RAFFLES);
     } catch (err) {
-      this.setState({
-        errorText: err.message,
-        loading: false
-      });
+      console.error(err);
+      
+      if(err.hasOwnProperty('data')) {
+        if(err.status === 400 && typeof err.data.error !== 'string') {
+          let errText = '';
+          Object.keys(err.data.error).map((key)=>{
+              errText += err.data.error[key] + '\n'
+          });
+          this.setState({
+            errorText: errText,
+            loading: false
+          });
+        } else {
+          this.setState({
+            errorText: err.data.error,
+            loading: false
+          });
+        }
+      } else {
+        this.setState({
+          errorText: err.message,
+          loading: false
+        });
+      }
     }
   }
 

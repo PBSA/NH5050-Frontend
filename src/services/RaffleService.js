@@ -1,7 +1,6 @@
 import { apiCall } from './api.helper';
 
 export default class RaffleService {
-  
   static getRaffle(organizationId) {
     return apiCall('get', 'raffles', { organizationId });
   }
@@ -47,5 +46,11 @@ export default class RaffleService {
 
   static getTicketDetails(ticketId) {
     return apiCall('get', `ticketdetails/${ticketId}`);
+  }
+
+  static uploadImage(image, ticketId) {
+    const formData = new FormData();
+    formData.append('file', image);
+    return apiCall('postimage', `raffles/uploadimage?raffleId=${ticketId}`, formData, { headers: {} });
   }
 }

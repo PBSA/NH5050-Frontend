@@ -32,4 +32,13 @@
       background-color: $primary-app-color;
     }
   }
+
+  &-img {
+    height: 4rem;
+    width: 5rem;
+  }
+
+  &-button {
+    display: inline;
+  }
 }

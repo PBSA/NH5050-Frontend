@@ -37,6 +37,8 @@ export async function apiCall(method, path, params, opts) {
       const queryParams = new URLSearchParams(params).toString();
       const url = `${path}?${queryParams}`;
       response = await apiClient.delete(`${apiRoot}/${url}`);
+    } else if (method === 'postimage') {
+      response = await apiClient.post(`${apiRoot}/${path}`, params, opts);
     } else {
       throw new Error(`invalid http method: ${method}`);
     }
