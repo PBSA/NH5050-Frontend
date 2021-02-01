@@ -4,7 +4,6 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RaffleService } from '../../services';
-import { StorageUtil } from '../../utility';
 import { NavigateActions, CheckoutActions } from '../../redux/actions';
 import strings from '../../assets/locales/strings';
 import { RouteConstants } from '../../constants';
@@ -73,7 +72,7 @@ class ConfirmationPage extends Component {
   }
 
   render() {
-    const {entries, ticket_sales, totalJackpot, totalProgressive, raffle_id, ticket_sales_id} = this.props;
+    const {entries, ticket_sales, totalJackpot, totalProgressive, raffle_id, ticket_sales_id, beneficiary} = this.props;
     const {raffle, progressive, timeToDraw, timeToProgressiveDraw} = this.state;
     let totalPrice = ticket_sales.total_price ? ticket_sales.total_price : ticket_sales.get('total_price');
     return (
@@ -83,21 +82,17 @@ class ConfirmationPage extends Component {
           <ProgressBar activeStep={2}/>
           {this.props.ticketConfirmation !== 'Processing' ? <div className="confirmation">
             <span className="confirmation-header">{strings.confirmationPage.header}</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.subtext0}</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.subtext01}{totalPrice} {strings.confirmationPage.subtext1}</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.subtext2} {raffle.raffle_name}{strings.confirmationPage.goodluck}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext0} {totalPrice} {strings.confirmationPage.subtext01} {beneficiary.getIn(['user','name'])}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext1}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext2} {moment(raffle.draw_datetime).format('MMMM D - h:mm A')} {strings.confirmationPage.goodluck} {moment(progressive.draw_datetime).format('MMMM D - h:mm A')} {strings.confirmationPage.subtext3}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext4}</span>
             <div className="confirmation-tickets">
               {entries.map((ticket, index) => <span key={index} className="confirmation-tickets-ticket">{`R${this.addLeadingZeros(raffle_id,2)}T${this.addLeadingZeros(ticket_sales_id,4)}E${this.addLeadingZeros(ticket.id === undefined ? ticket.get('id') : ticket.id , 5)}`}</span>)}
             </div>
-            <span className="confirmation-subtext">{strings.confirmationPage.subtext3}</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.subtext4}</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.assistance} <a href="mailto:raffles@seacoastmarines.org" className="confirmation-link">raffles@seacoastmarines.org</a>.</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.notmember}</span>
-            <span className="confirmation-subtext"><a target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/mcl-nh/" className="confirmation-link">{strings.confirmationPage.join}</a> {strings.confirmationPage.joinsidetext}</span>
-            <span className="confirmation-message">{strings.confirmationPage.regards}</span>
-            <span className="confirmation-message">{strings.confirmationPage.org}</span>
-            <a className="confirmation-link" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/">{strings.confirmationPage.rules}</a>
-            <a className="confirmation-link" target="_blank" rel="noopener noreferrer" href="https://www.seacoastmarines.org/raffle-rules/terms-conditions/">{strings.confirmationPage.terms}</a>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext5}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext6} {moment(progressive.draw_datetime).format('MMMM D - h:mm A')}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext7} <a href="www.washingtonspirit.org/raffles" className="confirmation-link">www.washingtonspirit.org/raffles</a>.</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext8}</span>
             <div className="confirmation-jackpots">
               <div className="confirmation-jackpots-5050">
                 <span className="confirmation-jackpots-header"> {strings.confirmationPage.fundsRaised} </span>
@@ -143,6 +138,7 @@ const mapStateToProps = (state) => {
     raffle_id: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'raffle_id']),
     totalJackpot: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'total_jackpot']),
     totalProgressive: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'total_progressive_jackpot']),
+    beneficiary: state.getIn(['checkout','detachment']),
   };
 };
 

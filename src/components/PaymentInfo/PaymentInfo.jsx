@@ -109,7 +109,7 @@ class PaymentInfo extends Component {
               </div>
               <div className="payment-ticket">
                 <p className="payment-ticket-header">${this.props.bundlePrice} {strings.paymentInfo.ticket}</p>
-                <span className="payment-ticket-subtext">{strings.paymentInfo.getsYou} {this.props.bundle.quantity} {strings.paymentInfo.text1} {moment(this.state.raffle.draw_datetime).format('MMMM D, YYYY')}. {strings.paymentInfo.and} {this.props.bundle.quantity} {strings.paymentInfo.text2} {moment(this.state.progressive.draw_datetime).format('MMMM D, YYYY')}.</span>
+                <span className="payment-ticket-subtext">{strings.paymentInfo.getsYou} {this.props.bundle.quantity} {strings.paymentInfo.text1} {moment(this.state.raffle.draw_datetime).format('MMMM D, YYYY')} {strings.paymentInfo.and} {this.props.bundle.quantity} {strings.paymentInfo.text2} {moment(this.state.progressive.draw_datetime).format('MMMM D, YYYY')}.</span>
               </div>
             </div>
             <div className="payment-buttons">

@@ -1,4 +1,4 @@
-import React, { Component, useCallback } from 'react';
+import React, { Component } from 'react';
 import {
   TextField, Button, FormControl, FormControlLabel, FormGroup, CircularProgress, Radio, RadioGroup, InputLabel, Select, MenuItem, Checkbox, Card, CardContent
 } from '@material-ui/core';
@@ -33,6 +33,7 @@ class OrderInfo extends Component {
       ageCheck: checkout.get('ageCheck'),
       emailCheck: checkout.get('emailCheck'),
       errorText: '',
+      member: 'yes',
     }
   }
 
@@ -193,7 +194,7 @@ class OrderInfo extends Component {
   }
 
   render() {
-    const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText} = this.state;
+    const {firstName, lastName, email, phoneNum, ticketSelected, ticketBundles, detachmentSelected, detachments, ageCheck, emailCheck, errorText, member} = this.state;
     return (
       <div className="checkout-container">
         <Card className="order" variant="outlined">
@@ -284,6 +285,15 @@ class OrderInfo extends Component {
                           return <MenuItem key={index} value={index}>{detachment.user.name}</MenuItem>
                         })}
                       </Select>
+                    </FormControl>
+                  </div>
+                  <div>
+                    <span className="order-tickets-subtext">Are you a member of this organization?</span>
+                    <FormControl component="fieldset">
+                      <RadioGroup aria-label="member" name="member" value={member} row >
+                        <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="no" control={<Radio />} label="No" />
+                      </RadioGroup>
                     </FormControl>
                   </div>
                 </div>
