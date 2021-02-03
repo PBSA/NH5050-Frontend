@@ -82,7 +82,7 @@ class ConfirmationPage extends Component {
           <ProgressBar activeStep={2}/>
           {this.props.ticketConfirmation !== 'Processing' ? <div className="confirmation">
             <span className="confirmation-header">{strings.confirmationPage.header}</span>
-            <span className="confirmation-subtext">{strings.confirmationPage.subtext0} {totalPrice} {strings.confirmationPage.subtext01} {beneficiary.getIn(['user','name'])}</span>
+            <span className="confirmation-subtext">{strings.confirmationPage.subtext0} {totalPrice} {strings.confirmationPage.subtext01} {beneficiary}</span>
             <span className="confirmation-subtext">{strings.confirmationPage.subtext1}</span>
             <span className="confirmation-subtext">{strings.confirmationPage.subtext2} {moment(raffle.draw_datetime).format('MMMM D - h:mm A')} {strings.confirmationPage.goodluck} {moment(progressive.draw_datetime).format('MMMM D - h:mm A')} {strings.confirmationPage.subtext3}</span>
             <span className="confirmation-subtext">{strings.confirmationPage.subtext4}</span>
@@ -138,7 +138,7 @@ const mapStateToProps = (state) => {
     raffle_id: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'raffle_id']),
     totalJackpot: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'total_jackpot']),
     totalProgressive: state.getIn(['checkout','ticketPurchaseResponse','ticket_sales', 'total_progressive_jackpot']),
-    beneficiary: state.getIn(['checkout','detachment']),
+    beneficiary: state.getIn(['checkout','detachment','user','name']),
   };
 };
 
